@@ -1,2 +1,6 @@
-# asp_recipe_graphs
+# ASP recipe graphs
+
 Code for reasoning about substitution and other properties of recipe graphs in ASP with supporting Python wrappers.
+
+## Reference
+
