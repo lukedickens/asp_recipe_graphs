@@ -16,22 +16,8 @@
 % Definition 5 of a subrecipe:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
--subrecipe_graph_of(RG1,RG2) :-           % the first argument is the  
-    recipe_graph(RG2),                    % subrecipe graph
-    in(arcs(RG1),Arc), 
-    not in(arcs(RG2),Arc).
-subrecipe_graph_of(RG1,RG2) :-
-    recipe_graph(RG1),
-    recipe_graph(RG2),
-    not -subrecipe_graph_of(RG1,RG2).
-strict_subrecipe_graph(RG) :-              % need this for the constraints
-    subrecipe_graph_of(RG,RG2),            % in lines 171-191
-    in(arcs(RG2),Arc),
-    not in(arcs(RG),Arc).
--strict_subrecipe_graph(RG) :- 
-    recipe_graph(RG),
-    not strict_subrecipe_graph(RG).
-    
+%strict_subrecipe_graph can now be found in recipe graphs.lp
+
 -subrecipe_of(RG1,TF1,RG2,TF2) :-          % the first two arguments  
     recipe(RG1,TF1),                       % are the subrecipe
     recipe(RG2,TF2),

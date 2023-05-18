@@ -78,6 +78,31 @@ atomic_recipe_graph(RG) :-
 % End of Definition 2
 %%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TODO
+% Used in subrecipes Defn. 5 of paper
+% strict subrecipe graphs are nonetheless in the body of
+% high_indexes_allowed, which is defined here. Maybe we
+% need to be more flexible about dependencies 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+-subrecipe_graph_of(RG1,RG2) :-           % the first argument is the  
+    recipe_graph(RG2),                    % subrecipe graph
+    in(arcs(RG1),Arc), 
+    not in(arcs(RG2),Arc).
+subrecipe_graph_of(RG1,RG2) :-
+    recipe_graph(RG1),
+    recipe_graph(RG2),
+    not -subrecipe_graph_of(RG1,RG2).
+strict_subrecipe_graph(RG) :-              % need this for the constraints
+    subrecipe_graph_of(RG,RG2),            % in lines 171-191
+    in(arcs(RG2),Arc),
+    not in(arcs(RG),Arc).
+-strict_subrecipe_graph(RG) :- 
+    recipe_graph(RG),
+    not strict_subrecipe_graph(RG).
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Here are some extra constraints on how nodes can be chosen to make up a recipe
 % graph, not included in the paper, but included here to reduce the number of 
@@ -87,6 +112,8 @@ atomic_recipe_graph(RG) :-
 % in the construction of recipe graphs that are not strict sub-recipe graphs of  
 % another recipe graph, and not "given recipe graphs", nodes have to be used with 
 % as low indexes as possible:
+
+
 
 high_indexes_allowed(RG) :- given_recipe_graph(RG).
 high_indexes_allowed(RG) :- strict_subrecipe_graph(RG).
