@@ -32,7 +32,7 @@ def load_and_solve(query, domain_files):
     dependencies = get_dependencies(query_info['requires'])
     load_modules(ctl, dependencies)
     load_paths(ctl, domain_files)
-    load_queries(ctl, [query])
+#    load_queries(ctl, [query])
 #    ctl.add(query, parameters, programme)
     ctl.ground([("base",[]), (query, parameters)])
     ctl.solve(on_model=lambda m: print("Answer: {}".format(m)))

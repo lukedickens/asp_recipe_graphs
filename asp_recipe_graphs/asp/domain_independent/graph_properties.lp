@@ -93,6 +93,8 @@ connected_in(G,N1,N2) :-
     in(nodes(G),N2),
     not connected_in(G,N1,N2).
 
+connected(G) :- graph(G), not -connected(G).
+
 % all action nodes in a recipe graph must have both an incoming and an outgoing arc:
 has_incoming_arc(G,N) :- in(arcs(G),arc(N1,N)).
 has_outgoing_arc(G,N) :- in(arcs(G),arc(N,N1)).

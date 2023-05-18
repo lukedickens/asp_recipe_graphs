@@ -43,3 +43,4 @@ in(arcs(rg_hummus),arc(c(8),a(3))).
 in(arcs(rg_hummus),arc(c(9),a(3))).
 in(arcs(rg_hummus),arc(a(3),c(10))).
 
+#show connected/1.
