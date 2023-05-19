@@ -41,10 +41,10 @@ for m in MODULES:
                 RE_IS_DEFINITION.findall(line)
             if len(def_term_matches) > 0:
                 defines.add(def_term_matches[0])
-                if def_term_matches[0] == 'child':
-                    print(f"{m}: {[line]}")
-                    print(f"\tdef_term_matches = {def_term_matches}")
-                    print(f"\tRE_IS_DEFINITION.findall(line) = {RE_IS_DEFINITION.findall(line)}")
+#                if def_term_matches[0] == 'child':
+#                    print(f"{m}: {[line]}")
+#                    print(f"\tdef_term_matches = {def_term_matches}")
+#                    print(f"\tRE_IS_DEFINITION.findall(line) = {RE_IS_DEFINITION.findall(line)}")
             using = RE_FIND_TERMS.findall(line)
             uses |= set(using)
     uses -= defines

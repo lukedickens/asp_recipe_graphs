@@ -29,6 +29,14 @@ QUERY_DATA['recipes'] = {
     'parameters' : [],
     'programme' : """
         #show recipe/2.
+        #show in/2.
+        #show type_of/3.
+        """,
+    'requires' : ['recipe_graphs']}
+QUERY_DATA['bare recipes'] = {
+    'parameters' : [],
+    'programme' : """
+        #show recipe/2.
         """,
     'requires' : ['recipe_graphs']}
     
