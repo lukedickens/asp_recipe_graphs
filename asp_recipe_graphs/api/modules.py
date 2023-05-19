@@ -2,13 +2,16 @@ import os
 import re
 import copy
 
-SRC_ROOT_DIR = '.'
+SRC_ROOT_DIR = os.environ.get("GRASP_SRC_DIR",'.')
 DEFINITIONS_SUBDIR = os.path.join(
+    'asp_recipe_graphs','asp','domain_independent')
+DOMAINS_SUBDIR = os.path.join(
     'asp_recipe_graphs','asp','domain_independent')
 MODULES = [
     'acceptability', 'composition', 'equivalence', 'granularity',
     'graph_properties', 'in_out_aligned', 'isomorphisms',
-    'recipe_graphs', 'subrecipes', 'type_hierarchies']
+    'recipe_graphs', 'subrecipes', 'type_hierarchies',
+    'universal_types']
 MODULES_FILEMAP = { t:t+'.lp' for t in MODULES }
 
 def get_module_path(
@@ -18,12 +21,14 @@ def get_module_path(
     fname = modules_filemap[module]
     return os.path.join(src_root_dir, definitions_subdir, fname)
 
+
 # Regular expressions used to find what terms are defined
 # and which are used in the modules.
 ASP_MODULE_DEFINES = {}
 ASP_MODULE_USES = {}
-RE_FIND_TERMS = re.compile('(?=(?:^|\W|\(|\))([a-z][a-z_]*)\([a-zA-Z_,()])')
-RE_IS_DEFINITION = re.compile('^([a-z][a-z_]*)\([a-zA-Z0-9_,]*\) :-')
+RE_FIND_TERMS = re.compile('(?=(?:^|\W|\(|\))([a-z][a-z_]*)\([a-zA-Z][a-zA-Z0-9_,()]*\))')
+#RE_IS_DEFINITION = re.compile('^([a-z][a-z_]*)\([a-zA-Z0-9_,]*\)(?: :-|\.)')
+RE_IS_DEFINITION = re.compile('^([a-z][a-z_]*)\([a-zA-Z0-9_," ]*\)(?: :-|\.)')
 for m in MODULES:
     fpath = get_module_path(m)
 #     print(f"fpath = {fpath}")
@@ -31,11 +36,15 @@ for m in MODULES:
     uses = set([])
     with open(fpath,'r') as ifile:
         for line in ifile.readlines():
-            line = line.strip()
+#            line = line.strip()
             def_term_matches = \
                 RE_IS_DEFINITION.findall(line)
             if len(def_term_matches) > 0:
                 defines.add(def_term_matches[0])
+                if def_term_matches[0] == 'child':
+                    print(f"{m}: {[line]}")
+                    print(f"\tdef_term_matches = {def_term_matches}")
+                    print(f"\tRE_IS_DEFINITION.findall(line) = {RE_IS_DEFINITION.findall(line)}")
             using = RE_FIND_TERMS.findall(line)
             uses |= set(using)
     uses -= defines

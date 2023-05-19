@@ -32,11 +32,21 @@ def load_and_solve(query, domain_files):
     dependencies = get_dependencies(query_info['requires'])
     load_modules(ctl, dependencies)
     load_paths(ctl, domain_files)
-    load_queries(ctl, [query])
+#    load_queries(ctl, [query])
 #    ctl.add(query, parameters, programme)
+    ctl.add(programme)
     ctl.ground([("base",[]), (query, parameters)])
     ctl.solve(on_model=lambda m: print("Answer: {}".format(m)))
     
     
 if __name__ == '__main__':
-    load_and_solve('connected',['asp_recipe_graphs/asp/recipes/hummus_graph.lp'])
+    fpaths = ['asp_recipe_graphs/asp/recipes/hummus_graph.lp']
+    fpaths.append('asp_recipe_graphs/asp/recipes/hummus_types.lp')
+#    fpaths = ['asp_recipe_graphs/asp/recipes/cannellini_hummus_graph.lp']
+#    fpaths = ['asp_recipe_graphs/asp/recipes/cannellini_hummus_types.lp']
+#    load_and_solve('connected', fpaths)    
+#    load_and_solve('cyclic', fpaths)    
+#    load_and_solve('arcs',fpaths)       
+#    load_and_solve('types',fpaths)       
+    load_and_solve('recipes',fpaths)       
+    
