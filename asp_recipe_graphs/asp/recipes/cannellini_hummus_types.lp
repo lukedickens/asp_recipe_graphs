@@ -16,7 +16,7 @@ type_of(tf_cannellini_hummus,c(6),"fresh rosemary sprigs").
 type_of(tf_cannellini_hummus,c(7),"chopped fresh rosemary").
 type_of(tf_cannellini_hummus,c(8),"fresh sage leaves").
 type_of(tf_cannellini_hummus,c(9),"chopped fresh sage").
-type_of(tf_cannellini_hummus,c(10),"chopped thyme, rosemary and sage mixture").
+type_of(tf_cannellini_hummus,c(10),"herb infused oil").
 type_of(tf_cannellini_hummus,c(11),"canned cannellini beans").
 type_of(tf_cannellini_hummus,c(12),"drained cannellini beans").
 type_of(tf_cannellini_hummus,c(13),"blended cannellini beans").

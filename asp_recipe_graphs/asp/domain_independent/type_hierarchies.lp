@@ -34,6 +34,11 @@ comestible_type("comestible").
 comestible_type(C) :- 
     child(C,C1), 
     comestible_type(C1).
+    
+action_or_comestible_type(T) :-
+    action_type(T).
+action_or_comestible_type(T) :-
+    comestible_type(T).
 
 subtype(Ts,T) :- child(Ts,T).
 subtype(Ts,T1) :- child(Ts,T2), 

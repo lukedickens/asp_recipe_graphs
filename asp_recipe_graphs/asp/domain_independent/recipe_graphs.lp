@@ -57,6 +57,10 @@ recipe_graph(RG) :- given_recipe_graph(RG).
 recipe_graph(RG) :- recipe(RG,TF).
 given_recipe_graph(RG) :- given_recipe(RG,TF).
 recipe(RG,TF) :- given_recipe(RG,TF).
+% Luke
+typing_function(TF) :-
+    recipe(RG, TF).
+
 
 %%%%%%%%%%%%%%%%%%%%%
 % End of Definition 1
@@ -149,6 +153,23 @@ high_indexes_allowed(RG) :- strict_subrecipe_graph(RG).
 :- recipe(RG,TF), in(c_nodes(RG),N1), in(c_nodes(RG),N2), N1 != N2, 
    type_of(TF,N1,T1), type_of(TF,N2,T2), same_type_path(T1,T2).
    
+conflicting_types_in(G, TF, T1, T2) :-
+    in(c_nodes(G),N1), in(c_nodes(G),N2), N1 != N2, 
+    type_of(TF,N1,T1), type_of(TF,N2,T2), same_type_path(T1,T2).
+    
+has_untyped_node(G, TF) :-
+    graph(G), action_or_comestible_type(T),
+    in(nodes(G),N),
+    typing_function(TF),
+    not type_of(TF,N,T).
+
+c_node_not_comestible_type(TF, N):-    
+    type_of(TF,c(N),T), not comestible_type(T).
+a_node_not_action_type(TF, N):-    
+    type_of(TF,a(N),T), not action_type(T).
+    
+    
+    
 %%%%%%%%%%%%%%%%%%%%%
 % End of Definition 3
 %%%%%%%%%%%%%%%%%%%%%
