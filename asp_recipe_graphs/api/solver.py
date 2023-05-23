@@ -24,7 +24,7 @@ def load_paths(ctl, paths):
         print(f"fpath ={fpath}")
         ctl.load(fpath)
 
-def load_and_solve(query, domain_files):
+def load_and_solve(query, domain_files, additional_asp=None):
     ctl = clingo.Control()
     query_info = QUERY_DATA[query]
     parameters = query_info['parameters']
@@ -33,11 +33,15 @@ def load_and_solve(query, domain_files):
     load_modules(ctl, dependencies)
     load_paths(ctl, domain_files)
 #    load_queries(ctl, [query])
-    ctl.add(query, parameters, programme)
+#    ctl.add(query, parameters, programme)
     ctl.add(programme)
+    if not additional_asp is None:
+        ctl.add(additional_asp)
     ctl.ground([("base",[]), (query, parameters)])
-    ctl.solve(on_model=lambda m: print("Answer: {}".format(m)))
-    
+    models = []
+#    ctl.solve(on_model=lambda m: print("Answer: {}".format(m)))
+    ctl.solve(on_model=lambda m: models.append(str(m)))
+    return models    
     
 if __name__ == '__main__':
     fpaths = ['asp_recipe_graphs/asp/recipes/hummus_graph.lp']

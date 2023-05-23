@@ -1,3 +1,5 @@
 *pyc
 *png
 __pycache__
+scratch
+.ipynb_checkpoints

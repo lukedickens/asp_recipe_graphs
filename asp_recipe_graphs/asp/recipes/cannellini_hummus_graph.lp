@@ -14,10 +14,12 @@
 % The size of the universal sets of comestible and action nodes for these examples:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%TODO Do we really need this in the recipe files?
+% 
 % (max_c_node_index + 1) is the maximum number of 
 % comestible nodes allowed in a recipe graph.
 % Change this according to your needs:
-#const max_c_node_index=17.
+#const max_c_node_index=18.
 % Similarly for action nodes:
 #const max_a_node_index=10.
 
@@ -51,7 +53,7 @@ in(arcs(rg_cannellini_hummus),arc(a(5),c(12))).
 % blending beans
 in(arcs(rg_cannellini_hummus),arc(c(12),a(6))).
 in(arcs(rg_cannellini_hummus),arc(a(6),c(13))).
-%% blending in herbs
+% blending in herbs
 in(arcs(rg_cannellini_hummus),arc(c(10),a(7))).
 in(arcs(rg_cannellini_hummus),arc(c(13),a(7))).
 in(arcs(rg_cannellini_hummus),arc(a(7),c(14))).
@@ -67,4 +69,5 @@ in(arcs(rg_cannellini_hummus),arc(c(15),a(10))).
 in(arcs(rg_cannellini_hummus),arc(c(17),a(10))).
 in(arcs(rg_cannellini_hummus),arc(a(10),c(18))).
 
-graph(rg_cannellini_hummus).
+%graph(rg_cannellini_hummus).
+given_recipe_graph(rg_cannellini_hummus).

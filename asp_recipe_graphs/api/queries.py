@@ -26,6 +26,7 @@ QUERY_DATA['types'] = {
         """,
     'requires' : ['graph_properties']}
 
+
 QUERY_DATA['arcs and types'] = {
     'parameters' : [],
     'programme' : """
@@ -47,30 +48,60 @@ QUERY_DATA['recipes'] = {
         #show type_of/3.
         """,
     'requires' : ['recipe_graphs']}
-QUERY_DATA['explain not recipe_graph'] = {
+QUERY_DATA['conflicting types'] = {
     'parameters' : [],
     'programme' : """
-        #show -a_node_properly_connected/2.
-        #show cyclic/1.
-        #show -connected/1.
-        #show empty/1.
+        #show conflicting_types_in/4.
         """,
-        # should also check for nodes that aren't c or a nodes, and arcs that aren't in the arcs set
-    'requires' : ['graph_properties']}
+    'requires' : ['recipe_graphs']}
+
 QUERY_DATA['explain not recipe'] = {
     'parameters' : [],
     'programme' : """
-        #show -a_node_properly_connected/2.
         #show cyclic/1.
         #show -connected/1.
         #show empty/1.
-        #show conflicting_types_in/4.
         #show has_untyped_node/2.
-        #show c_node_not_comestible_type/2.
-        #show a_node_not_action_type/2.
+        #show -well_typed_a_node/3.
+        #show -well_typed_c_node/3.
+        #show typed_graph/2.
+        #show conflicting_types/4.
         """,
         # should also check for nodes that aren't c or a nodes, and arcs that aren't in the arcs set
-    'requires' : ['recipe_graphs']}
+    'requires' : ['recipe_graphs', 'query_support']}
+
+QUERY_DATA['untyped nodes'] = {
+    'parameters' : [],
+    'programme' : """
+        #show has_untyped_node/2.
+        #show well_typed_a_node/3.
+        #show well_typed_c_node/3.
+        #show -well_typed_a_node/3.
+        #show -well_typed_c_node/3.
+        #show typed_graph/2.
+        #show in/2.
+        #show action_type/1.
+        #show comestible_type/1.
+        #show conflicting_types/4.
+        #show type_of/3.
+        """,
+        # should also check for nodes that aren't c or a nodes, and arcs that aren't in the arcs set
+    'requires' : ['recipe_graphs', 'query_support']}
+
+#QUERY_DATA['explain not recipe'] = {
+#    'parameters' : [],
+#    'programme' : """
+#        #show -a_node_properly_connected/2.
+#        #show cyclic/1.
+#        #show -connected/1.
+#        #show empty/1.
+#        #show conflicting_types_in/4.
+#        #show has_untyped_node/2.
+#        #show c_node_not_comestible_type/2.
+#        #show a_node_not_action_type/2.
+#        """,
+#        # should also check for nodes that aren't c or a nodes, and arcs that aren't in the arcs set
+#    'requires' : ['recipe_graphs']}
 
 QUERY_DATA['is recipe'] = {
     'parameters' : [],
