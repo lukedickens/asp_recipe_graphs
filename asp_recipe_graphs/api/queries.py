@@ -68,7 +68,7 @@ QUERY_DATA['explain not recipe'] = {
         #show conflicting_types/4.
         """,
         # should also check for nodes that aren't c or a nodes, and arcs that aren't in the arcs set
-    'requires' : ['recipe_graphs', 'query_support']}
+    'requires' : ['recipe_graphs', 'debug_recipes']}
 
 QUERY_DATA['untyped nodes'] = {
     'parameters' : [],

@@ -10,7 +10,7 @@ DOMAINS_SUBDIR = os.path.join(
 MODULES = [
     'acceptability', 'composition', 'equivalence', 'granularity',
     'graph_properties', 'in_out_aligned', 'isomorphisms',
-    'query_support',
+    'debug_recipes',
     'recipe_graphs', 'subrecipes', 'type_hierarchies',
     'universal_types']
 MODULES_FILEMAP = { t:t+'.lp' for t in MODULES }
