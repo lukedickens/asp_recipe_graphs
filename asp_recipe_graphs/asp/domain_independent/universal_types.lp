@@ -3,28 +3,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-child("put", "action").
-    child("pour", "put").
-        child("pour onto toast", "pour").
-    child("spread", "put").
-        child("spread on toast", "spread").
-child("combine", "action").
-    child("mix", "combine").
-    child("blend", "combine").
-        child("blend until uniform", "blend").
-        child("blend together", "blend").
-        child("pulse in blender", "blend").
-child("infuse", "action").
-    child("infuse in hot oil", "infuse").
-
 child("bake", "action").
     child("bake at 180C for 45min", "bake").
 child("boil", "action").
-child("fry", "action").
-    child("fry onion", "fry").
-        child("fry onion for 4 min", "fry onion").
-    child("fry for 4 min", "fry").
-        child("fry onion for 4 min", "fry for 4 min").
 child("chop", "action").
     child("finely chop", "chop").
         child("finely chop onion", "finely chop").
@@ -32,18 +13,46 @@ child("chop", "action").
         child("finely chop onion", "chop onion").
     child("chop onion", "chop").
     child("dice", "chop").
-child("rinse", "action").
-    %%TODO is rinse and drain a subtype of rinse?
-    child("rinse and drain", "rinse").
-child("roast", "action").
+child("combine", "action").
+    child("mix", "combine").
+    child("blend together", "mix").
+    child("stir together", "mix").
+child("blend", "action").
+    child("blend until uniform", "blend").
+    child("blend together", "blend").
+        child("pulse in blender", "blend").
+            child("blend together until smooth", "blend together").
 child("drain", "action").
-    %%TODO is rinse and drain a subtype of drain?
-    child("rinse and drain", "drain").
+child("fry", "action").
+    child("fry onion", "fry").
+        child("fry onion for 4 min", "fry onion").
+    child("fry for 4 min", "fry").
+        child("fry onion for 4 min", "fry for 4 min").
+child("hull", "action").
+child("infuse", "action").
+    child("infuse in hot oil", "infuse").
+child("put", "action").
+    child("pour", "put").
+        child("pour onto toast", "pour").
+    child("spread", "put").
+        child("spread on toast", "spread").
+child("rinse", "action").
+child("roast", "action").
+child("shell", "action").
+child("stir", "action").
+    child("stir together", "stir").
+        child("stir together vigorously", "stir together").
+child("thaw", "action").
+
 
 
 % multistep
 child("combine then roast", "roast").
 child("combine then roast", "combine").
+%%TODO is rinse and drain a subtype of rinse?
+child("rinse and drain", "rinse").
+%%TODO is rinse and drain a subtype of drain?
+child("rinse and drain", "drain").
 
 
 child("fish", "comestible").
@@ -59,14 +68,27 @@ child("pulses", "comestible").
         child("tinned cannellini beans", "cannellini beans").
         child("drained cannellini beans", "cannellini beans").
         child("blended cannellini beans", "cannellini beans").
+    child("edamame beans", "pulses").
+        child("frozen shelled edamame beans", "edamame beans").
+        child("thawed shelled edamame beans", "edamame beans").
+        child("thawed hulled edamame beans", "edamame beans").
 child("vegetable", "comestible").
     child("preserved vegetable","vegetable").
         child("sun-dried tomato", "preserved vegetable").
     child("aubergine", "vegetable").
+        child("oiled aubergine halves", "aubergine").
+        child("roasted aubergine", "aubergine").
+            child("roasted aubergine halves", "roasted aubergine").
+            child("roasted aubergine flesh", "roasted aubergine").
+            child("strained aubergine flesh", "roasted aubergine").
+            child("roasted aubergine skin", "roasted aubergine").
+        child("aubergine drippings", "aubergine").
+    child("carrot", "vegetable").
     child("garlic", "vegetable").
         child("diced garlic", "garlic").
         child("whole garlic", "garlic").
         child("minced garlic", "garlic").
+            child("frozen minced garlic", "minced garlic").
         %child("roasted peeled garlic", "roasted whole garlic").
         %child("roasted peeled garlic", "peeled garlic").
         child("roasted peeled garlic", "garlic").
@@ -74,7 +96,9 @@ child("vegetable", "comestible").
         child("raw onion", "onion").
         child("fried onion", "onion").
         child("sliced onion", "onion").
-    child("carrot", "vegetable").
+    child("radish", "vegetable").
+        child("sliced radish", "radish").
+            child("thinly sliced radish", "radish").
     child("tomato", "vegetable").
         child("sun-dried tomato", "tomato").
             child("sun-dried tomato halves", "sun-dried tomato").
@@ -113,9 +137,10 @@ child("flavourings", "comestible").
     child("sage", "herbs").
         child("fresh sage leaves", "sage").
         child("chopped fresh sage", "sage").
+    child("shisho leaves", "herbs").
+        child("chopped shisho leaves", "shisho leaves").
 child("mixture", "comestible").
         child("infusion", "mixture").
-        child("blend", "mixture").
 
 %child("mixture", "comestible").
 %child(numbered_mixture(X), "mixture") :- int(X), X < 10.

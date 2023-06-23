@@ -41,7 +41,7 @@ def load_and_solve(query, domain_files, additional_asp=None):
     models = []
 #    ctl.solve(on_model=lambda m: print("Answer: {}".format(m)))
     ctl.solve(on_model=lambda m: models.append(str(m)))
-    return models    
+    return models
     
 if __name__ == '__main__':
     fpaths = ['asp_recipe_graphs/asp/recipes/hummus_graph.lp']

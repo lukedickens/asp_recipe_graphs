@@ -21,6 +21,7 @@
 %% define pools of comestible nodes, action nodes,   
 %% and arcs with which to construct graphs:
 
+%TODO get c_node_index(N) to be created if c(N) stated within a recipe.
 % specify values of "max_c_node_index" 
 c_node_index(0..max_c_node_index).
 % and "max_a_node_index" in domain

@@ -2,9 +2,6 @@
 % example recipe: hummus
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%TODO would be nice to have a switch to check for unconnected definitions
-%allow_unconnected_recipes.
-given_recipe(rg_hummus,tf_hummus).
 % "tf" indicates "type function"
 type_of(tf_hummus,c(0),"whole garlic").
 type_of(tf_hummus,c(1),"tahini").
@@ -26,3 +23,4 @@ type_of(tf_hummus,a(3),"blend together").
 
 child("mixture of garlic, tahini, salt, lemon juice, olive oil and water", "mixture").
 
+given_recipe(rg_hummus,tf_hummus).
