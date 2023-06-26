@@ -88,6 +88,15 @@ QUERY_DATA['untyped nodes'] = {
         # should also check for nodes that aren't c or a nodes, and arcs that aren't in the arcs set
     'requires' : ['recipe_graphs', 'debug_recipes']}
 
+QUERY_DATA['acceptability'] = {
+    'parameters' : [],
+    'programme' : """
+        #show acceptability_tuple/3.
+        """,
+        # should also check for nodes that aren't c or a nodes, and arcs that aren't in the arcs set
+    'requires' : ['acceptability']}
+
+
 #QUERY_DATA['explain not recipe'] = {
 #    'parameters' : [],
 #    'programme' : """

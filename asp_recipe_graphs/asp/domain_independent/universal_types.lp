@@ -55,6 +55,10 @@ child("rinse and drain", "rinse").
 child("rinse and drain", "drain").
 
 
+child("bread", "comestible").
+    child("toast", "bread").
+        child("plain toast", "toast").
+        child("buttered toast", "toast").
 child("fish", "comestible").
 child("water", "comestible").
 child("pasta", "comestible").
@@ -72,6 +76,8 @@ child("pulses", "comestible").
         child("frozen shelled edamame beans", "edamame beans").
         child("thawed shelled edamame beans", "edamame beans").
         child("thawed hulled edamame beans", "edamame beans").
+    child("baked beans", "pulses").
+        child("heated beans", "baked beans").
 child("vegetable", "comestible").
     child("preserved vegetable","vegetable").
         child("sun-dried tomato", "preserved vegetable").
@@ -141,6 +147,11 @@ child("flavourings", "comestible").
         child("chopped shisho leaves", "shisho leaves").
 child("mixture", "comestible").
         child("infusion", "mixture").
+child("spreads", "comestible").
+    child("butter", "spreads").
+
+child("complex comestible", "comestible").
+    child("beans on toast", "complex comestible").
 
 %child("mixture", "comestible").
 %child(numbered_mixture(X), "mixture") :- int(X), X < 10.

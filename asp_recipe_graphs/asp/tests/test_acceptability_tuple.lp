@@ -56,7 +56,7 @@ child("buttered toast", "toast").
 
 % alternatively, sate that it's a "given recipe":
 
-%given_recipe(rg1,tf1).   
+given_recipe(rg1,tf1).   
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Example recipe graph (buttered toast):

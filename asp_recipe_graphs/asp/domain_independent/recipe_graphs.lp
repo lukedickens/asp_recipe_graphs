@@ -154,7 +154,9 @@ high_indexes_allowed(RG) :- strict_subrecipe_graph(RG).
 :- recipe(RG,TF), in(c_nodes(RG),N1), in(c_nodes(RG),N2), N1 != N2, 
    type_of(TF,N1,T1), type_of(TF,N2,T2), same_type_path(T1,T2).
     
-    
+atomic_recipe(RG, TF) :-
+    recipe(RG, TF),
+    atomic_recipe_graph(RG).    
     
 %%%%%%%%%%%%%%%%%%%%%
 % End of Definition 3
