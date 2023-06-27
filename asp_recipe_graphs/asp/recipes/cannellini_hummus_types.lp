@@ -37,8 +37,8 @@ type_of(tf_cannellini_hummus,a(10),"blend together").
 
 child("oil and salt garlic then roast", "combine then roast").
 child("thyme, rosemary and sage infused oil", "infusion").
-child("herb and cannellini bean blend", "blend").
-child("garlic, herb and cannellini bean blend", "blend").
+child("herb and cannellini bean blend", "blended mixture").
+child("garlic, herb and cannellini bean blend", "blended mixture").
 child("cannellini hummus", "dips").
 
 %% uncomment when resolved

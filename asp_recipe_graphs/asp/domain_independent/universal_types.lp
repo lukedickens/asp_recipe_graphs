@@ -147,6 +147,7 @@ child("flavourings", "comestible").
         child("chopped shisho leaves", "shisho leaves").
 child("mixture", "comestible").
         child("infusion", "mixture").
+        child("blended mixture","mixture").
 child("spreads", "comestible").
     child("butter", "spreads").
 

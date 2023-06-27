@@ -30,7 +30,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % code to generate a set of input types for each action node in a recipe:
 
-#const max_in_set_size=3.
+#const max_in_set_size=6.
 possible_inset_size(0..max_in_set_size).
 
 exists_lexically_bigger_input_type_than(RG,TF,a(N),c(NinGiven),Type) :-
@@ -39,21 +39,20 @@ exists_lexically_bigger_input_type_than(RG,TF,a(N),c(NinGiven),Type) :-
     recipe(RG,TF),
     in(arcs(RG),arc(c(Nin),a(N))),
     type_of(TF,c(Nin),LargerType),
-    NinGiven != Nin,
+    c(NinGiven) != c(Nin),
     Type < LargerType.
     
 exists_input_type_lexically_inbetween(RG,TF,a(N),c(NinGiven1),Type1,c(NinGiven2),Type2) :-
 %    in(arcs(RG),arc(c(NinGiven1),a(N))),
     type_of(TF,c(NinGiven1),Type1),
 %    in(arcs(RG),arc(c(NinGiven2),a(N))),
-%    NinGiven1 != NinGiven2,
     type_of(TF,c(NinGiven2),Type2),
     Type1 < Type2,
     recipe(RG,TF),
     in(arcs(RG),arc(c(Nin),a(N))),
     type_of(TF,c(Nin),InBetweenType),
-    NinGiven1 != Nin,
-    NinGiven2 != Nin,
+    c(NinGiven1) != c(Nin),
+    c(NinGiven2) != c(Nin),
     Type1 < InBetweenType,
     InBetweenType < Type2.
 
@@ -70,7 +69,7 @@ partial_inset_with_size(RG,TF,a(N),s_(Type1,s_(Type2,Inset)),Size+1) :-
     possible_inset_size(N+1),
     in(arcs(RG),arc(c(Nin1),a(N))),
     in(arcs(RG),arc(c(Nin2),a(N))),
-    Nin1 != Nin2,
+    c(Nin1) != c(Nin2),
     type_of(TF,c(Nin1),Type1),
     type_of(TF,c(Nin2),Type2),
     Type1 < Type2,
@@ -114,7 +113,7 @@ exists_lexically_bigger_output_type_than(RG,TF,a(N),c(NoutGiven),Type) :-
     type_of(TF,c(NoutGiven),Type),
     recipe(RG,TF),
     in(arcs(RG),arc(a(N),c(Nout))),
-    Nout != NoutGiven,
+    c(Nout) != c(NoutGiven),
     type_of(TF,c(Nout),LargerType),
     Type < LargerType.
     
@@ -125,8 +124,8 @@ exists_output_type_lexically_inbetween(RG,TF,a(N),c(NoutGiven1),Type1,c(NoutGive
     type_of(TF,c(NoutGiven1),Type2),
     recipe(RG,TF),
     in(arcs(RG),arc(a(N),c(Nout))),
-    Nout != NoutGiven1,
-    Nout != NoutGiven2,
+    c(Nout) != c(NoutGiven1),
+    c(Nout) != c(NoutGiven2),
     type_of(TF,c(Nout),InBetweenType),
     Type1 < InBetweenType,
     InBetweenType < Type2.
@@ -144,7 +143,7 @@ partial_outset_with_size(RG,TF,a(N),s_(Type1,s_(Type2,Outset)),Size+1) :-
     possible_outset_size(N+1),
     in(arcs(RG),arc(a(N),c(Nout1))),
     in(arcs(RG),arc(a(N),c(Nout2))),
-    Nout1 != Nout2,
+    c(Nout1) != c(Nout2),
     type_of(TF,c(Nout1),Type1),
     type_of(TF,c(Nout2),Type2),
     Type1 < Type2,

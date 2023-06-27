@@ -60,7 +60,14 @@ recipe_graph(RG) :- given_recipe_graph(RG).
 recipe_graph(RG) :- recipe(RG,TF).
 given_recipe_graph(RG) :- given_recipe(RG,TF).
 recipe(RG,TF) :- given_recipe(RG,TF).
-% Luke
+%TODO Luke: constrain the recipe predicate to only act on type functions
+%TODO Luke: constrain type functions to only associate one type with each node
+%TODO Luke: constrain type functions paired with a recipe graph to only define types for nodes within the graph 
+%type_function(TF) :- given_recipe(RG,TF).
+%%:- recipe(RG, TF), not graph(RG).
+%:- recipe(RG, TF), not type_function(TF).
+%:- recipe(RG,TF), type_of(TF,V,Type1), type_of(TF,V,Type2), Type1 != Type2.
+%:- recipe(RG,TF), type_of(TF,V,Type), not in(nodes(RG),V).
 
 
 %%%%%%%%%%%%%%%%%%%%%
@@ -83,28 +90,6 @@ atomic_recipe_graph(RG) :-
 % End of Definition 2
 %%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% TODO
-% Used in subrecipes Defn. 5 of paper
-% strict subrecipe graphs are nonetheless in the body of
-% high_indexes_allowed, which is defined here. Maybe we
-% need to be more flexible about dependencies 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
--subrecipe_graph_of(RG1,RG2) :-           % the first argument is the  
-    recipe_graph(RG2),                    % subrecipe graph
-    in(arcs(RG1),Arc), 
-    not in(arcs(RG2),Arc).
-subrecipe_graph_of(RG1,RG2) :-
-    recipe_graph(RG1),
-    recipe_graph(RG2),
-    not -subrecipe_graph_of(RG1,RG2).
-strict_subrecipe_graph(RG) :-              % need this for the constraints
-    subrecipe_graph_of(RG,RG2),            % in lines 171-191
-    in(arcs(RG2),Arc),
-    not in(arcs(RG),Arc).
--strict_subrecipe_graph(RG) :- 
-    recipe_graph(RG),
-    not strict_subrecipe_graph(RG).
 
 
 
@@ -137,30 +122,6 @@ high_indexes_allowed(RG) :- strict_subrecipe_graph(RG).
 % end of extra constraints not in the paper.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Definition 3 of a recipe:
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% the 3rd argument of type_of is a function of the first two arguments:
-1 { type_of(TF,c(N),Ctype) : comestible_type(Ctype) } 1 :- 
-    recipe(RG,TF), in(c_nodes(RG),c(N)).
-1 { type_of(TF,a(N),Atype) : action_type(Atype) } 1 :- 
-    recipe(RG,TF), in(a_nodes(RG),a(N)).
-
-% for each recipe, type_of is restricted to its nodes only:
-:- type_of(TF,N,T), recipe(RG,TF), not in(nodes(RG),N).
-
-% all the comestible node types in a recipe must be in different type paths:
-:- recipe(RG,TF), in(c_nodes(RG),N1), in(c_nodes(RG),N2), N1 != N2, 
-   type_of(TF,N1,T1), type_of(TF,N2,T2), same_type_path(T1,T2).
-    
-atomic_recipe(RG, TF) :-
-    recipe(RG, TF),
-    atomic_recipe_graph(RG).    
-    
-%%%%%%%%%%%%%%%%%%%%%
-% End of Definition 3
-%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Coding of extra notation at the end of Section 3:
