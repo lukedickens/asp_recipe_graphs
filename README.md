@@ -36,8 +36,15 @@ However this can be slow. To easily create your own type hierarchy or hierarchie
 
 This outputs a stable model with terms of the form `used_child(A,B)`. Copy these to a new file at some location (hereafter called `<TYPEHIERARCHY>`) then edit to replace `used_child` with `child` and `) ` with `). ` universally. `<TYPEHIERARCHY>` can then be used in place of `<ASPDIR>/domain_independent/universal_types.lp` as a minimal type-hierarchy.
 
+For even greater speed use `used_ancestor` rather than `used_child`.
+
 ### Acceptability Tuples
 
 To output the acceptability tuples you can derive from a `given_recipe`, use:
 
 `clingo 1 <ASPDIR>/domain_independent/{type_hierarchies,recipe_graphs,graph_properties,acceptability}.lp  <TYPEHIERARCHY> <RECIPES> <ASPDIR>/queries/acceptability_tuples.lp`
+
+Example: Hummus with the repository root as `<ASPDIR>` and a compressed type hierarchy stored in `scratch/hummus_type_hierarchy_compressed.lp`.
+
+```RECIPE=hummus ; clingo 1 asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,acceptability}.lp  scratch/${RECIPE}_type_hierarchy_compressed.lp asp_recipe_graphs/asp/recipes/${RECIPE}_*lp asp_recipe_graphs/asp/queries/acceptability_tuples.lp```
+
