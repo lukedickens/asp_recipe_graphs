@@ -12,6 +12,30 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TODO
+% Used in subrecipes Defn. 5 of paper
+% strict subrecipe graphs are nonetheless in the body of
+% high_indexes_allowed, which is defined here. Maybe we
+% need to be more flexible about dependencies 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+-subrecipe_graph_of(RG1,RG2) :-           % the first argument is the  
+    recipe_graph(RG2),                    % subrecipe graph
+    in(arcs(RG1),Arc), 
+    not in(arcs(RG2),Arc).
+subrecipe_graph_of(RG1,RG2) :-
+    recipe_graph(RG1),
+    recipe_graph(RG2),
+    not -subrecipe_graph_of(RG1,RG2).
+strict_subrecipe_graph(RG) :-              % need this for the constraints
+    subrecipe_graph_of(RG,RG2),            % in lines 171-191
+    in(arcs(RG2),Arc),
+    not in(arcs(RG),Arc).
+-strict_subrecipe_graph(RG) :- 
+    recipe_graph(RG),
+    not strict_subrecipe_graph(RG).
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Definition 5 of a subrecipe:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
