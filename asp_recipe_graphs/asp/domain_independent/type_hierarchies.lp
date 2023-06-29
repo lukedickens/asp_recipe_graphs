@@ -49,3 +49,5 @@ subtype_or_equal(T,T) :- comestible_type(T).
 
 same_type_path(T1,T2) :- subtype_or_equal(T1,T2).   % mathematically "comparable"
 same_type_path(T1,T2) :- subtype_or_equal(T2,T1).
+
+

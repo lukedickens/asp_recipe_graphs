@@ -57,6 +57,11 @@ subrecipe_of(RG1,TF1,RG2,TF2) :-
     recipe(RG2,TF2),
     not -subrecipe_of(RG1,TF1,RG2,TF2).
 
+%TODO moved from recipe graphs as generated a dependency cycle otherwise
+%TODO high indexes allowed also creates dependency cycle though but this
+%TODO dependency is not recognised by parser.
+high_indexes_allowed(RG) :- strict_subrecipe_graph(RG).
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % End of definition of a subrecipe
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

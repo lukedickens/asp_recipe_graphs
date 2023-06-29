@@ -15,14 +15,21 @@ child("chop", "action").
     child("dice", "chop").
 child("combine", "action").
     child("mix", "combine").
+    child("beat together", "mix").
+        child("beat together until smooth", "beat together").
     child("blend together", "mix").
+    child("cream together", "mix").
     child("stir together", "mix").
+
 child("blend", "action").
     child("blend until uniform", "blend").
     child("blend together", "blend").
         child("pulse in blender", "blend").
             child("blend together until smooth", "blend together").
 child("drain", "action").
+child("dust","action").
+child("fill","action").
+
 child("fry", "action").
     child("fry onion", "fry").
         child("fry onion for 4 min", "fry onion").
@@ -53,12 +60,21 @@ child("combine then roast", "combine").
 child("rinse and drain", "rinse").
 %%TODO is rinse and drain a subtype of drain?
 child("rinse and drain", "drain").
+child("fill and dust","dust").
+child("fill and dust","fill").
 
+child("baking agent","comestible").
+    child("bicarbonate of soda","baking agent").
 
 child("bread", "comestible").
     child("toast", "bread").
         child("plain toast", "toast").
         child("buttered toast", "toast").
+child("cake","comestible").
+    child("sponge cake","cake").
+        child("victoria sponge","sponge cake").
+        child("unfinished vegan sponge cake","sponge cake").
+        child("vegan sponge cake","sponge cake").
 child("fish", "comestible").
 child("water", "comestible").
 child("pasta", "comestible").
@@ -109,6 +125,16 @@ child("vegetable", "comestible").
         child("sun-dried tomato", "tomato").
             child("sun-dried tomato halves", "sun-dried tomato").
             child("chopped sun-dried tomatoes", "sun-dried tomato").
+
+child("milk or milk analog","comestible").
+    child("milk","milk or milk analog").
+    child("vegan milk analog","milk or milk analog").
+        child("oat milk","vegan milk analog").
+        child("cashew milk","vegan milk analog").
+        child("almond milk","vegan milk analog").
+        child("soya milk","vegan milk analog").
+child("flour", "comestible").
+    child("self-raising flour", "flour").
 child("fruit", "comestible").
     child("lemon juice", "fruit").
 child("dairy", "comestible").
@@ -126,6 +152,7 @@ child("flavourings", "comestible").
     child("spices", "flavourings").
         child("cumin", "spices").
             child("ground cumin", "cumin").
+        child("vanilla seeds", "spices").
         child("paprika", "spices").
             child("smoked paprika", "paprika").
     child("herbs", "flavourings").
@@ -148,8 +175,31 @@ child("flavourings", "comestible").
 child("mixture", "comestible").
         child("infusion", "mixture").
         child("blended mixture","mixture").
+        child("cake mix", "mixture").
+        child("sponge cake mix", "cake mix").
+            child("vegan sponge cake mix","sponge cake mix").
+        
 child("spreads", "comestible").
     child("butter", "spreads").
+    child("dairy-free spread", "spreads").
+child("sweetener","comestible").
+    child("sugar","sweetener").
+        child("caster sugar","sugar").
+            child("golden caster sugar","caster sugar").
+    child("icing sugar","sugar").
+child("preserves", "comestible").
+    child("jam", "preserves").
+        child("strawberry jam", "jam").
+
+child("vegan comestible","comestible").
+    child("vegan sponge cake","vegan comestible").
+    child("vegan milk analog","vegan comestible").
+    
+child("vinegar","comestible").
+    child("cider vinegar","vinegar").
+    
+    
+child("gluten free comestible","comestible").
 
 child("complex comestible", "comestible").
     child("beans on toast", "complex comestible").

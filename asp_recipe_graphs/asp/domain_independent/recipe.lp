@@ -3,6 +3,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % the 3rd argument of type_of is a function of the first two arguments:
+% range of function is the c_nodes and a_nodes of corresponding graph
 1 { type_of(TF,c(N),Ctype) : comestible_type(Ctype) } 1 :- 
     recipe(RG,TF), in(c_nodes(RG),c(N)).
 1 { type_of(TF,a(N),Atype) : action_type(Atype) } 1 :- 

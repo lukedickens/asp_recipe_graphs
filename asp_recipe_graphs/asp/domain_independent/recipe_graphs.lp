@@ -106,7 +106,6 @@ atomic_recipe_graph(RG) :-
 
 
 high_indexes_allowed(RG) :- given_recipe_graph(RG).
-high_indexes_allowed(RG) :- strict_subrecipe_graph(RG).
 
 :- recipe_graph(RG), in(c_nodes(RG),c(N2)), not high_indexes_allowed(RG),
    c_node_index(N1), N1<N2, not in(c_nodes(RG),c(N1)).
