@@ -5,15 +5,23 @@ import copy
 SRC_ROOT_DIR = os.environ.get("GRASP_SRC_DIR",'.')
 DEFINITIONS_SUBDIR = os.path.join(
     'asp_recipe_graphs','asp','domain_independent')
-DOMAINS_SUBDIR = os.path.join(
-    'asp_recipe_graphs','asp','domain_independent')
+DEFINITIONS_DIR = os.path.join(
+    SRC_ROOT_DIR,DEFINITIONS_SUBDIR)
+
+MODULE_FILES = [
+    f for f in os.listdir(DEFINITIONS_DIR) \
+        if os.path.isfile(os.path.join(DEFINITIONS_DIR, f))]
+
+#MODULES = [
+#    'acceptability', 'composition', 'equivalence', 'granularity',
+#    'graph_properties', 'in_out_aligned', 'isomorphisms',
+#    'debug_recipes',
+#    'recipe_graphs', 'subrecipes', 'type_hierarchies',
+#    'universal_types']
+#MODULES_FILEMAP = { t:t+'.lp' for t in MODULES }
 MODULES = [
-    'acceptability', 'composition', 'equivalence', 'granularity',
-    'graph_properties', 'in_out_aligned', 'isomorphisms',
-    'debug_recipes',
-    'recipe_graphs', 'subrecipes', 'type_hierarchies',
-    'universal_types']
-MODULES_FILEMAP = { t:t+'.lp' for t in MODULES }
+    f.split('.')[0] for f in MODULE_FILES ]
+MODULES_FILEMAP = { m:f for m,f in zip(MODULES,MODULE_FILES) }
 
 def get_module_path(
         module, src_root_dir=SRC_ROOT_DIR,

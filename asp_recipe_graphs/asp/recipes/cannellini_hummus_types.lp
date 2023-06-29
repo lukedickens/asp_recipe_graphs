@@ -2,7 +2,7 @@
 % example recipe: hummus
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% "tf" indicates "type function"
+given_recipe(rg_cannellini_hummus,tf_cannellini_hummus).
 type_of(tf_cannellini_hummus,c(0),"whole garlic").
 type_of(tf_cannellini_hummus,c(1),"olive oil").
 type_of(tf_cannellini_hummus,c(2),"kosher salt").
@@ -41,7 +41,4 @@ child("herb and cannellini bean blend", "blended mixture").
 child("garlic, herb and cannellini bean blend", "blended mixture").
 child("cannellini hummus", "dips").
 
-%% uncomment when resolved
-%typed_graph(rg_cannellini_hummus,tf_cannellini_hummus).
-given_recipe(rg_cannellini_hummus,tf_cannellini_hummus).
 

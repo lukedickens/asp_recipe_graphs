@@ -52,45 +52,14 @@
 :- in(arcs(RG),arc(a(N1),c(N))), in(arcs(RG),arc(a(N2),c(N))), N1 != N2, recipe_graph(RG).
 
 % subsets of graphs and recipes:
-typed_graph(RG,TF) :-
-    recipe(RG,TF).
-graph(G) :- typed_graph(G,TF).
 graph(RG) :- recipe_graph(RG).
 recipe_graph(RG) :- given_recipe_graph(RG).
-recipe_graph(RG) :- recipe(RG,TF).
 given_recipe_graph(RG) :- given_recipe(RG,TF).
-recipe(RG,TF) :- given_recipe(RG,TF).
-%TODO Luke: constrain the recipe predicate to only act on type functions
-%TODO Luke: constrain type functions to only associate one type with each node
-%TODO Luke: constrain type functions paired with a recipe graph to only define types for nodes within the graph 
-%type_function(TF) :- given_recipe(RG,TF).
-%%:- recipe(RG, TF), not graph(RG).
-%:- recipe(RG, TF), not type_function(TF).
-%:- recipe(RG,TF), type_of(TF,V,Type1), type_of(TF,V,Type2), Type1 != Type2.
-%:- recipe(RG,TF), type_of(TF,V,Type), not in(nodes(RG),V).
 
 
 %%%%%%%%%%%%%%%%%%%%%
 % End of Definition 1
 %%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Definition 2 of an atomic recipe graph:
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
--atomic_recipe_graph(RG) :- 
-    in(a_nodes(RG),a(N1)), 
-    in(a_nodes(RG),a(N2)), 
-    N1 != N2.
-atomic_recipe_graph(RG) :- 
-    recipe_graph(RG), 
-    not -atomic_recipe_graph(RG).
-
-%%%%%%%%%%%%%%%%%%%%%
-% End of Definition 2
-%%%%%%%%%%%%%%%%%%%%%
-
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -2,6 +2,7 @@
 % example recipe: hummus
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+given_recipe(rg_edamame_hummus,tf_edamame_hummus).
 % "tf" indicates "type function"
 type_of(tf_edamame_hummus,c(0),"frozen shelled edamame soybeans").
 type_of(tf_edamame_hummus,c(1),"thawed shelled edamame soybeans").
@@ -34,7 +35,4 @@ child("process lemon juice and tahini in a food processor", "blend").
 child("blend of lemon juice and tahini","mixture").
 child("blend of lemon juice, tahini, olive oil, salt, cumin and garlic","mixture").
 
-%% uncomment when resolved
-%typed_graph(rg_edamame_hummus,tf_edamame_hummus).
-given_recipe(rg_edamame_hummus,tf_edamame_hummus).
 

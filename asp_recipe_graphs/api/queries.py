@@ -55,39 +55,6 @@ QUERY_DATA['conflicting types'] = {
         """,
     'requires' : ['recipe_graphs']}
 
-QUERY_DATA['explain not recipe'] = {
-    'parameters' : [],
-    'programme' : """
-        #show cyclic/1.
-        #show -connected/1.
-        #show empty/1.
-        #show has_untyped_node/2.
-        #show -well_typed_a_node/3.
-        #show -well_typed_c_node/3.
-        #show typed_graph/2.
-        #show conflicting_types/4.
-        """,
-        # should also check for nodes that aren't c or a nodes, and arcs that aren't in the arcs set
-    'requires' : ['recipe_graphs', 'debug_recipes']}
-
-QUERY_DATA['untyped nodes'] = {
-    'parameters' : [],
-    'programme' : """
-        #show has_untyped_node/2.
-        #show well_typed_a_node/3.
-        #show well_typed_c_node/3.
-        #show -well_typed_a_node/3.
-        #show -well_typed_c_node/3.
-        #show typed_graph/2.
-        #show in/2.
-        #show action_type/1.
-        #show comestible_type/1.
-        #show conflicting_types/4.
-        #show type_of/3.
-        """,
-        # should also check for nodes that aren't c or a nodes, and arcs that aren't in the arcs set
-    'requires' : ['recipe_graphs', 'debug_recipes']}
-
 QUERY_DATA['acceptability'] = {
     'parameters' : [],
     'programme' : """

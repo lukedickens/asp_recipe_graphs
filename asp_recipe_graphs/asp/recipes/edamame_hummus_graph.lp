@@ -58,5 +58,4 @@ in(arcs(rg_edamame_hummus),arc(c(13),a(6))).
 in(arcs(rg_edamame_hummus),arc(c(14),a(6))).
 in(arcs(rg_edamame_hummus),arc(a(6),c(15))).
 
-graph(rg_edamame_hummus).
-%given_recipe_graph(rg_edamame_hummus).
+given_recipe_graph(rg_edamame_hummus).
