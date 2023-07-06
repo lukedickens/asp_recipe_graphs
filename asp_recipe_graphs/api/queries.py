@@ -1,5 +1,6 @@
 import os
 from asp_recipe_graphs.api.modules import SRC_ROOT_DIR
+from asp_recipe_graphs.api.modules import QUERIES_DIR
 
 QUERY_DATA = {}
 
@@ -91,3 +92,19 @@ QUERY_SUBDIR = os.path.join('asp_recipe_graphs', 'asp', 'queries')
 def get_query_path(query, src_root_dir=SRC_ROOT_DIR):
     fname = QUERY_DATA[query]['fname']
     return os.path.join(src_root_dir, QUERY_SUBDIR, fname )
+    
+    
+if __name__ == '__main__':
+    import os
+    query_files = os.listdir(QUERIES_DIR)
+    print(f"query_files = {query_files}")
+    query_names = [ f[:-3] for f in query_files \
+        if f[-3:] == '.lp' and os.path.isfile(os.path.join(QUERIES_DIR, f)) ]
+    print(f"query_names = {query_names}")
+    query_paths = { name: os.path.join(QUERIES_DIR, f) \
+        for name, f in zip(query_names, query_files)}
+        
+#    query_path = { f[:-3]:path for f in query_files \        
+#        if f[-3:] == '.lp' and os.path.isfile((path := os.path.join(QUERIES_DIR, f))) }
+        
+        
