@@ -2,109 +2,75 @@ import os
 from asp_recipe_graphs.api.modules import SRC_ROOT_DIR
 from asp_recipe_graphs.api.modules import QUERIES_DIR
 
-QUERY_DATA = {}
+#acceptability_tuples.lp  is_connected.lp     is_recipe.lp                     used_child.lp
+#atomic_recipe_graph.lp   is_cyclic.lp        not_properly_connected_graph.lp  why_not_recipe_graph.lp
+#badly_defined_type.lp    is_recipe_graph.lp  used_ancestor.lp                 why_not_recipe.lp
 
-QUERY_DATA['cyclic'] = {
-    'parameters' : [],
-    'programme' : '#show cyclic/1.',
-    'fname' : 'is_cyclic.lp',
+# ideally the dependencies here would also be auto discovered just as for the 
+# domain independent modules
+QUERY_DATA = {}
+QUERY_DATA['is_cyclic'] = {
     'requires' : ['graph_properties']}
-QUERY_DATA['connected'] = {
+QUERY_DATA['is_connected'] = {
     'parameters' : [],
-    'programme' : '#show connected/1.',
-    'fname' : 'is_connected.lp',
     'requires' : ['graph_properties']}
 QUERY_DATA['arcs'] = {
-    'parameters' : [],
-    'programme' : """
-        #show in/2.
-        """,
     'requires' : ['graph_properties']}
 QUERY_DATA['types'] = {
-    'parameters' : [],
-    'programme' : """
-        #show type_of/3.
-        """,
     'requires' : ['graph_properties']}
-
-
-QUERY_DATA['arcs and types'] = {
-    'parameters' : [],
-    'programme' : """
-        #show in/2.
-        #show type_of/3.
-        """,
+QUERY_DATA['arcs_and_types'] = {
     'requires' : ['graph_properties']}
-QUERY_DATA['recipe_graph'] = {
+QUERY_DATA['is_recipe_graph'] = {
     'parameters' : [],
-    'programme' : """
-        #show recipe_graph/1.
-        """,
     'requires' : ['recipe_graphs']}
-QUERY_DATA['recipes'] = {
-    'parameters' : [],
-    'programme' : """
-        #show recipe/2.
-        #show in/2.
-        #show type_of/3.
-        """,
-    'requires' : ['recipe_graphs']}
-QUERY_DATA['conflicting types'] = {
-    'parameters' : [],
-    'programme' : """
-        #show conflicting_types_in/4.
-        """,
-    'requires' : ['recipe_graphs']}
-
-QUERY_DATA['acceptability'] = {
-    'parameters' : [],
-    'programme' : """
-        #show acceptability_tuple/3.
-        """,
-        # should also check for nodes that aren't c or a nodes, and arcs that aren't in the arcs set
+QUERY_DATA['is_recipe'] = {
+    'requires' : ['recipe']}
+QUERY_DATA['why_not_recipe_graph'] = {
+    'requires' : ['graph_properties']}
+QUERY_DATA['why_not_recipe'] = {
+    'requires' : ['graph_properties', 'recipe_graph', 'type_hierarchies']}
+QUERY_DATA['acceptability_tuples'] = {
     'requires' : ['acceptability']}
-
-
-#QUERY_DATA['explain not recipe'] = {
-#    'parameters' : [],
-#    'programme' : """
-#        #show -a_node_properly_connected/2.
-#        #show cyclic/1.
-#        #show -connected/1.
-#        #show empty/1.
-#        #show conflicting_types_in/4.
-#        #show has_untyped_node/2.
-#        #show c_node_not_comestible_type/2.
-#        #show a_node_not_action_type/2.
-#        """,
-#        # should also check for nodes that aren't c or a nodes, and arcs that aren't in the arcs set
-#    'requires' : ['recipe_graphs']}
-
-QUERY_DATA['is recipe'] = {
-    'parameters' : [],
-    'programme' : """
-        #show recipe/2.
-        """,
+    
+QUERY_DATA['describe_recipe_graphs'] = {
     'requires' : ['recipe_graphs']}
+QUERY_DATA['describe_recipes'] = {
+    'requires' : ['recipe']}
+
+def generate_query_data(query_data=QUERY_DATA, queries_dir=QUERIES_DIR):
+    files = os.listdir(queries_dir)
+    query_paths = { f[:-3]:path for f in files \
+        if f[-3:] == '.lp' and os.path.isfile((path := os.path.join(QUERIES_DIR, f))) }
+    print(f"query_paths = {query_paths}")
+    for query_name, this_data in query_data.items():
+        query_path = query_paths[query_name]
+        this_data['parameters'] = list()
+        this_data['path'] = query_path
+        with open(query_path, 'r') as ifile:
+            this_data['programme'] = ''.join(ifile.readlines())
+QUERY_DATA = generate_query_data(query_data=QUERY_DATA)
     
 QUERY_SUBDIR = os.path.join('asp_recipe_graphs', 'asp', 'queries')
 
 def get_query_path(query, src_root_dir=SRC_ROOT_DIR):
-    fname = QUERY_DATA[query]['fname']
-    return os.path.join(src_root_dir, QUERY_SUBDIR, fname )
+    path = QUERY_DATA[query]['path']
+    return path
     
     
 if __name__ == '__main__':
-    import os
     query_files = os.listdir(QUERIES_DIR)
     print(f"query_files = {query_files}")
     query_names = [ f[:-3] for f in query_files \
         if f[-3:] == '.lp' and os.path.isfile(os.path.join(QUERIES_DIR, f)) ]
     print(f"query_names = {query_names}")
-    query_paths = { name: os.path.join(QUERIES_DIR, f) \
-        for name, f in zip(query_names, query_files)}
+#    query_paths = { name: os.path.join(QUERIES_DIR, f) \
+#        for name, f in zip(query_names, query_files)}
         
-#    query_path = { f[:-3]:path for f in query_files \        
-#        if f[-3:] == '.lp' and os.path.isfile((path := os.path.join(QUERIES_DIR, f))) }
-        
-        
+    query_paths = { f[:-3]:path for f in query_files \
+        if f[-3:] == '.lp' and os.path.isfile((path := os.path.join(QUERIES_DIR, f))) }
+            
+    print(f"query_paths = {query_paths}")
+    example_query_name = 'why_not_recipe'
+    with open(query_paths[example_query_name],'r') as ifile:
+        text = ifile.readlines()
+    print(f"text = {text}")
