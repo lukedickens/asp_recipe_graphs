@@ -30,7 +30,6 @@ multiply_typed_node(given_recipe(RG,TF), given_type_of(TF,V,T1), given_type_of(T
     % this is equivalent to T1 != T2 but avoid symmetrical groundings
     T1 < T2.
 
-
 % constraint
 % for each recipe, given_type_of is restricted to its nodes only:
 typed_node_not_in_graph(given_recipe(RG,TF),given_type_of(TF,N,T)) :-
