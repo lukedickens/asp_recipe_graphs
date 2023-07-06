@@ -21,7 +21,7 @@ The standard command is as follows:
 
 `clingo 1 <ASPDIR>/domain_independent/{<ASPMODULES>}.lp <TYPEHIERARCHY> <RECIPES> <QUERY>`
 
-where query is typically of the form `<ASPDIR>/queries/<QUERYNAME>.lp`. You can write your own queries or use those in the folder `<ASPDIR>/queries`. The `1` means "return just one stable model, which is sufficient for the majority of queries, but you may require `0` (all stable models) for more advanced calls.
+where query is typically of the form `<ASPDIR>/queries/<QUERYNAME>.lp`. You can write your own queries or use those in the folder `<ASPDIR>/queries`. The `1` means "return just one stable model", which is sufficient for the majority of queries, but you may require `0` (all stable models) for more advanced calls.
 
 
 ### Type Hierarchies
@@ -47,4 +47,22 @@ To output the acceptability tuples you can derive from a `given_recipe`, use:
 Example: Hummus with the repository root as `<ASPDIR>` and a compressed type hierarchy stored in `scratch/hummus_type_hierarchy_compressed.lp`.
 
 ```RECIPE=hummus ; clingo 1 asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,acceptability}.lp  scratch/${RECIPE}_type_hierarchy_compressed.lp asp_recipe_graphs/asp/recipes/${RECIPE}_*lp asp_recipe_graphs/asp/queries/acceptability_tuples.lp```
+
+## Check if something is a recipe Graph
+
+Example check if  bbc vegan sponge cake graph is a recipe graph:
+
+```clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs}.lp asp_recipe_graphs/asp/recipes/bbc_vegan_sponge_cake_{graph,types}.lp asp_recipe_graphs/asp/queries/is_recipe_graph.lp```
+
+
+
+
+
+## Recipes
+
+
+
+Example - check if BBC vegan sponge cake graph and type function constitute a recipe:
+
+```clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,universal_types,type_hierarchies,recipe}.lp asp_recipe_graphs/asp/recipes/bbc_vegan_sponge_cake_{graph,types}.lp asp_recipe_graphs/asp/queries/is_recipe.lp ```
 

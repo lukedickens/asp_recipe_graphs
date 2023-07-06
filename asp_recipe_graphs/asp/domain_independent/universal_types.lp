@@ -176,8 +176,8 @@ child("mixture", "comestible").
         child("infusion", "mixture").
         child("blended mixture","mixture").
         child("cake mix", "mixture").
-        child("sponge cake mix", "cake mix").
-            child("vegan sponge cake mix","sponge cake mix").
+            child("sponge cake mix", "cake mix").
+                child("vegan sponge cake mix","sponge cake mix").
         
 child("spreads", "comestible").
     child("butter", "spreads").
