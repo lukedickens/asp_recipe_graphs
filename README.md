@@ -127,5 +127,5 @@ This will output all acceptability tuples from the hummus recipe.
 (In development)
 Here is our example for extracting a subrecipe from a recipe:
 
-```/asp/domain_independent/{graph_properties,recipe_graphs,universal_types,type_hierarchies,recipe,subrecipes}.lp asp_recipe_graphs/asp/recipes/grilled_cheese_on_toast_{graph,types}.lp asp_recipe_graphs/asp/queries/give_subrecipes.lp```
+```clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,universal_types,type_hierarchies,recipe,subrecipes}.lp asp_recipe_graphs/asp/recipes/grilled_cheese_on_toast_{graph,types}.lp asp_recipe_graphs/asp/queries/give_subrecipes.lp```
 
