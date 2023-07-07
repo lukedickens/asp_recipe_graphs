@@ -17,9 +17,9 @@ QUERY_DATA['is_connected'] = {
 QUERY_DATA['arcs'] = {
     'requires' : ['graph_properties']}
 QUERY_DATA['types'] = {
-    'requires' : ['graph_properties']}
+    'requires' : ['graph_properties','type_hierarchies']}
 QUERY_DATA['arcs_and_types'] = {
-    'requires' : ['graph_properties']}
+    'requires' : ['graph_properties','type_hierarchies']}
 QUERY_DATA['is_recipe_graph'] = {
     'parameters' : [],
     'requires' : ['recipe_graphs']}
@@ -48,6 +48,8 @@ def generate_query_data(query_data=QUERY_DATA, queries_dir=QUERIES_DIR):
         this_data['path'] = query_path
         with open(query_path, 'r') as ifile:
             this_data['programme'] = ''.join(ifile.readlines())
+    return query_data
+# now update query data dictioary with these new details    
 QUERY_DATA = generate_query_data(query_data=QUERY_DATA)
     
 QUERY_SUBDIR = os.path.join('asp_recipe_graphs', 'asp', 'queries')

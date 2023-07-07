@@ -98,6 +98,12 @@ This should output (something like) the following:
 
 ```used_child("butter","spreads") used_child("spreads","comestible") used_child("plain toast","toast") used_child("toast","bread") used_child("bread","comestible") used_child("buttered toast","toast") used_child("spread on toast","spread") used_child("spread","put") used_child("put","action")```
 
+Edit this, as described, to give the following:
+
+```child("butter","spreads"). child("spreads","comestible"). child("plain toast","toast"). child("toast","bread"). child("bread","comestible"). child("buttered toast","toast"). child("spread on toast","spread"). child("spread","put"). child("put","action").```
+
+Then save in an appropriate `.lp` file, e.g. `scratch/buttered_toast_type_hierarchy.lp`.
+
 
 
 ### Acceptability Tuples
@@ -115,3 +121,11 @@ This will output all acceptability tuples from the hummus recipe.
 **Example: Acceptability tuples inferred from hummus recipe using compressed hierarchy** With the repository root as present working directory, and a compressed type hierarchy stored in `scratch/hummus_type_hierarchy_compressed.lp`, run the following command:
 
 ```RECIPE=hummus ; clingo 1 asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,acceptability}.lp  scratch/${RECIPE}_type_hierarchy_compressed.lp asp_recipe_graphs/asp/recipes/${RECIPE}_{graph,types}.lp asp_recipe_graphs/asp/queries/acceptability_tuples.lp```
+
+### Subrecipes
+
+(In development)
+Here is our example for extracting a subrecipe from a recipe:
+
+```/asp/domain_independent/{graph_properties,recipe_graphs,universal_types,type_hierarchies,recipe,subrecipes}.lp asp_recipe_graphs/asp/recipes/grilled_cheese_on_toast_{graph,types}.lp asp_recipe_graphs/asp/queries/give_subrecipes.lp```
+

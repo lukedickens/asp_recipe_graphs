@@ -35,6 +35,7 @@ child("fry", "action").
         child("fry onion for 4 min", "fry onion").
     child("fry for 4 min", "fry").
         child("fry onion for 4 min", "fry for 4 min").
+child("grill", "action").
 child("hull", "action").
 child("infuse", "action").
     child("infuse in hot oil", "infuse").
@@ -43,6 +44,7 @@ child("put", "action").
         child("pour onto toast", "pour").
     child("spread", "put").
         child("spread on toast", "spread").
+    child("sprinkle", "put").
 child("rinse", "action").
 child("roast", "action").
 child("shell", "action").
@@ -67,6 +69,7 @@ child("baking agent","comestible").
     child("bicarbonate of soda","baking agent").
 
 child("bread", "comestible").
+    child("slice of bread","bread").
     child("toast", "bread").
         child("plain toast", "toast").
         child("buttered toast", "toast").
@@ -139,6 +142,8 @@ child("fruit", "comestible").
     child("lemon juice", "fruit").
 child("dairy", "comestible").
     child("milk", "dairy").
+    child("cheese", "dairy").
+        child("grated cheese", "dairy").
 child("dips", "comestible").
     child("hummus", "dips").
 child("pastes", "comestible").

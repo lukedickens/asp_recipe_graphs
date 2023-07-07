@@ -29,9 +29,10 @@ recipe(RG,TF) :- given_recipe(RG,TF).
    type_of(TF,N1,T1), type_of(TF,N2,T2), same_type_path(T1,T2).
 
 % given recipes have an extra constraint that all nodes must have "given" types
-:- given_recipe(RG, TF), in(nodes(RG), V), not given_type_of(TF, V, T),
-    action_or_comestible_type(T).
-    
+has_given_type(TF, V) :-
+    given_type_of(TF, V, T), action_or_comestible_type(T).
+:- given_recipe(RG, TF), in(nodes(RG), V), not has_given_type(TF, V).
+
 %%%%%%%%%%%%%%%%%%%%%
 % End of Definition 3
 %%%%%%%%%%%%%%%%%%%%%
