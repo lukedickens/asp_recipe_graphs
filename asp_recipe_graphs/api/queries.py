@@ -37,6 +37,9 @@ QUERY_DATA['describe_recipe_graphs'] = {
 QUERY_DATA['describe_recipes'] = {
     'requires' : ['recipe']}
 
+QUERY_DATA['used_child'] = {
+    'requires' : ['universal_types','type_hierarchies']}
+
 def get_query_path(query, src_root_dir=SRC_ROOT_DIR):
     path = QUERY_DATA[query]['path']
     return path

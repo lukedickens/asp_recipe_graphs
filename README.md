@@ -129,3 +129,44 @@ Here is our example for extracting a subrecipe from a recipe:
 
 ```clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,universal_types,type_hierarchies,recipe,subrecipes}.lp asp_recipe_graphs/asp/recipes/grilled_cheese_on_toast_{graph,types}.lp asp_recipe_graphs/asp/queries/give_subrecipes.lp```
 
+## Running Python
+
+Many of the queries you can run directly through clingo (ASP), you can also run through Python. This python API provides some additional functionality make the querying simpler and less error prone. 
+
+### Simple queries
+
+To get started, you can try the `simple_asp_query.py` script. This has the following basic structure:
+
+```python simple_asp_query.py -r <RECIPE> -q <QUERY>```
+
+where `<QUERY>` is the name of the query you wish to run and `<RECIPE>` is the short-name of the recipe you wish to run the query on. The Python API aims to manage the required ASP modules and determine the file-paths of the necessary modules, recipes and queries.  The output from this script will include some information about which ASP modules are loaded and will conclude by printing the list of stable models.
+
+What follows are a few examples that replicate the functionality described for clingo above. 
+
+**Example: Check if  BBC vegan sponge cake graph is a recipe graph** 
+
+```python3 simple_asp_query.py -r bbc_vegan_sponge_cake -q is_recipe_graph```
+
+**Example: Is BBC Vegan Sponge Cake a recipe?** 
+
+```python3 simple_asp_query.py -r bbc_vegan_sponge_cake -q is_recipe```
+
+**Example: Compressed hierarchy for buttered toast** 
+
+```python3 simple_asp_query.py -r buttered_toast -q used_child```
+
+**Example: Acceptability tuples inferred from hummus recipe**
+
+```python3 simple_asp_query.py -r hummus -q acceptability_tuples```
+
+
+
+### Which queries and which recipes
+
+You can get a list of available queries and available recipes by passing the `-h` flag to the `simple_asp_query.py` script. I.e.
+
+```python3 simple_asp_query.py -h```
+
+You can add additional recipes and queries too. Recipes are picked up from the appropriate folder but at the time of writing the queries must be present in the `queries` folder but also included in the `QUERIES_DATA` global variable defined in `asp_recipe_graphs.api.queries` module.
+
+### 
