@@ -69,7 +69,7 @@ child("baking agent","comestible").
     child("bicarbonate of soda","baking agent").
 
 child("bread", "comestible").
-    child("slice of bread","bread").
+    child("sliced bread","bread").
     child("toast", "bread").
         child("plain toast", "toast").
         child("buttered toast", "toast").

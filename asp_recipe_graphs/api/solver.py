@@ -5,7 +5,9 @@ from asp_recipe_graphs.api.modules import get_module_path
 from asp_recipe_graphs.api.queries import QUERY_DATA
 from asp_recipe_graphs.api.queries import get_query_path
 
-    
+from asp_recipe_graphs.api.recipes import RECIPE_GRAPH_PATHS
+from asp_recipe_graphs.api.recipes import RECIPE_TYPE_FUNCTION_PATHS
+
 def load_modules(ctl, modules):
     print("loading...")
     for m in modules:
@@ -23,6 +25,24 @@ def load_paths(ctl, paths):
     for fpath in paths:
         print(f"fpath ={fpath}")
         ctl.load(fpath)
+
+
+def load_and_solve_recipes(
+        query, recipes, domain_files=None, include_graphs=True,
+        include_type_functions=True,
+        recipe_graph_paths=RECIPE_GRAPH_PATHS,
+        recipe_type_function_paths=RECIPE_TYPE_FUNCTION_PATHS):
+    print(f"recipe_graph_paths = {recipe_graph_paths}")
+    print(f"recipe_type_function_paths = {recipe_type_function_paths}")
+    if domain_files is None:
+        domain_files = []
+    for recipe in recipes:
+        if include_graphs:
+            domain_files.append(recipe_graph_paths[recipe])
+        if include_type_functions:
+            domain_files.append(recipe_type_function_paths[recipe])
+    return load_and_solve(query, domain_files, additional_asp=None)
+    
 
 def load_and_solve(query, domain_files, additional_asp=None):
     ctl = clingo.Control()
@@ -46,11 +66,5 @@ def load_and_solve(query, domain_files, additional_asp=None):
 if __name__ == '__main__':
     fpaths = ['asp_recipe_graphs/asp/recipes/hummus_graph.lp']
     fpaths.append('asp_recipe_graphs/asp/recipes/hummus_types.lp')
-#    fpaths = ['asp_recipe_graphs/asp/recipes/cannellini_hummus_graph.lp']
-#    fpaths = ['asp_recipe_graphs/asp/recipes/cannellini_hummus_types.lp']
-#    load_and_solve('connected', fpaths)    
-#    load_and_solve('cyclic', fpaths)    
-#    load_and_solve('arcs',fpaths)       
-#    load_and_solve('types',fpaths)       
     load_and_solve('recipes',fpaths)       
     

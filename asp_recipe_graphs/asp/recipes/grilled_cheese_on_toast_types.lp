@@ -3,7 +3,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 given_recipe(rg_grilled_cheese_on_toast,tf_grilled_cheese_on_toast).
-given_type_of(tf_grilled_cheese_on_toast,c(0),"slice of bread").
+given_type_of(tf_grilled_cheese_on_toast,c(0),"sliced bread").
 given_type_of(tf_grilled_cheese_on_toast,c(1),"plain toast").
 given_type_of(tf_grilled_cheese_on_toast,c(2),"grated cheese").
 given_type_of(tf_grilled_cheese_on_toast,c(3),"grated cheese on toast").

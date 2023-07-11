@@ -37,11 +37,15 @@ QUERY_DATA['describe_recipe_graphs'] = {
 QUERY_DATA['describe_recipes'] = {
     'requires' : ['recipe']}
 
+def get_query_path(query, src_root_dir=SRC_ROOT_DIR):
+    path = QUERY_DATA[query]['path']
+    return path
+
 def generate_query_data(query_data=QUERY_DATA, queries_dir=QUERIES_DIR):
     files = os.listdir(queries_dir)
     query_paths = { f[:-3]:path for f in files \
         if f[-3:] == '.lp' and os.path.isfile((path := os.path.join(QUERIES_DIR, f))) }
-    print(f"query_paths = {query_paths}")
+#    print(f"query_paths = {query_paths}")
     for query_name, this_data in query_data.items():
         query_path = query_paths[query_name]
         this_data['parameters'] = list()
@@ -49,14 +53,10 @@ def generate_query_data(query_data=QUERY_DATA, queries_dir=QUERIES_DIR):
         with open(query_path, 'r') as ifile:
             this_data['programme'] = ''.join(ifile.readlines())
     return query_data
-# now update query data dictioary with these new details    
-QUERY_DATA = generate_query_data(query_data=QUERY_DATA)
-    
-QUERY_SUBDIR = os.path.join('asp_recipe_graphs', 'asp', 'queries')
 
-def get_query_path(query, src_root_dir=SRC_ROOT_DIR):
-    path = QUERY_DATA[query]['path']
-    return path
+## now update query data dictioary with these new details    
+QUERY_DATA = generate_query_data(query_data=QUERY_DATA)
+QUERIES = list(QUERY_DATA.keys())
     
     
 if __name__ == '__main__':

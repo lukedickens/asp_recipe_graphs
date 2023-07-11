@@ -11,6 +11,10 @@ QUERIES_SUBDIR = os.path.join(
     'asp_recipe_graphs','asp','queries')
 QUERIES_DIR = os.path.join(
     SRC_ROOT_DIR, QUERIES_SUBDIR)
+RECIPES_SUBDIR = os.path.join(
+    'asp_recipe_graphs','asp','recipes')
+RECIPES_DIR = os.path.join(
+    SRC_ROOT_DIR, RECIPES_SUBDIR)
 
 MODULE_FILES = [
     f for f in os.listdir(DEFINITIONS_DIR) \
