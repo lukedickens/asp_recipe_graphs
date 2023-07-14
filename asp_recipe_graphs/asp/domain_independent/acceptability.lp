@@ -203,3 +203,4 @@ acceptability_tuple(Inset,Action,Outset) :-
     input_set(RG,TF,a(N),Inset),
     output_set(RG,TF,a(N),Outset),
     type_of(TF,a(N),Action). 
+

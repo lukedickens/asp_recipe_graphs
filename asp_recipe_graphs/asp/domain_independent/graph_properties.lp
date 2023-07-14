@@ -35,14 +35,15 @@ is_node(N) :- is_c_node(N).
 is_node(N) :- is_a_node(N).
 
 % auto discover recipe graph nodes
+%TODO is this safe? In Luke's sense of the word safe.
 c_node_index(N1) :-
-    in(arcs(RG),arc(c(N1),a(N2))), given_recipe_graph(RG).
+    in(arcs(RG),arc(c(N1),a(N2))).
 a_node_index(N2) :-
-    in(arcs(RG),arc(c(N1),a(N2))), given_recipe_graph(RG).
+    in(arcs(RG),arc(c(N1),a(N2))).
 a_node_index(N1) :-
-    in(arcs(RG),arc(a(N1),c(N2))), given_recipe_graph(RG).
+    in(arcs(RG),arc(a(N1),c(N2))).
 c_node_index(N2) :-
-    in(arcs(RG),arc(a(N1),c(N2))), given_recipe_graph(RG).
+    in(arcs(RG),arc(a(N1),c(N2))).
 
 
 % "Coms(R)" in the paper

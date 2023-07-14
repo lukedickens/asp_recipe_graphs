@@ -113,15 +113,6 @@ in(acts(RG),a(N)) :-
 in(acts(RG),a(N)) :- 
     in(arcs(RG),arc(c(N1),a(N))).
 
-% auto discover recipe graphs
-c_node_index(N1) :-
-    in(arcs(RG),arc(c(N1),a(N2))), given_recipe_graph(RG).
-a_node_index(N2) :-
-    in(arcs(RG),arc(c(N1),a(N2))), given_recipe_graph(RG).
-a_node_index(N1) :-
-    in(arcs(RG),arc(a(N1),c(N2))), given_recipe_graph(RG).
-c_node_index(N2) :-
-    in(arcs(RG),arc(a(N1),c(N2))), given_recipe_graph(RG).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % End of coding of extra notation
