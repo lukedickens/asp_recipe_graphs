@@ -1,30 +1,8 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% baba_ganoush Recipe Graph
-
-% run with the command "clingo 0 RecipeGraphs.lp Recipes.lp example_recipes/baba_ganoushGraph.lp <query>.lp"
-% or with the command "clingo 1 RecipeGraphs.lp Recipes.lp example_recipes/baba_ganoushGraph.lp <query>.lp"
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% The size of the universal sets of comestible and action nodes for these examples:
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% (max_c_node_index + 1) is the maximum number of 
-% comestible nodes allowed in a recipe graph.
-% Change this according to your needs:
-%#const max_c_node_index=21.
-%% Similarly for action nodes:
-%#const max_a_node_index=10.
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % example recipe graph: baba_ganoush
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+given_recipe_graph(rg_baba_ganoush).
 % halve and oil
 in(arcs(rg_baba_ganoush),arc(c(0),a(0))).
 in(arcs(rg_baba_ganoush),arc(c(1),a(0))).

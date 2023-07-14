@@ -2,7 +2,8 @@
 % example recipe: hummus
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% "tf" indicates "type function"
+given_recipe(rg_hummus,tf_hummus).
+
 given_type_of(tf_hummus,c(0),"whole garlic").
 given_type_of(tf_hummus,c(1),"tahini").
 given_type_of(tf_hummus,c(2),"salt").
@@ -23,4 +24,4 @@ given_type_of(tf_hummus,a(3),"blend together").
 
 child("mixture of garlic, tahini, salt, lemon juice, olive oil and water", "mixture").
 
-given_recipe(rg_hummus,tf_hummus).
+

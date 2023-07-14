@@ -27,6 +27,7 @@ child("blend", "action").
         child("pulse in blender", "blend").
             child("blend together until smooth", "blend together").
 child("drain", "action").
+
 child("dust","action").
 child("fill","action").
 
@@ -42,6 +43,7 @@ child("infuse", "action").
 child("put", "action").
     child("pour", "put").
         child("pour onto toast", "pour").
+        child("pour into bowl", "pour").
     child("spread", "put").
         child("spread on toast", "spread").
     child("sprinkle", "put").
@@ -64,6 +66,8 @@ child("rinse and drain", "rinse").
 child("rinse and drain", "drain").
 child("fill and dust","dust").
 child("fill and dust","fill").
+child("mix and heat", "mix").
+child("mix and heat", "heat").
 
 child("baking agent","comestible").
     child("bicarbonate of soda","baking agent").
@@ -80,8 +84,13 @@ child("cake","comestible").
         child("vegan sponge cake","sponge cake").
 child("fish", "comestible").
 child("water", "comestible").
+    child("boiling salted water", "water").
+    child("pasta water", "water").
 child("pasta", "comestible").
     child("spaghetti", "pasta").
+        child("uncooked spaghetti", "spaghetti").
+        child("undrained cooked spaghetti", "spaghetti").
+        child("drained cooked spaghetti", "spaghetti").
     child("fusilli", "pasta").
 child("pulses", "comestible").
     child("chick peas", "pulses").
@@ -125,6 +134,7 @@ child("vegetable", "comestible").
         child("sliced radish", "radish").
             child("thinly sliced radish", "radish").
     child("tomato", "vegetable").
+        child("pasata", "tomato").
         child("sun-dried tomato", "tomato").
             child("sun-dried tomato halves", "sun-dried tomato").
             child("chopped sun-dried tomatoes", "sun-dried tomato").

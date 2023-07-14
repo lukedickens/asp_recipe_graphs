@@ -40,6 +40,6 @@ given_type_of(tf_baba_ganoush,a(8),"season").
 given_type_of(tf_baba_ganoush,a(9),"garnish").
 
 
-%child("mixture of garlic, tahini, salt, lemon juice, olive oil and water", "mixture").
+child("mixture of aubergine, garlic, lemon juice and tahini", "mixture").
+child("mixture of aubergine, garlic, lemon juice, tahini and olive oil", "mixture").
 
-given_recipe(rg_baba_ganoush,tf_baba_ganoush).

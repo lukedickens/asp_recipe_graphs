@@ -39,11 +39,11 @@ This should be `SATISFIABLE` and output `recipe_graph(rg_bbc_vegan_sponge_cake)`
 
 **Example: Imperfect recipe graph definitions.** Imagine instead that I have a recipe graph poorly defined in file `scratch/not_a_recipe.lp`, then the following should be  `UNSATISFIABLE`:
 
-```clingo 0 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs}.lp scratch/not_a_recipe_graph.lp asp_recipe_graphs/asp/queries/is_recipe_graph.lp```
+```clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs}.lp scratch/not_a_recipe_graph.lp asp_recipe_graphs/asp/queries/is_recipe_graph.lp```
 
 To understand why this is not a recipe-graph I can run the `why_not_recipe_graph` query with:
 
-```clingo 0 asp_recipe_graphs/asp/domain_independent/graph_properties.lp scratch/not_a_recipe_graph.lp asp_recipe_graphs/asp/queries/why_not_recipe_graph.lp```
+```clingo 1 asp_recipe_graphs/asp/domain_independent/graph_properties.lp scratch/not_a_recipe_graph.lp asp_recipe_graphs/asp/queries/why_not_recipe_graph.lp```
 
 This will output predicates associated with offending properties, see `asp_recipe_graphs/asp/queries/why_not_recipe_graph.lp` for a description. 
 
@@ -65,11 +65,11 @@ This should be `SATISFIABLE` and output `recipe(rg_bbc_vegan_sponge_cake,tf_bbc_
 
 **Example: Imperfect recipe definitions.** Imagine instead that I have a recipe (graph and types) poorly defined in file `scratch/not_a_recipe.lp` then the following should be `UNSATISFIABLE`:
 
-```clingo 0 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,universal_types,type_hierarchies,recipe}.lp scratch/not_a_recipe.lp asp_recipe_graphs/asp/queries/is_recipe.lp```
+```clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,universal_types,type_hierarchies,recipe}.lp scratch/not_a_recipe.lp asp_recipe_graphs/asp/queries/is_recipe.lp```
 
 To understand why this is not a recipe I can run the `why_not_recipe_graph` to determine if the recipe-graph is okay. If the graph is fine, then run `why_not_recipe` to query the typing function with:
 
-```clingo 0 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,universal_types,type_hierarchies}.lp scratch/not_a_recipe.lp asp_recipe_graphs/asp/queries/why_not_recipe.lp```
+```clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,universal_types,type_hierarchies}.lp scratch/not_a_recipe.lp asp_recipe_graphs/asp/queries/why_not_recipe.lp```
 
 This will output predicates associated with offending properties, see `asp_recipe_graphs/asp/queries/why_not_recipe.lp` for a description.
 
