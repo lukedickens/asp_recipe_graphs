@@ -17,9 +17,9 @@
 % (max_c_node_index + 1) is the maximum number of 
 % comestible nodes allowed in a recipe graph.
 % Change this according to your needs:
-#const max_c_node_index=21.
-% Similarly for action nodes:
-#const max_a_node_index=10.
+%#const max_c_node_index=21.
+%% Similarly for action nodes:
+%#const max_a_node_index=10.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % example recipe graph: baba_ganoush

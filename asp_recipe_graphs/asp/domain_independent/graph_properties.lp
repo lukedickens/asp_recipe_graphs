@@ -23,15 +23,27 @@
 
 %TODO get c_node_index(N) to be created if c(N) stated within a recipe.
 % specify values of "max_c_node_index" 
-c_node_index(0..max_c_node_index).
-% and "max_a_node_index" in domain
-a_node_index(0..max_a_node_index).
+%c_node_index(0..max_c_node_index).
+%% and "max_a_node_index" in domain
+%a_node_index(0..max_a_node_index).
+
 is_c_node(c(N)) :- c_node_index(N).
 is_a_node(a(N)) :- a_node_index(N).
 is_arc(arc(X,Y)) :- is_c_node(X), is_a_node(Y).
 is_arc(arc(X,Y)) :- is_a_node(X), is_c_node(Y).
 is_node(N) :- is_c_node(N).
 is_node(N) :- is_a_node(N).
+
+% auto discover recipe graph nodes
+c_node_index(N1) :-
+    in(arcs(RG),arc(c(N1),a(N2))), given_recipe_graph(RG).
+a_node_index(N2) :-
+    in(arcs(RG),arc(c(N1),a(N2))), given_recipe_graph(RG).
+a_node_index(N1) :-
+    in(arcs(RG),arc(a(N1),c(N2))), given_recipe_graph(RG).
+c_node_index(N2) :-
+    in(arcs(RG),arc(a(N1),c(N2))), given_recipe_graph(RG).
+
 
 % "Coms(R)" in the paper
 in(c_nodes(G),c(N)) :- in(arcs(G),arc(c(N),a(N1))).
@@ -45,7 +57,7 @@ graph(G) :- in(arcs(G),Arc).
 graph(G) :- in(a_nodes(G),A).
 graph(G) :- in(c_nodes(G),C).
 
-% C, A and E must be non-empty:
+% C, A and E are non-empty if they contain elements:
 -empty(c_nodes(G)) :- 
     in(c_nodes(G),C).
 empty(c_nodes(G)) :- 
@@ -72,7 +84,7 @@ path(G,N1,N3) :-
     in(arcs(G),arc(N2,N3)).
 cyclic(G) :- path(G,N,N).
 
-% recipe graphs must be connected:
+% recipe graphs must be connected (see recipe_graphs.lp)
 % for this definition we need "Nodes" (the union of sets C and A):
 in(nodes(G),N) :- in(a_nodes(G),N).
 in(nodes(G),N) :- in(c_nodes(G),N).

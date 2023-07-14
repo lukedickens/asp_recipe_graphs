@@ -39,13 +39,17 @@
 :- in(arcs(RG),X), not is_arc(X), recipe_graph(RG).
 % C and A include all the nodes appearing in E:
 
+% Recipe graphs must have non empty comestible, action and arc sets
 :- empty(c_nodes(RG)), recipe_graph(RG).
 :- empty(a_nodes(RG)), recipe_graph(RG).
 :- empty(arcs(RG)), recipe_graph(RG).
 
+% Recipe graphs must not be cyclic
 :- cyclic(RG), recipe_graph(RG).
+% Recipe graphs must be connected
 :- -connected(RG), recipe_graph(RG).
-
+% A nodes in recipe graphs must be properly connected (in and out going edges
+% to comestible nodes)
 :- -a_node_properly_connected(RG,a(N)), recipe_graph(RG).
 
 % for each comestible node in a recipe graph, there is at most one incoming arc:
@@ -108,6 +112,16 @@ in(acts(RG),a(N)) :-
     in(arcs(RG),arc(a(N),c(N1))).
 in(acts(RG),a(N)) :- 
     in(arcs(RG),arc(c(N1),a(N))).
+
+% auto discover recipe graphs
+c_node_index(N1) :-
+    in(arcs(RG),arc(c(N1),a(N2))), given_recipe_graph(RG).
+a_node_index(N2) :-
+    in(arcs(RG),arc(c(N1),a(N2))), given_recipe_graph(RG).
+a_node_index(N1) :-
+    in(arcs(RG),arc(a(N1),c(N2))), given_recipe_graph(RG).
+c_node_index(N2) :-
+    in(arcs(RG),arc(a(N1),c(N2))), given_recipe_graph(RG).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % End of coding of extra notation

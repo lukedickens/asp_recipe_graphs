@@ -1,6 +1,6 @@
 %
-#const max_c_node_index=10.
-#const max_a_node_index=3.
+%#const max_c_node_index=10.
+%#const max_a_node_index=3.
 
 
 recipe_graph(rg_mcdougalls_victoria_sponge).
