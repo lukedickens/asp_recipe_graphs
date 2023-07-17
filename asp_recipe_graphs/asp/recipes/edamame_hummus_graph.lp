@@ -1,32 +1,8 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% HUMMUS Recipe Graph
-
-% run with the command "clingo 0 RecipeGraphs.lp Recipes.lp example_recipes/HummusGraph.lp <query>.lp"
-% or with the command "clingo 1 RecipeGraphs.lp Recipes.lp example_recipes/HummusGraph.lp <query>.lp"
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% The size of the universal sets of comestible and action nodes for these examples:
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%TODO Do we really need this in the recipe files?
-% 
-%% (max_c_node_index + 1) is the maximum number of 
-%% comestible nodes allowed in a recipe graph.
-%% Change this according to your needs:
-%#const max_c_node_index=18.
-%% Similarly for action nodes:
-%#const max_a_node_index=10.
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % example recipe graph: hummus
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+given_recipe_graph(rg_edamame_hummus).
 % thawing edamame
 in(arcs(rg_edamame_hummus),arc(c(0),a(0))).
 in(arcs(rg_edamame_hummus),arc(a(0),c(1))).
@@ -58,4 +34,4 @@ in(arcs(rg_edamame_hummus),arc(c(13),a(6))).
 in(arcs(rg_edamame_hummus),arc(c(14),a(6))).
 in(arcs(rg_edamame_hummus),arc(a(6),c(15))).
 
-given_recipe_graph(rg_edamame_hummus).
+

@@ -2,6 +2,7 @@ import os
 import re
 import copy
 
+#TODO put in separate config file
 SRC_ROOT_DIR = os.environ.get("GRASP_SRC_DIR",'.')
 DEFINITIONS_SUBDIR = os.path.join(
     'asp_recipe_graphs','asp','domain_independent')

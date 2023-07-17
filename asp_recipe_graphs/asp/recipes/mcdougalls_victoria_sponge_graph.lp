@@ -1,9 +1,6 @@
 %
-%#const max_c_node_index=10.
-%#const max_a_node_index=3.
 
-
-recipe_graph(rg_mcdougalls_victoria_sponge).
+given_recipe_graph(rg_mcdougalls_victoria_sponge).
 % Beat together the sugar and butter until light and fluffy. Beat as much air as you can into the mixture for a light and airy cake.
 in(arcs(rg_mcdougalls_victoria_sponge),arc(c(0),a(0))).
 in(arcs(rg_mcdougalls_victoria_sponge),arc(c(1),a(0))).

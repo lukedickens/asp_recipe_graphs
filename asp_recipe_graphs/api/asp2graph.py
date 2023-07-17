@@ -1,8 +1,11 @@
 import re
 import graphviz
+import os
 
-
-
+from asp_recipe_graphs.api.modules import SRC_ROOT_DIR
+RESULTS_DIR = os.path.join(SRC_ROOT_DIR, 'results')
+RECIPE_GRAPH_DIR = os.path.join(RESULTS_DIR, 'recipe_graphs')
+TYPE_GRAPH_DIR = os.path.join(RESULTS_DIR, 'types')
 
 RES_C_OR_A = '(?:c|a)\([0-9]+\)'
 RES_FIND_ARC = fr'arc\(({RES_C_OR_A}),({RES_C_OR_A})\)'
@@ -12,11 +15,15 @@ RE_RMV_BRCK = re.compile('(\(|\))')
 
 RES_VAR_OR_CONST = '[a-zA-Z][a-zA-Z_]*'
 RES_STRING = '"[a-z][a-zA-Z, \-]*"'
-RES_FIND_TYPE_OF = fr'arc\(({RES_C_OR_A}),({RES_C_OR_A})\)'
 RES_FIND_ARCS_GRAPH = fr'arcs\(([a-zA-Z][a-zA-Z_]*)\)'
 RE_FIND_TYPE_OF = re.compile(fr'(?:^|\s)type_of\(({RES_VAR_OR_CONST}),({RES_C_OR_A}),({RES_STRING})\)')
 
 RE_FIND_RECIPE = re.compile(fr'(?:^|\s)recipe\(({RES_VAR_OR_CONST}),({RES_VAR_OR_CONST})\)')
+
+RE_FIND_USED_CHILDS = re.compile(
+    fr'used_child\(({RES_STRING}),({RES_STRING})\)')
+
+GRAPH_TYPES = ['recipe_graph', 'recipe', 'types', 'compressed_types']
 
 def remove_brackets(str_):
     return str_.replace('(','').replace(')','')
@@ -68,9 +75,11 @@ def graph_to_dot(nodes, arcs):
         node_type = node_desc['type_']
         node_str = node_desc['str_']
         if node_type =='a':
-            dot.node(n, label=node_str, style='filled', color='yellow', shape='box')
+            dot.node(n, label=node_str,
+            style='filled', color='yellow', shape='box')
         elif node_type =='c':
-            dot.node(n, label=node_str, style='filled', color='gray', shape='oval')
+            dot.node(n, label=node_str,
+            style='filled', color='gray', shape='oval')
     for arc_desc in arcs:
         source = arc_desc['source']
         target = arc_desc['target']
@@ -103,4 +112,45 @@ def create_dependency_graph(dependency_map):
         for target in targets:
             dot.edge(source,target)
     return dot
+
+## Type hierarchies
+def create_type_hierarchy_graph(neighbours):
+    dot = graphviz.Digraph()
+    seen = set()
+    for source, targets in neighbours.items():
+        if not source in seen:
+            dot.node(
+                source, label=source,
+                style='filled', color='skyblue', shape='oval')
+            seen.add(source)
+        for target in targets:
+            dot.edge(source,target)
+            if not target in seen:
+                dot.node(target, label=target,
+                style='filled', color='skyblue', shape='oval')
+                seen.add(target)
+    return dot
+
+
+def parse_type_hierarchy(asp_model, root='comestible'):
+    neighbours = {}
+    for child, parent in RE_FIND_USED_CHILDS.findall(asp_model):
+        parent = parent.strip('"')
+        child = child.strip('"')
+        these_children = neighbours.get(parent, set())
+        these_children.add(child)
+        neighbours[parent] = these_children
+    neighbours = isolate_hierarchy(neighbours, root)
+    return neighbours
+
+def isolate_hierarchy(neighbours, root):
+    nodes = set([root])
+    seen = set()
+    while nodes:
+#        print(f"iterate with nodes = {nodes}")
+        node = nodes.pop()
+#        print(f"\tnode={node}")
+        seen.add(node)
+        nodes |= neighbours.get(node,set()) - seen
+    return { n:neighbours[n] for n in seen if n in neighbours }
 

@@ -1,7 +1,4 @@
 %
-%#const max_c_node_index=13.
-%#const max_a_node_index=4.
-
 
 given_recipe_graph(rg_bbc_vegan_sponge_cake).
 % Put the dairy-free milk into a jug and add the vinegar, leave for a few minutes until it looks a little lumpy.
