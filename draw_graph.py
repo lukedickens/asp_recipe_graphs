@@ -20,7 +20,7 @@ from asp_recipe_graphs.api.recipes import RECIPE_GRAPH_PATHS
 from asp_recipe_graphs.api.recipes import RECIPE_TYPE_FUNCTION_PATHS
 
 
-def recipe_to_fpaths(recipe,
+def recipes_to_fpaths_and_str(recipe,
         recipe_graph_paths=RECIPE_GRAPH_PATHS,
         recipe_type_function_paths=RECIPE_TYPE_FUNCTION_PATHS):
     # find the file paths
@@ -31,7 +31,7 @@ def recipe_to_fpaths(recipe,
         types_fpath = recipe_type_function_paths[rid]
         fpaths.append(graph_fpath)
         fpaths.append(types_fpath)
-    return fpaths
+    return fpaths, '_'.join(recipes)
 
 def load_and_draw_recipe(
         recipe='beans_on_toast', **kwargs):
@@ -41,7 +41,7 @@ def load_and_draw_recipe(
 #    fpaths =[]
 #    fpaths.append(graph_fpath)
 #    fpaths.append(types_fpath)
-    fpaths = recipe_to_fpaths(recipe)
+    fpaths, recipes_name = recipes_to_fpaths_and_str(recipe)
     # recipe identifier
     graph_id, typef_id = (f'rg_{recipe}',f'tf_{recipe}')
     # run the asp to get the arcs and types
@@ -51,13 +51,13 @@ def load_and_draw_recipe(
     # parses the asp model string to get type function info
     type_functions = get_type_functions(asp_model)
     dot = recipe_graph_to_dot((graph_id, typef_id), graphs, type_functions)
-    bare_ofname = os.path.join(RECIPE_GRAPH_DIR,recipe)
+    bare_ofname = os.path.join(RECIPE_GRAPH_DIR,recipes_name)
     ofname = dot.render(bare_ofname)
     print(f"recipe graph for {recipe} saved to:\n\t{ofname}")
 
 def load_and_draw_type_hierarchy(recipe=None, base_type=None, **kwargs):
     print(f"Creating type hierarchy for {recipe}")
-    fpaths = recipe_to_fpaths(recipe)
+    fpaths, recipes_name = recipes_to_fpaths_and_str(recipe)
 #    recipe = 'buttered_toast'
 #    asp_model = """
 #        used_child("butter","spreads") used_child("spreads","comestible") used_child("plain toast","toast") used_child("toast","bread") used_child("bread","comestible") used_child("buttered toast","toast") used_child("spread on toast","spread") used_child("spread","put") used_child("put","action")"""
@@ -65,7 +65,7 @@ def load_and_draw_type_hierarchy(recipe=None, base_type=None, **kwargs):
     parent2children = parse_type_hierarchy(asp_model, root=base_type)
     print(f"parent2children = {parent2children}")
     dot = create_type_hierarchy_graph(parent2children)
-    ofstem = recipe+'_'+base_type
+    ofstem = recipes_name+'_'+base_type
     bare_ofname = os.path.join(TYPE_GRAPH_DIR,ofstem)
     ofname = dot.render(bare_ofname)
     print(f"Type hierarchy for {recipe} saved to:\n\t{ofname}")
@@ -97,8 +97,10 @@ def create_parser():
     parser.add_argument('--base-type', '-b', type=str,
         default='comestible',
         help='Specify base type')
-    recipe_options = RECIPES
-    parser.add_argument('--recipe', '-r', type=str, choices=recipe_options,
+   # we no longer limit recipes to options as we want to allow multiple recipes
+#    recipe_options = RECIPES
+    parser.add_argument('--recipe', '-r', type=str,
+#     choices=recipe_options,
         help='Specify recipe by identifier')
     return parser
     
