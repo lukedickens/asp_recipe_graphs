@@ -110,7 +110,7 @@ Then save in an appropriate `.lp` file, e.g. `scratch/buttered_toast_type_hierar
 
 To output the acceptability tuples you can derive from a `given_recipe`, use:
 
-`clingo 1 <ASPDIR>/domain_independent/{type_hierarchies,recipe_graphs,graph_properties,acceptability}.lp  <TYPEHIERARCHY> <RECIPES> <ASPDIR>/queries/acceptability_tuples.lp`
+```clingo 1 <ASPDIR>/domain_independent/{type_hierarchies,recipe_graphs,recipe,graph_properties,acceptability}.lp  <TYPEHIERARCHY> <RECIPES> <ASPDIR>/queries/acceptability_tuples.lp```
 
 **Example: Acceptability tuples inferred from hummus recipe** With the repository root as present working directory, run the following command:
 
