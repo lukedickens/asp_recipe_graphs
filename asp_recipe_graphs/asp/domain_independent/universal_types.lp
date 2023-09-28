@@ -92,6 +92,9 @@ child("pasta", "comestible").
         child("undrained cooked spaghetti", "spaghetti").
         child("drained cooked spaghetti", "spaghetti").
     child("fusilli", "pasta").
+        child("uncooked fusilli", "fusilli").
+        child("undrained cooked fusilli", "fusilli").
+        child("drained cooked fusilli", "fusilli").
 child("pulses", "comestible").
     child("chick peas", "pulses").
         child("tinned chick peas", "chick peas").
@@ -218,6 +221,10 @@ child("gluten free comestible","comestible").
 
 child("complex comestible", "comestible").
     child("beans on toast", "complex comestible").
+    child("pasta sauce", "complex comestible").
+        child("pomodoro sauce", "pasta sauce").
+            child("cold pomodoro sauce", "pasta sauce").
+            child("hot pomodoro sauce", "pasta sauce").
 
 %child("mixture", "comestible").
 %child(numbered_mixture(X), "mixture") :- int(X), X < 10.
