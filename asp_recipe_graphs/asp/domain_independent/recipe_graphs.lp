@@ -79,12 +79,11 @@ given_recipe_graph(RG) :- given_recipe(RG,TF).
 
 
 high_indexes_allowed(RG) :- given_recipe_graph(RG).
-
 :- recipe_graph(RG), in(c_nodes(RG),c(N2)), not high_indexes_allowed(RG),
    c_node_index(N1), N1<N2, not in(c_nodes(RG),c(N1)).
 :- recipe_graph(RG), in(a_nodes(RG),a(N2)), not high_indexes_allowed(RG),
    a_node_index(N1), N1<N2, not in(a_nodes(RG),a(N1)).
-   
+
 % there can't be a path from a node to another node with 
 % a lower index if the other node is of the same type:
 :- path(RG,c(N2),c(N1)), N1<N2, recipe_graph(RG).
@@ -108,6 +107,7 @@ in(in(RG),c(N)) :-
 in(out(RG),c(N)) :- 
     in(arcs(RG),arc(a(N1),c(N))),
     not in(mid(RG),c(N)).
+% may be redundant. Already done with :- in(a_nodes(G),a(N))
 in(acts(RG),a(N)) :- 
     in(arcs(RG),arc(a(N),c(N1))).
 in(acts(RG),a(N)) :- 

@@ -14,7 +14,7 @@ RE_FIND_ARCS = re.compile(fr'(?:^|\s)in\(arcs\(([a-z][a-z_]*)\),{RES_FIND_ARC}\)
 RE_RMV_BRCK = re.compile('(\(|\))')
 
 RES_VAR_OR_CONST = '[a-zA-Z][a-zA-Z_]*'
-RES_STRING = '"[a-z][a-zA-Z, \-]*"'
+RES_STRING = '"[a-z][a-zA-Z0-9, \-]*"'
 RES_FIND_ARCS_GRAPH = fr'arcs\(([a-zA-Z][a-zA-Z_]*)\)'
 RE_FIND_TYPE_OF = re.compile(fr'(?:^|\s)type_of\(({RES_VAR_OR_CONST}),({RES_C_OR_A}),({RES_STRING})\)')
 
