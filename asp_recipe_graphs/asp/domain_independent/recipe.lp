@@ -37,3 +37,7 @@ has_given_type(TF, V) :-
 % End of Definition 3
 %%%%%%%%%%%%%%%%%%%%%
 
+comestible_type_in(recipe(RG,TF),Type) :- recipe(RG,TF), type_of(TF,V,Type), in(c_nodes(RG),V).
+action_type_in(recipe(RG,TF),Type) :- recipe(RG,TF), type_of(TF,V,Type), in(a_nodes(RG),V).
+
+%#show comestible_type_in/2.

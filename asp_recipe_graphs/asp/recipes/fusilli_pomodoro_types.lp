@@ -2,7 +2,7 @@
 % example recipe: hummus
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-given_recipe(rg_fusilli_pomodoro,tf_fusilli_pomodoro).
+recipe(rg_fusilli_pomodoro,tf_fusilli_pomodoro).
 
 given_type_of(tf_fusilli_pomodoro,c(0),"boiling salted water").
 given_type_of(tf_fusilli_pomodoro,c(1),"uncooked fusilli").

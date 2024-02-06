@@ -1,4 +1,14 @@
-acceptability_tuple(s_("boiling salted water",s_("uncooked fusilli",s_0)),"boil for 10 min",s_("undrained cooked fusilli",s_0)).
-acceptability_tuple(s_("cold pomodoro sauce",s_("fried onion",s_0)),"mix and heat",s_("hot pomodoro sauce",s_0)).
-acceptability_tuple(s_("drained cooked fusilli",s_0),"pour into bowl",s_("fusilli in bowl",s_0)).
-acceptability_tuple(s_("fusilli in bowl",s_("hot pomodoro sauce",s_0)),"mix in bowl",s_("fusilli pomodoro",s_0)).
+good_comestible_position_in_output_tuple((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(0)),"boil for 10 min","undrained cooked fusilli",1).
+good_comestible_position_in_output_tuple((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(1)),"mix and heat","hot pomodoro sauce",1).
+good_comestible_position_in_output_tuple((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(2)),"drain","drained cooked fusilli",1).
+good_comestible_position_in_output_tuple((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(2)),"drain","pasta water",2).
+good_comestible_position_in_output_tuple((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(3)),"pour into bowl","fusilli in bowl",1).
+good_comestible_position_in_output_tuple((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(4)),"mix in bowl","fusilli pomodoro",1).
+good_comestible_position_in_input_tuple((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(0)),"boil for 10 min","boiling salted water",1).
+good_comestible_position_in_input_tuple((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(0)),"boil for 10 min","uncooked fusilli",2).
+good_comestible_position_in_input_tuple((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(1)),"mix and heat","cold pomodoro sauce",1).
+good_comestible_position_in_input_tuple((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(1)),"mix and heat","fried onion",2).
+good_comestible_position_in_input_tuple((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(2)),"drain","undrained cooked fusilli",1).
+good_comestible_position_in_input_tuple((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(3)),"pour into bowl","drained cooked fusilli",1).
+good_comestible_position_in_input_tuple((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(4)),"mix in bowl","fusilli in bowl",1).
+good_comestible_position_in_input_tuple((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(4)),"mix in bowl","hot pomodoro sauce",2).
