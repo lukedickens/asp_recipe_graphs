@@ -43,6 +43,10 @@ SATISFIABLE
 
 
 
+# General Usage
+
+
+
 ## Running ASP
 
 For the following examples,
@@ -143,26 +147,53 @@ Then save in an appropriate `.lp` file, e.g. `scratch/buttered_toast_type_hierar
 
 ### Acceptability Tuples
 
-To output the acceptability tuples you can derive from a `given_recipe`, use:
+To output the acceptability tuples you can derive from a `recipe`, use:
 
 ```clingo 1 <ASPDIR>/domain_independent/{type_hierarchies,recipe_graphs,recipe,graph_properties,acceptability}.lp  <TYPEHIERARCHY> <RECIPES> <ASPDIR>/queries/acceptability_tuples.lp```
 
-**Example: Acceptability tuples inferred from hummus recipe** With the repository root as present working directory, run the following command:
 
-```clingo 1 asp_recipe_graphs/asp/domain_independent/{universal_types,type_hierarchies,graph_properties,recipe_graphs,acceptability}.lp asp_recipe_graphs/asp/recipes/hummus_{graph,types}.lp asp_recipe_graphs/asp/queries/acceptability_tuples.lp```
 
-This will output all acceptability tuples from the hummus recipe.
+**Example: Acceptability tuples derived from fusilli pomodoro** With the repository root as present working directory, run the following command:
 
-**Example: Acceptability tuples inferred from hummus recipe using compressed hierarchy** With the repository root as present working directory, and a compressed type hierarchy stored in `scratch/hummus_type_hierarchy_compressed.lp`, run the following command:
+```clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,universal_types,graph_properties,recipe_graphs,recipe,acceptability_tuples}.lp   asp_recipe_graphs/asp/recipes/fusilli_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/queries/derived_acceptability_tuples.lp -n 0```
 
-```RECIPE=hummus ; clingo 1 asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,acceptability}.lp  scratch/${RECIPE}_type_hierarchy_compressed.lp asp_recipe_graphs/asp/recipes/${RECIPE}_{graph,types}.lp asp_recipe_graphs/asp/queries/acceptability_tuples.lp```
+This will output all acceptability tuples from the chosen recipe using the universal type hierarchy. This can take a long time for larger recipes in particular, so you may prefer to use a type hierarchy that includes fewer elements.
 
-### Subrecipes
+**Example: Acceptability tuples derived from fusilli pomodoro recipe using specialised hierarchy** With the repository root as present working directory, and a compressed type hierarchy stored in `asp_recipe_graphs/asp/domains/pomodoro_types.lp`, run the following command:
 
-(In development)
-Here is our example for extracting a subrecipe from a recipe:
+```clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples}.lp  asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/recipes/fusilli_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/queries/derived_acceptability_tuples.lp -n 0```
 
-```clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,universal_types,type_hierarchies,recipe,subrecipes}.lp asp_recipe_graphs/asp/recipes/grilled_cheese_on_toast_{graph,types}.lp asp_recipe_graphs/asp/queries/give_subrecipes.lp```
+
+
+**Example: Acceptability tuples derived from fusilli pomodoro candidate recipe** With the repository root as present working directory, a candidate recipe in `asp_recipe_graphs/asp/candidate_recipes/fusilli_pomodoro_{graph,types}.lp` , and a compressed type hierarchy stored in `asp_recipe_graphs/asp/domains/pomodoro_types.lp`, run the following command:
+
+```clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples}.lp  asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/candidate_recipes/fusilli_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/queries/derived_acceptability_tuples.lp -n 0```
+
+Note that the fusilli_pomodoro recipe here is a candidate recipe, not a given recipe, and so the derived acceptability tuples are candidate tuples, not given tuples.
+
+
+
+### Validating candidate tuples
+
+This requires a candidate recipe, namely a recipe (graph and type function) that is not a given recipe. We provide a small number of these in the `<ASPDIR>/candidate_recipes` directory with filenames of the form `<RECIPENAME>_graph.lp` and `<RECIPENAME>_types.lp`. You will also need to provide a set of given acceptability tuples. Some examples of these can be found in the `<ASPDIR>/recipes` directory with filenames of the form `<RECIPENAME>_tuples.lp`. Again this can be a computationally expensive call, so you are advised to create a compressed hierarchy with only the types of interest within it and place this in `<DOMAIN_TYPE_HIERARCHY>`. The general call to determine which nodes in your candidate recipe are valid is:
+
+```clingo <ASPDIR>/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples,validity}.lp  <DOMAIN_TYPE_HIERARCHY> <ASPDIR>/recipes/<RECIPENAME>_tuples.lp <ASPDIR>/candidate_recipes/<RECIPENAME>_{graph,types}.lp <ASPDIR>/queries/is_valid_candidate.lp  -n 0```
+
+**Example: Valid candidate tuples derived from fusilli pomodoro candidate recipe using specialised hierarchy** With the repository root as present working directory, a candidate recipe in `asp_recipe_graphs/asp/candidate_recipes/fusilli_pomodoro_{graph,types}.lp` and a compressed type hierarchy stored in `asp_recipe_graphs/asp/domains/pomodoro_types.lp`, run the following command:
+
+```clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples,validity}.lp  asp_recipe_graphs/asp/recipes/fusilli_pomodoro_tuples.lp asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/candidate_recipes/fusilli_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/queries/is_valid_candidate.lp  -n 0```
+
+
+
+
+
+### Substitution
+
+
+
+
+
+
 
 ## Running Python
 
