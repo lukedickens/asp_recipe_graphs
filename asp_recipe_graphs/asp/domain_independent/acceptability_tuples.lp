@@ -12,7 +12,7 @@
 :- output_element((RG,TF,a(N)),AType,CType), not there_is_output_comestible((RG,TF,a(N)),CType).
 :- used_output_m((RG,TF,a(N)),M1), not used_output_m((RG,TF,a(N)),M2), M2 = 1..max_out_set_size, M2 < M1.
 
-questionable_recipe(RG,TF) :- recipe(RG,TF), not given_recipe(RG,TF).
+candidate_recipe(RG,TF) :- recipe(RG,TF), not given_recipe(RG,TF).
 
 1{ input_element((RG,TF,a(N)),AType,CType) : in(arcs(RG),arc(c(Nin),a(N))), type_of(TF,c(Nin),CType), type_of(TF,a(N),AType) }max_in_set_size :-
 	recipe(RG,TF), in(acts(RG),a(N)).
@@ -37,29 +37,23 @@ there_is_output_comestible((RG,TF,a(N)),CType) :- comestible_position_in_output_
 used_output_m((RG,TF,a(N)),M) :- comestible_position_in_output_tuple((RG,TF,a(N)),CType,M).
 
 % Definitions for good and questionable comestibles
-good_comestible_position_in_input_tuple((RG,TF,a(N)),AType,CType,M) :-
+valid_input_element((RG,TF,a(N)),AType,CType,M) :-
 	type_of(TF,a(N),AType),
 	given_recipe(RG,TF),
 	comestible_position_in_input_tuple((RG,TF,a(N)),CType,M).
 
-good_comestible_position_in_output_tuple((RG,TF,a(N)),AType,CType,M) :-
+valid_output_element((RG,TF,a(N)),AType,CType,M) :-
 	type_of(TF,a(N),AType),
 	given_recipe(RG,TF),
 	comestible_position_in_output_tuple((RG,TF,a(N)),CType,M).
 
-questionable_comestible_position_in_input_tuple((RG,TF,a(N)),AType,CType,M) :-
+candidate_input_element((RG,TF,a(N)),AType,CType,M) :-
 	type_of(TF,a(N),AType),
-	questionable_recipe(RG,TF),
+	candidate_recipe(RG,TF),
 	comestible_position_in_input_tuple((RG,TF,a(N)),CType,M).
 
-questionable_comestible_position_in_output_tuple((RG,TF,a(N)),AType,CType,M) :-
+candidate_output_element((RG,TF,a(N)),AType,CType,M) :-
 	type_of(TF,a(N),AType),
-	questionable_recipe(RG,TF),
+	candidate_recipe(RG,TF),
 	comestible_position_in_output_tuple((RG,TF,a(N)),CType,M).
 
-%#show input_element/5.
-%#show output_element/5.
-%#show good_comestible_position_in_input_tuple/4.
-%#show good_comestible_position_in_output_tuple/4.
-%#show questionable_comestible_position_in_input_tuple/4.
-%#show questionable_comestible_position_in_output_tuple/4.
