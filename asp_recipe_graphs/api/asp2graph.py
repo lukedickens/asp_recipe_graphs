@@ -5,6 +5,7 @@ import os
 from asp_recipe_graphs.api.modules import SRC_ROOT_DIR
 RESULTS_DIR = os.path.join(SRC_ROOT_DIR, 'results')
 RECIPE_GRAPH_DIR = os.path.join(RESULTS_DIR, 'recipe_graphs')
+RECIPE_DIR = os.path.join(RESULTS_DIR, 'recipe')
 TYPE_GRAPH_DIR = os.path.join(RESULTS_DIR, 'types')
 
 RES_C_OR_A = '(?:c|a)\([0-9]+\)'
@@ -86,7 +87,18 @@ def graph_to_dot(nodes, arcs):
         dot.edge(source, target)
     return dot
     
-def type_function_to_dot_nodes(type_function):
+def recipe_graph_to_dot_node_descs(graph):
+    nodes = {}
+    for arc in graph:
+        type_ = arc['type_']
+        source = arc['source']
+        target = arc['target']
+        type_ = arc['type_']
+        nodes[source] = {'type_': type_[0], 'str_': source}
+        nodes[target] = {'type_': type_[1], 'str_': target}
+    return nodes
+
+def type_function_to_dot_node_descs(type_function):
     nodes = {}
     for node, name in type_function.items():
         node_desc = {}
@@ -95,12 +107,20 @@ def type_function_to_dot_nodes(type_function):
         nodes[node] = node_desc
     return nodes
 
-def recipe_graph_to_dot(recipe, graphs, type_functions):
-    gid, tfid = recipe
+def recipe_to_dot(recipe_id, graphs, type_functions):
+#    print(f"type_functions = {type_functions}")
+    gid, tfid = recipe_id
     arcs = graphs[gid]
+#    print(f"arcs = {arcs}")
     type_function = type_functions[tfid]
-    nodes = type_function_to_dot_nodes(type_function)
+    nodes = type_function_to_dot_node_descs(type_function)
+#    print(f"nodes = {nodes}")
     return graph_to_dot(nodes, arcs)
+
+def recipe_graph_to_dot(graph_id, graphs):
+    graph = graphs[graph_id]
+    nodes = recipe_graph_to_dot_node_descs(graph)
+    return graph_to_dot(nodes, graph)
 
 # unlike the above graphs which relate to recipes this is a graph
 # of the module dependency structure.

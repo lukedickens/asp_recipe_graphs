@@ -19,15 +19,8 @@ RECIPES_DIR = os.path.join(
 
 MODULE_FILES = [
     f for f in os.listdir(DEFINITIONS_DIR) \
-        if os.path.isfile(os.path.join(DEFINITIONS_DIR, f))]
+        if os.path.isfile(os.path.join(DEFINITIONS_DIR, f)) and f[0] != '.' ]
 
-#MODULES = [
-#    'acceptability', 'composition', 'equivalence', 'granularity',
-#    'graph_properties', 'in_out_aligned', 'isomorphisms',
-#    'debug_recipes',
-#    'recipe_graphs', 'subrecipes', 'type_hierarchies',
-#    'universal_types']
-#MODULES_FILEMAP = { t:t+'.lp' for t in MODULES }
 MODULES = [
     f.split('.')[0] for f in MODULE_FILES ]
 MODULES_FILEMAP = { m:f for m,f in zip(MODULES,MODULE_FILES) }
@@ -45,30 +38,22 @@ def get_module_path(
 ASP_MODULE_DEFINES = {}
 ASP_MODULE_USES = {}
 RE_FIND_TERMS = re.compile('(?=(?:^|\W|\(|\))([a-z][a-z_]*)\([a-zA-Z][a-zA-Z0-9_,()]*\))')
-#RE_IS_DEFINITION = re.compile('^([a-z][a-z_]*)\([a-zA-Z0-9_,]*\)(?: :-|\.)')
 RE_IS_DEFINITION = re.compile('^([a-z][a-z_]*)\([a-zA-Z0-9_," ]*\)(?: :-|\.)')
+
+
 for m in MODULES:
     fpath = get_module_path(m)
-#     print(f"fpath = {fpath}")
     defines = set([])
     uses = set([])
     with open(fpath,'r') as ifile:
         for line in ifile.readlines():
-#            line = line.strip()
             def_term_matches = \
                 RE_IS_DEFINITION.findall(line)
             if len(def_term_matches) > 0:
                 defines.add(def_term_matches[0])
-#                if def_term_matches[0] == 'child':
-#                    print(f"{m}: {[line]}")
-#                    print(f"\tdef_term_matches = {def_term_matches}")
-#                    print(f"\tRE_IS_DEFINITION.findall(line) = {RE_IS_DEFINITION.findall(line)}")
             using = RE_FIND_TERMS.findall(line)
             uses |= set(using)
     uses -= defines
-#             if len(using) > 0:
-#                 print(line)
-#                 print(f"\tusing = {using}")
     ASP_MODULE_DEFINES[m] = defines
     ASP_MODULE_USES[m] = uses
 

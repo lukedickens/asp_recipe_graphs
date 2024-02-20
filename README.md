@@ -4,8 +4,43 @@ Code for reasoning about substitution and other properties of recipe graphs in A
 
 ## Reference
 This code is based on the definitions within:
-"A Graphical Formalism for Commonsense Reasoning with Recipes",
+[BDD+24] "A Graphical Formalism for Commonsense Reasoning with Recipes",
 by Antonis Bikakis , Aissatou Diallo , Luke Dickens, Anthony Hunter, Rob Miller
+
+## Quick-start: Paper Examples
+
+Later in this README we describe a general use of the library. First, we list a series of executions that recreate the examples in Section 10 of the paper [BDD+24]. Each command should be executed from within the root directory of the git repository, hereafter referred to as `'.'`.
+
+### Testing recipe graph for spaghetti-pomodoro
+
+To test whether the graph for spaghetti-pomodoro (in file `'./asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_graph.lp'`) satisfies the requirements of  a recipe graph, run:
+
+``` clingo 1 ./asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs}.lp ./asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_graph.lp ./asp_recipe_graphs/asp/queries/is_recipe_graph.lp```
+
+This should give the following as part of the output:
+
+```shell
+Solving...
+Answer: 1
+recipe_graph(rg_spaghetti_pomodoro)
+SATISFIABLE
+```
+
+### Testing recipe spaghetti-pomodoro
+
+To test whether the graph and type function for spaghetti-pomodoro (in files `'./asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_graph.lp'` and  `'./asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_types.lp'`) satisfies the requirements of  a recipe, run:
+
+``` clingo 1 ./asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,universal_types,type_hierarchies,recipe}.lp ./asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_{graph,types}.lp ./asp_recipe_graphs/asp/queries/is_recipe.lp```
+
+This should give the following as part of the output:
+
+```shell
+Solving...
+Answer: 1
+recipe(rg_spaghetti_pomodoro,tf_spaghetti_pomodoro)
+SATISFIABLE
+```
+
 
 
 ## Running ASP

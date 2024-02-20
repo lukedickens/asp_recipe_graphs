@@ -6,9 +6,11 @@ from asp_recipe_graphs.api.asp2graph import typed_arcs_to_dot
 from asp_recipe_graphs.api.asp2graph import get_type_functions
 from asp_recipe_graphs.api.asp2graph import get_recipes
 from asp_recipe_graphs.api.asp2graph import recipe_graph_to_dot
+from asp_recipe_graphs.api.asp2graph import recipe_to_dot
 from asp_recipe_graphs.api.asp2graph import GRAPH_TYPES
 from asp_recipe_graphs.api.asp2graph import parse_type_hierarchy
 from asp_recipe_graphs.api.asp2graph import create_type_hierarchy_graph
+from asp_recipe_graphs.api.asp2graph import RECIPE_DIR
 from asp_recipe_graphs.api.asp2graph import RECIPE_GRAPH_DIR
 from asp_recipe_graphs.api.asp2graph import TYPE_GRAPH_DIR
 
@@ -19,18 +21,36 @@ from asp_recipe_graphs.api.recipes import RECIPE_GRAPH_PATHS
 from asp_recipe_graphs.api.recipes import RECIPE_TYPE_FUNCTION_PATHS
 
 
-def recipes_to_fpaths_and_str(recipe,
-        recipe_graph_paths=RECIPE_GRAPH_PATHS,
-        recipe_type_function_paths=RECIPE_TYPE_FUNCTION_PATHS):
+def recipe_graphs_to_fpaths_and_str(recipe_graphs,
+        recipe_graph_paths=RECIPE_GRAPH_PATHS):
+    """
+    recipe_graphs - 
+        string containing recipe graph name or recipe graph names (comma separated).
+    """
     # find the file paths
     fpaths =[]
-    recipes = recipe.split(',')
-    for rid in recipes:
+    recipe_graph_list = recipe_graphs.split(',')
+    for rid in recipe_graph_list:
+        graph_fpath = recipe_graph_paths[rid]
+        fpaths.append(graph_fpath)
+    return fpaths, '_'.join(recipe_graph_list)
+
+def recipes_to_fpaths_and_str(recipes,
+        recipe_graph_paths=RECIPE_GRAPH_PATHS,
+        recipe_type_function_paths=RECIPE_TYPE_FUNCTION_PATHS):
+    """
+    recipes - 
+        string containing recipe or recipes (comma separated).
+    """
+    # find the file paths
+    fpaths =[]
+    recipe_list = recipes.split(',')
+    for rid in recipe_list:
         graph_fpath = recipe_graph_paths[rid]
         types_fpath = recipe_type_function_paths[rid]
         fpaths.append(graph_fpath)
         fpaths.append(types_fpath)
-    return fpaths, '_'.join(recipes)
+    return fpaths, '_'.join(recipe_list)
 
 def load_and_draw_recipe(
         recipe='beans_on_toast', **kwargs):
@@ -40,7 +60,7 @@ def load_and_draw_recipe(
 #    fpaths =[]
 #    fpaths.append(graph_fpath)
 #    fpaths.append(types_fpath)
-    fpaths, recipes_name = recipes_to_fpaths_and_str(recipe)
+    fpaths, recipe_name = recipes_to_fpaths_and_str(recipe)
     # recipe identifier
     graph_id, typef_id = (f'rg_{recipe}',f'tf_{recipe}')
     # run the asp to get the arcs and types
@@ -49,10 +69,25 @@ def load_and_draw_recipe(
     graphs = get_graphs(asp_model)
     # parses the asp model string to get type function info
     type_functions = get_type_functions(asp_model)
-    dot = recipe_graph_to_dot((graph_id, typef_id), graphs, type_functions)
-    bare_ofname = os.path.join(RECIPE_GRAPH_DIR,recipes_name)
+    dot = recipe_to_dot((graph_id, typef_id), graphs, type_functions)
+    bare_ofname = os.path.join(RECIPE_DIR,recipe_name)
     ofname = dot.render(bare_ofname)
     print(f"recipe graph for {recipe} saved to:\n\t{ofname}")
+
+def load_and_draw_recipe_graph(
+        recipe='beans_on_toast', outdir=RECIPE_GRAPH_DIR, **kwargs):
+#    # find the file path (just one graph)
+    fpaths, recipe_graph_name = recipe_graphs_to_fpaths_and_str(recipe)
+    # recipe identifier
+    graph_id = f'rg_{recipe}'
+    # run the asp to get the arcs and types
+    asp_model = load_and_solve('arcs',fpaths)[0]
+    # parses asp_model string to get the graph info
+    graphs = get_graphs(asp_model)
+    dot = recipe_graph_to_dot(graph_id, graphs)
+    bare_ofname = os.path.join(outdir, recipe_graph_name)
+    ofname = dot.render(bare_ofname)
+    print(f"recipe graph for {recipe_graph_name} saved to:\n\t{ofname}")
 
 def load_and_draw_type_hierarchy(recipe=None, base_type=None, **kwargs):
     print(f"Creating type hierarchy for {recipe}")
@@ -70,7 +105,9 @@ def load_and_draw_type_hierarchy(recipe=None, base_type=None, **kwargs):
     print(f"Type hierarchy for {recipe} saved to:\n\t{ofname}")
 
 def main(graph_type=None, **kwargs):
-    if graph_type == 'recipe':
+    if graph_type == 'recipe_graph':
+        load_and_draw_recipe_graph(**kwargs)
+    elif graph_type == 'recipe':
         load_and_draw_recipe(**kwargs)
     elif graph_type == 'types':
         load_and_draw_type_hierarchy(**kwargs)
