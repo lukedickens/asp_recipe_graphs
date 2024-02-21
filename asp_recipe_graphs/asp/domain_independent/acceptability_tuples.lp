@@ -66,3 +66,4 @@ candidate_action_element((RG,TF,a(N)),AType) :-
 	candidate_recipe(RG,TF).
 
 
+

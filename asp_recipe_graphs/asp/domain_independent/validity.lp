@@ -66,4 +66,10 @@ valid_candidate_tuple(Candidate) :-
     candidate_input_element(Candidate,CType2,M2),
     not valid_candidate_tuple(Candidate).
 
+-valid_recipe(RG,TF) :-
+	candidate_recipe(RG,TF),
+	in(a_nodes(RG),a(N)),
+	not valid_candidate_tuple((RG,TF,a(N))).
+
+valid_recipe(RG,TF) :- candidate_recipe(RG,TF), not -valid_recipe(RG,TF).
 

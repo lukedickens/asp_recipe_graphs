@@ -5,17 +5,37 @@
 % tf_spaghetti_pomodoro_sub maps the nodes in rg_spaghetti_pomodoro
 % (that tf_spaghetti_pomodoro maps to uncooked spaghetti) to uncooked fusilli
 
--valid_recipe(RG,TF) :-
-	candidate_recipe(RG,TF),
-	in(a_nodes(RG),a(N)),
-	not valid_candidate_tuple((RG,TF,a(N))).
+recipe(RG,PartSpecTF) :-
+    given_recipe(RG,TF),
+    type_substitution(RG,TF,PartSpecTF).
+    
+type_of(PartSpecTF,Node,NewType) :-
+    recipe(RG,PartSpecTF),
+    primary_substitution((RG,TF,PartSpecTF),Node,NewType).
+:- -valid_recipe(RG,PartSpecTF), type_substitution(RG,TF,PartSpecTF), given_recipe(RG,TF).
 
-valid_recipe(RG,TF) :- candidate_recipe(RG,TF), not -valid_recipe(RG,TF).
+#maximize{ 1,X : 
+    type_of(TF,X,Y),
+    type_of(PartSpecTF,X,Y),
+    given_recipe(RG,TF),
+    type_substitution(RG,TF,PartSpecTF)}.
 
-recipe(rg_spaghetti_pomodoro,tf_spaghetti_pomodoro_sub).
-type_of(tf_spaghetti_pomodoro_sub,c(1),"uncooked fusilli").
-:- -valid_recipe(rg_spaghetti_pomodoro,tf_spaghetti_pomodoro_sub).
+secondary_substitution((RG,TF,PartSpecTF),Node,NewType) :-
+    given_recipe(RG,TF),
+    type_substitution(RG, TF, PartSpecTF),
+    recipe(RG,PartSpecTF),
+    not primary_substitution((RG, TF, PartSpecTF), Node, NewType),
+    type_of(TF,Node,Type),
+    type_of(PartSpecTF,Node,NewType),
+    NewType != Type.
 
-#maximize{ 1,X : type_of(tf_spaghetti_pomodoro,X,Y), type_of(tf_spaghetti_pomodoro_sub,X,Y) }.
+% domain specific
+%recipe(rg_spaghetti_pomodoro,tf_spaghetti_pomodoro_sub).
+%type_of(tf_spaghetti_pomodoro_sub,c(1),"uncooked fusilli").
+%:- -valid_recipe(rg_spaghetti_pomodoro,tf_spaghetti_pomodoro_sub).
+type_substitution(rg_spaghetti_pomodoro,tf_spaghetti_pomodoro,tf_spaghetti_pomodoro_sub).
+primary_substitution((rg_spaghetti_pomodoro,tf_spaghetti_pomodoro,tf_spaghetti_pomodoro_sub),c(1),"uncooked fusilli").
+
+%#maximize{ 1,X : type_of(tf_spaghetti_pomodoro,X,Y), type_of(tf_spaghetti_pomodoro_sub,X,Y) }.
 
 
