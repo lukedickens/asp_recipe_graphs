@@ -23,7 +23,7 @@ type_of(PartSpecTF,Node,NewType) :-
 secondary_substitution((RG,TF,PartSpecTF),Node,NewType) :-
     given_recipe(RG,TF),
     type_substitution(RG, TF, PartSpecTF),
-    recipe(RG,PartSpecTF),
+    valid_recipe(RG,PartSpecTF),
     not primary_substitution((RG, TF, PartSpecTF), Node, NewType),
     type_of(TF,Node,Type),
     type_of(PartSpecTF,Node,NewType),

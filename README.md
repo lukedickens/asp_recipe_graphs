@@ -195,7 +195,7 @@ We can now demonstrate type substitution. This requires a given recipe (graph an
 
 **Example: Type substitution for spaghetti pomodoro with primary substitution set switching uncooked spaghetti with uncooked fusilli**
 
-```clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples,validity,substitution}.lp asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/recipes/fusilli_pomodoro_tuples.lp asp_recipe_graphs/asp/domains/pomodoro_types.lp  asp_recipe_graphs/asp/queries/is_valid_recipe.lp asp_recipe_graphs/asp/queries/is_type_substitution.lp -n 0```
+```clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples,validity,type_substitution}.lp asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/recipes/fusilli_pomodoro_tuples.lp asp_recipe_graphs/asp/domains/pomodoro_types.lp  asp_recipe_graphs/asp/queries/is_valid_recipe.lp asp_recipe_graphs/asp/queries/is_type_substitution.lp -n 0```
 
 
 
