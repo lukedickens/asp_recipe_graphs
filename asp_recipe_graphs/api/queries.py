@@ -29,8 +29,8 @@ QUERY_DATA['why_not_recipe_graph'] = {
     'requires' : ['graph_properties']}
 QUERY_DATA['why_not_recipe'] = {
     'requires' : ['graph_properties', 'recipe_graphs', 'type_hierarchies']}
-QUERY_DATA['acceptability_tuples'] = {
-    'requires' : ['acceptability']}
+#QUERY_DATA['acceptability_tuples'] = {
+#    'requires' : ['acceptability']}
     
 QUERY_DATA['describe_recipe_graphs'] = {
     'requires' : ['recipe_graphs']}
