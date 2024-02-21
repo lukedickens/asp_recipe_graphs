@@ -66,23 +66,27 @@ where query is typically of the form `<ASPDIR>/queries/<QUERYNAME>.lp`. You can 
 
 The standard command to query whether the graphs in `<RECIPES>` are recipe graphs is:
 
-```clingo 1 <ASPDIR>/domain_independent/{graph_properties,recipe_graphs}.lp <RECIPES> <ASPDIR>/queries/is_recipe_graph.lp```
+```clingo 1 <ASPDIR>/domain_independent/{graph_properties,recipe_graphs}.lp <RECIPES> <ASPDIR>/queries/is_recipe_graph.lp
+```
 
 If any graphs are not recipe graphs then this will be `UNSATISFIABLE`, otherwise it will list all recipe_graphs in `<RECIPES>`.
 
 **Example: Check if  BBC vegan sponge cake graph is a recipe graph** We can do this with the following query:
 
-```clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs}.lp asp_recipe_graphs/asp/recipes/bbc_vegan_sponge_cake_graph.lp asp_recipe_graphs/asp/queries/is_recipe_graph.lp```
+```clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs}.lp asp_recipe_graphs/asp/recipes/bbc_vegan_sponge_cake_graph.lp asp_recipe_graphs/asp/queries/is_recipe_graph.lp
+```
 
 This should be `SATISFIABLE` and output `recipe_graph(rg_bbc_vegan_sponge_cake)` .
 
 **Example: Imperfect recipe graph definitions.** Imagine instead that I have a recipe graph poorly defined in file `scratch/not_a_recipe.lp`, then the following should be  `UNSATISFIABLE`:
 
-```clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs}.lp scratch/not_a_recipe_graph.lp asp_recipe_graphs/asp/queries/is_recipe_graph.lp```
+```clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs}.lp scratch/not_a_recipe_graph.lp asp_recipe_graphs/asp/queries/is_recipe_graph.lp
+```
 
 To understand why this is not a recipe-graph I can run the `why_not_recipe_graph` query with:
 
-```clingo 1 asp_recipe_graphs/asp/domain_independent/graph_properties.lp scratch/not_a_recipe_graph.lp asp_recipe_graphs/asp/queries/why_not_recipe_graph.lp```
+```clingo 1 asp_recipe_graphs/asp/domain_independent/graph_properties.lp scratch/not_a_recipe_graph.lp asp_recipe_graphs/asp/queries/why_not_recipe_graph.lp
+```
 
 This will output predicates associated with offending properties, see `asp_recipe_graphs/asp/queries/why_not_recipe_graph.lp` for a description. 
 
@@ -92,23 +96,27 @@ This will output predicates associated with offending properties, see `asp_recip
 
 The standard command to query whether the given recipes in `<RECIPES>` are properly defined recipes:
 
-```clingo 1 <ASPDIR>/domain_independent/{graph_properties,recipe_graphs,recipe}.lp <TYPEHIERARCHY> <RECIPES> <ASPDIR>/queries/is_recipe.lp```
+```clingo 1 <ASPDIR>/domain_independent/{graph_properties,recipe_graphs,recipe}.lp <TYPEHIERARCHY> <RECIPES> <ASPDIR>/queries/is_recipe.lp
+```
 
 If any graphs are not recipe graphs then this will be `UNSATISFIABLE`, otherwise it will list all recipe_graphs in `<RECIPES>`.
 
 **Example: Is BBC Vegan Sponge Cake a recipe?** - check if BBC vegan sponge cake graph and type function constitute a recipe with:
 
-```clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,universal_types,type_hierarchies,recipe}.lp asp_recipe_graphs/asp/recipes/bbc_vegan_sponge_cake_{graph,types}.lp asp_recipe_graphs/asp/queries/is_recipe.lp ```
+```clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,universal_types,type_hierarchies,recipe}.lp asp_recipe_graphs/asp/recipes/bbc_vegan_sponge_cake_{graph,types}.lp asp_recipe_graphs/asp/queries/is_recipe.lp
+```
 
 This should be `SATISFIABLE` and output `recipe(rg_bbc_vegan_sponge_cake,tf_bbc_vegan_sponge_cake)` .
 
 **Example: Imperfect recipe definitions.** Imagine instead that I have a recipe (graph and types) poorly defined in file `scratch/not_a_recipe.lp` then the following should be `UNSATISFIABLE`:
 
-```clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,universal_types,type_hierarchies,recipe}.lp scratch/not_a_recipe.lp asp_recipe_graphs/asp/queries/is_recipe.lp```
+```clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,universal_types,type_hierarchies,recipe}.lp scratch/not_a_recipe.lp asp_recipe_graphs/asp/queries/is_recipe.lp
+```
 
 To understand why this is not a recipe I can run the `why_not_recipe_graph` to determine if the recipe-graph is okay. If the graph is fine, then run `why_not_recipe` to query the typing function with:
 
-```clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,universal_types,type_hierarchies}.lp scratch/not_a_recipe.lp asp_recipe_graphs/asp/queries/why_not_recipe.lp```
+```clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,universal_types,type_hierarchies}.lp scratch/not_a_recipe.lp asp_recipe_graphs/asp/queries/why_not_recipe.lp
+```
 
 This will output predicates associated with offending properties, see `asp_recipe_graphs/asp/queries/why_not_recipe.lp` for a description.
 
@@ -139,7 +147,8 @@ This should output (something like) the following:
 
 Edit this, as described, to give the following:
 
-```child("butter","spreads"). child("spreads","comestible"). child("plain toast","toast"). child("toast","bread"). child("bread","comestible"). child("buttered toast","toast"). child("spread on toast","spread"). child("spread","put"). child("put","action").```
+```child("butter","spreads"). child("spreads","comestible"). child("plain toast","toast"). child("toast","bread"). child("bread","comestible"). child("buttered toast","toast"). child("spread on toast","spread"). child("spread","put"). child("put","action").
+```
 
 Then save in an appropriate `.lp` file, e.g. `scratch/buttered_toast_type_hierarchy.lp`.
 
@@ -155,7 +164,8 @@ To output the acceptability tuples you can derive from a `recipe`, use:
 
 **Example: Acceptability tuples derived from fusilli pomodoro** With the repository root as present working directory, run the following command:
 
-```clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,universal_types,graph_properties,recipe_graphs,recipe,acceptability_tuples}.lp   asp_recipe_graphs/asp/recipes/fusilli_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/queries/derived_acceptability_tuples.lp -n 0```
+```clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,universal_types,graph_properties,recipe_graphs,recipe,acceptability_tuples}.lp   asp_recipe_graphs/asp/recipes/fusilli_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/queries/derived_acceptability_tuples.lp -n 0
+```
 
 This will output all acceptability tuples from the chosen recipe using the universal type hierarchy. This can take a long time for larger recipes in particular, so you may prefer to use a type hierarchy that includes fewer elements.
 
@@ -177,12 +187,18 @@ Note that the fusilli_pomodoro recipe here is a candidate recipe, not a given re
 
 This requires a candidate recipe, namely a recipe (graph and type function) that is not a given recipe. We provide a small number of these in the `<ASPDIR>/candidate_recipes` directory with filenames of the form `<RECIPENAME>_graph.lp` and `<RECIPENAME>_types.lp`. You will also need to provide a set of given acceptability tuples. Some examples of these can be found in the `<ASPDIR>/recipes` directory with filenames of the form `<RECIPENAME>_tuples.lp`. Again this can be a computationally expensive call, so you are advised to create a compressed hierarchy with only the types of interest within it and place this in `<DOMAIN_TYPE_HIERARCHY>`. The general call to determine which nodes in your candidate recipe are valid is:
 
-```clingo <ASPDIR>/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples,validity}.lp  <DOMAIN_TYPE_HIERARCHY> <ASPDIR>/recipes/<RECIPENAME>_tuples.lp <ASPDIR>/candidate_recipes/<RECIPENAME>_{graph,types}.lp <ASPDIR>/queries/is_valid_candidate.lp  -n 0```
+```clingo <ASPDIR>/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples,validity}.lp  <DOMAIN_TYPE_HIERARCHY> <ASPDIR>/recipes/<RECIPENAME>_tuples.lp <ASPDIR>/candidate_recipes/<RECIPENAME>_{graph,types}.lp <ASPDIR>/queries/is_valid_candidate.lp  -n 0
+```
 
 **Example: Valid candidate tuples derived from fusilli pomodoro candidate recipe using specialised hierarchy** With the repository root as present working directory, a candidate recipe in `asp_recipe_graphs/asp/candidate_recipes/fusilli_pomodoro_{graph,types}.lp` and a compressed type hierarchy stored in `asp_recipe_graphs/asp/domains/pomodoro_types.lp`, run the following command:
 
-```clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples,validity}.lp  asp_recipe_graphs/asp/recipes/fusilli_pomodoro_tuples.lp asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/candidate_recipes/fusilli_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/queries/is_valid_candidate.lp  -n 0```
+```clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples,validity}.lp  asp_recipe_graphs/asp/recipes/fusilli_pomodoro_tuples.lp asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/candidate_recipes/fusilli_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/queries/is_valid_candidate.lp  -n 0
+```
 
+**Example: Show that candidate recipe fusilli pomodoro is valid** With the command
+
+```clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples,validity}.lp  asp_recipe_graphs/asp/recipes/fusilli_pomodoro_tuples.lp asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/candidate_recipes/fusilli_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/queries/is_valid_recipe.lp  -n 0
+```
 
 
 
