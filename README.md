@@ -206,9 +206,39 @@ We can now demonstrate type substitution. This requires a given recipe (graph an
 
 Many of the queries you can run directly through clingo (ASP), you can also run through Python. This python API provides some additional functionality make the querying simpler and less error prone. 
 
+### Drawing graphs
+
+The python api provides capabilities for drawing graphs of type hierarchies, recipe graphs and recipes. The following examples demonstrate this functionality. For more information run:
+
+```python draw_graph.py -h```
+
+**Draw type hierarchy:** To draw a graph of the pomodoro type hierarchy, types in spaghetti pomodoro and fusilli pomodoro run:
+
+```python draw_graph.py -t types -r spaghetti_pomodoro,fusilli_pomodoro```
+
+This will store the result in:
+
+```results/types/spaghetti_pomodoro_fusilli_pomodoro_comestible.pdf```
+
+**Draw recipe graph:** To draw a graph of spaghetti pomodoro's recipe graph:
+
+```python draw_graph.py -t recipe_graph -r spaghetti_pomodoro```
+
+This will store the result in:
+
+```results/recipe_graphs/spaghetti_pomodoro.pdf```
+
+**Draw recipe:** To draw the spaghetti pomodoro recipe as a graph (e.g. with types indicated) run:
+
+```python draw_graph.py -t recipe -r spaghetti_pomodoro```
+
+This will store the result in:
+
+```results/recipe/spaghetti_pomodoro.pdf```
+
 ### Simple queries
 
-To get started, you can try the `simple_asp_query.py` script. This has the following basic structure:
+Functionality in development includes running arbitrary queries through the python api, you can try the `simple_asp_query.py` script. This has the following basic structure:
 
 ```python simple_asp_query.py -r <RECIPE> -q <QUERY>```
 
@@ -232,8 +262,6 @@ What follows are a few examples that replicate the functionality described for c
 
 ```python3 simple_asp_query.py -r hummus -q acceptability_tuples```
 
-
-
 ### Which queries and which recipes
 
 You can get a list of available queries and available recipes by passing the `-h` flag to the `simple_asp_query.py` script. I.e.
@@ -242,4 +270,3 @@ You can get a list of available queries and available recipes by passing the `-h
 
 You can add additional recipes and queries too. Recipes are picked up from the appropriate folder but at the time of writing the queries must be present in the `queries` folder but also included in the `QUERIES_DATA` global variable defined in `asp_recipe_graphs.api.queries` module.
 
-### 
