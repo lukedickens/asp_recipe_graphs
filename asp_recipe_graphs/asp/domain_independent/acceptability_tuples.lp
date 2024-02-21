@@ -1,6 +1,8 @@
+% set maximum input and output set sizes (should be moved elsewhere for flexibility)
 #const max_in_set_size=6.
 #const max_out_set_size=2.
 
+%%% Removed this block as we didn't need a choice rule
 %%% allow creation of input and output elements
 %%1{ input_element((RG,TF,a(N)),CType) : in(arcs(RG),arc(c(Nin),a(N))), type_of(TF,c(Nin),CType), type_of(TF,a(N),AType) }max_in_set_size :-
 %%	recipe(RG,TF), in(acts(RG),a(N)).
@@ -53,38 +55,10 @@ used_output_m((RG,TF,a(N)),M) :- output_element_position((RG,TF,a(N)),CType,M).
 there_is_output_element_position((RG,TF,a(N)),CType) :- output_element_position((RG,TF,a(N)),CType,M).
 :- output_element((RG,TF,a(N)),CType), not there_is_output_element_position((RG,TF,a(N)),CType).
 
-
 % a recipe is either a given recipe xor a candidate recipe
 candidate_recipe(RG,TF) :- recipe(RG,TF), not given_recipe(RG,TF).
 
-
-%% will remove vvvv and replace with the tuple being valid or not see directly below
-%%% Definitions for good and questionable comestibles
-%%valid_input_element((RG,TF,a(N)),CType,M) :-
-%%	given_recipe(RG,TF),
-%%	input_element_position((RG,TF,a(N)),CType,M).
-%%
-%%valid_output_element((RG,TF,a(N)),CType,M) :-
-%%	given_recipe(RG,TF),
-%%	output_element_position((RG,TF,a(N)),CType,M).
-%%
-%%valid_action_element((RG,TF,a(N)),AType) :-
-%%	type_of(TF,a(N),AType),
-%%	given_recipe(RG,TF).
-%%
-%%candidate_input_element((RG,TF,a(N)),CType,M) :-
-%%	candidate_recipe(RG,TF),
-%%	input_element_position((RG,TF,a(N)),CType,M).
-%%
-%%candidate_output_element((RG,TF,a(N)),CType,M) :-
-%%	candidate_recipe(RG,TF),
-%%	output_element_position((RG,TF,a(N)),CType,M).
-%%
-%%candidate_action_element((RG,TF,a(N)),AType) :-
-%%	type_of(TF,a(N),AType),
-%%	candidate_recipe(RG,TF).
-
-%% Now we just say whether or not the tuple is given or candidate
+%% State whether or not the tuple is given or candidate
 given_acceptability_tuple((RG,TF,a(N))) :-
 	given_recipe(RG,TF),
     action_element((RG,TF,a(N)),AType).

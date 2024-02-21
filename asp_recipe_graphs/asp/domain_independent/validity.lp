@@ -10,6 +10,9 @@ match_for_action(Candidate,Valid,AType) :-
     action_element(Candidate,AType).
 
 % Sufficient and necessary conditions for outputs
+% Commented out lines are now possible because we can state whether the
+% acceptability tuple itself is valid or candidate (rather than input or output elements)
+% This commenting out speeds up code by factor of 80x
 match_for_output(Candidate,Valid,CType) :-
     valid_acceptability_tuple(Valid),
     output_element_position(Valid,CType,M1),
