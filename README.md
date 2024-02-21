@@ -191,11 +191,12 @@ This requires a candidate recipe, namely a recipe (graph and type function) that
 
 We can now demonstrate type substitution. This requires a given recipe (graph and type function) as well as some additional given/valid acceptability tuples from elsewhere. Finally, we need to specify some partial type function or primary substitution set which can be then fully resolved by the substitution process. The general query for this is:
 
+```clingo <ASPDIR>/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples,validity,type_substitution}.lp <ASPDIR>/recipes/<GIVEN_RECIPE_NAME>_{graph,types}.lp <MORE_VALID_TUPLES> <TYPE_HIERARCHY>  <ASPDIR>/queries/is_type_substitution.lp -n 0```
 
 
 **Example: Type substitution for spaghetti pomodoro with primary substitution set switching uncooked spaghetti with uncooked fusilli**
 
-```clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples,validity,type_substitution}.lp asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/recipes/fusilli_pomodoro_tuples.lp asp_recipe_graphs/asp/domains/pomodoro_types.lp  asp_recipe_graphs/asp/queries/is_valid_recipe.lp asp_recipe_graphs/asp/queries/is_type_substitution.lp -n 0```
+```clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples,validity,type_substitution}.lp asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/recipes/fusilli_pomodoro_tuples.lp asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/queries/is_type_substitution.lp -n 0```
 
 
 
