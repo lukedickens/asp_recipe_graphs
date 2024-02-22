@@ -3,25 +3,15 @@
 
 % the existing way
 % all given tuples are valid under any rule
-valid_tuple(Valid) :-
-    tuple_inference_ruleset(RuleSet),
-    valid_action_element(Valid, AType).
+valid_acceptability_tuple((Valid,AType,AType2)) :-
+    valid_acceptability_tuple(Valid),
+    action_element(Tuple, AType),
+    action_element((Valid,AType,AType2), AType2),
+    child(AType,AType2),
+    sufficient_match_input((Valid,AType,AType2),Valid),
+    necessary_match_input((Valid,AType,AType2),Valid),
+    sufficient_match_output((Valid,AType,AType2),Valid),
+    necessary_match_output((Valid,AType,AType2),Valid).
 
-valid_action_element(Key,AType) :-
-    tuple_inference_ruleset(RuleSet),
-    potential_action_element(Key,AType),
-    inferred_action_element(Rules,Key,AType).
-    
-valid_input_element(Key,CType,M) :-
-    tuple_inference_ruleset(RuleSet),
-    potential_action_element(Key,CType,M),
-    inferred_action_element(Rules,Key,CType,M).
 
-valid_output_element(Key,CType,M) :-
-    tuple_inference_ruleset(RuleSet),
-    potential_action_element(Key,CType,M),
-    inferred_action_element(Rules,Key,CType,M).
-    
-    
-% or should we be validating the key rather than the elements?
-
+% But how do we generate identifiers to the variables NewTuple
