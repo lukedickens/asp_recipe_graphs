@@ -2,8 +2,17 @@
 % Definition 3 of a recipe:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-recipe_graph(RG) :- recipe(RG,TF).
 recipe(RG,TF) :- given_recipe(RG,TF).
+recipe_graph(RG) :- recipe(RG,TF).
+
+
+given_recipe_graph(RG) :- given_recipe(RG,TF).
+given_type_of(TF, V, T) :- 
+    given_recipe(RG,TF),
+    in(nodes(RG),V),
+    type_of(TF, V, T).
+    
+    
 %TODO Luke: constrain the recipe predicate to only act on type functions
 %TODO Luke: constrain type functions to only associate one type with each node
 %TODO Luke: constrain type functions paired with a recipe graph to only define types for nodes within the graph 

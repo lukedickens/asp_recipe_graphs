@@ -58,7 +58,6 @@
 % subsets of graphs and recipes:
 graph(RG) :- recipe_graph(RG).
 recipe_graph(RG) :- given_recipe_graph(RG).
-given_recipe_graph(RG) :- given_recipe(RG,TF).
 
 
 %%%%%%%%%%%%%%%%%%%%%

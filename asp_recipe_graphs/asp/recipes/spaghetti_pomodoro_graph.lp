@@ -3,7 +3,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-given_recipe_graph(rg_spaghetti_pomodoro).
+recipe_graph(rg_spaghetti_pomodoro).
 % boil spaghetti
 in(arcs(rg_spaghetti_pomodoro),arc(c(0),a(0))).
 in(arcs(rg_spaghetti_pomodoro),arc(c(1),a(0))).

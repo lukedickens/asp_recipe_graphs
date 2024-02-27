@@ -84,21 +84,21 @@ necessary_match_input(Candidate,Valid) :-
     
 
 % Sufficient and necessary condition for both inputs and outputs
-valid_candidate_tuple(Candidate) :-
+valid_acceptability_tuple(Candidate) :-
     match_for_action(Candidate,Valid,AType),
     sufficient_match_input(Candidate,Valid),
     necessary_match_input(Candidate,Valid),
     sufficient_match_output(Candidate,Valid),
     necessary_match_output(Candidate,Valid).
 
--valid_candidate_tuple(Candidate) :-
+-valid_acceptability_tuple(Candidate) :-
     candidate_acceptability_tuple(Candidate),
-    not valid_candidate_tuple(Candidate).
+    not valid_acceptability_tuple(Candidate).
 
 -valid_recipe(RG,TF) :-
 	candidate_recipe(RG,TF),
 	in(a_nodes(RG),a(N)),
-	not valid_candidate_tuple((RG,TF,a(N))).
+	not valid_acceptability_tuple((RG,TF,a(N))).
 
 valid_recipe(RG,TF) :- candidate_recipe(RG,TF), not -valid_recipe(RG,TF).
 

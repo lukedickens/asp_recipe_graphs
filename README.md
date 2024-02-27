@@ -188,7 +188,7 @@ This will output all acceptability tuples from the chosen recipe using the unive
 **Example: Acceptability tuples derived from fusilli pomodoro recipe using specialised hierarchy** With the repository root as present working directory, and a compressed type hierarchy stored in `asp_recipe_graphs/asp/domains/pomodoro_types.lp`, run the following command:
 
 ```
-clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples}.lp  asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/recipes/fusilli_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/queries/derived_acceptability_tuples.lp -n 0
+clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples}.lp  asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/recipes/fusilli_pomodoro_{graph,types,given}.lp asp_recipe_graphs/asp/queries/derived_acceptability_tuples.lp -n 0
 ```
 
 
@@ -196,7 +196,7 @@ clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properti
 **Example: Acceptability tuples derived from fusilli pomodoro candidate recipe** With the repository root as present working directory, a candidate recipe in `asp_recipe_graphs/asp/candidate_recipes/fusilli_pomodoro_{graph,types}.lp` , and a compressed type hierarchy stored in `asp_recipe_graphs/asp/domains/pomodoro_types.lp`, run the following command:
 
 ```
-clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples}.lp  asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/candidate_recipes/fusilli_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/queries/derived_acceptability_tuples.lp -n 0
+clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples}.lp  asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/recipes/fusilli_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/queries/derived_acceptability_tuples.lp -n 0
 ```
 
 Note that the fusilli_pomodoro recipe here is a candidate recipe, not a given recipe, and so the derived acceptability tuples are candidate tuples, not given tuples.
@@ -214,13 +214,13 @@ clingo <ASPDIR>/domain_independent/{type_hierarchies,graph_properties,recipe_gra
 **Example: Valid candidate tuples derived from fusilli pomodoro candidate recipe using specialised hierarchy** With the repository root as present working directory, a candidate recipe in `asp_recipe_graphs/asp/candidate_recipes/fusilli_pomodoro_{graph,types}.lp` and a compressed type hierarchy stored in `asp_recipe_graphs/asp/domains/pomodoro_types.lp`, run the following command:
 
 ```
-clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples,validity}.lp  asp_recipe_graphs/asp/recipes/fusilli_pomodoro_tuples.lp asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/candidate_recipes/fusilli_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/queries/is_valid_candidate.lp  -n 0
+clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples,validity}.lp  asp_recipe_graphs/asp/recipes/fusilli_pomodoro_tuples.lp asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/candidate_recipes/fusilli_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/queries/show_validated_candidate_tuples.lp
 ```
 
 **Example: Show that candidate recipe fusilli pomodoro is valid** With the command
 
 ```
-clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples,validity}.lp  asp_recipe_graphs/asp/recipes/fusilli_pomodoro_tuples.lp asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/candidate_recipes/fusilli_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/queries/is_valid_recipe.lp  -n 0
+clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples,validity}.lp  asp_recipe_graphs/asp/recipes/fusilli_pomodoro_tuples.lp asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/recipes/fusilli_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/queries/show_validated_recipe.lp  -n 0
 ```
 
 
@@ -231,14 +231,14 @@ clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properti
 We can now demonstrate type substitution. This requires a given recipe (graph and type function) as well as some additional given/valid acceptability tuples from elsewhere. Finally, we need to specify some partial type function or primary substitution set which can be then fully resolved by the substitution process. The general query for this is:
 
 ```
-clingo <ASPDIR>/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples,validity,type_substitution}.lp <ASPDIR>/recipes/<GIVEN_RECIPE_NAME>_{graph,types}.lp <MORE_VALID_TUPLES> <TYPE_HIERARCHY>  <ASPDIR>/queries/is_type_substitution.lp -n 0
+clingo <ASPDIR>/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples,validity,type_substitution}.lp <ASPDIR>/recipes/<GIVEN_RECIPE_NAME>_{graph,types,given}.lp <MORE_VALID_TUPLES> <TYPE_HIERARCHY>  <ASPDIR>/queries/is_type_substitution.lp -n 0
 ```
 
 
 **Example: Type substitution for spaghetti pomodoro with primary substitution set switching uncooked spaghetti with uncooked fusilli**
 
 ```
-clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples,validity,type_substitution}.lp asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/recipes/fusilli_pomodoro_tuples.lp asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/queries/is_type_substitution.lp -n 0
+clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipe,acceptability_tuples,validity,type_substitution}.lp asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_{graph,types,given}.lp asp_recipe_graphs/asp/recipes/fusilli_pomodoro_tuples.lp asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/queries/is_type_substitution.lp -n 0
 ```
 
 
