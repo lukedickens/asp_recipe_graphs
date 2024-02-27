@@ -30,30 +30,32 @@ action_element((RG,TF,a(N)),AType) :-
 % ensure there can be numbered position in tuple for input elements
 0{ input_element_position((RG,TF,a(N)),CType,M) : input_element((RG,TF,a(N)),CType) }1 :-
 	recipe(RG,TF), M=1..max_in_set_size, in(arcs(RG),arc(c(Nin),a(N))).
-% ensure no input element has two positions
-:- input_element_position((RG,TF,a(N)),CType,N1), input_element_position((RG,TF,a(N)),CType,N2), N1 != N2.
-% ensure input element positions are lexicographically ordered
-:- input_element_position((RG,TF,a(N)),CType1,N1), input_element_position((RG,TF,a(N)),CType2,N2), CType1 < CType2, N1 > N2.
-% no gaps between numbers (contiguous)
-used_input_m((RG,TF,a(N)),M) :- input_element_position((RG,TF,a(N)),CType,M).
-:- used_input_m((RG,TF,a(N)),M1), not used_input_m((RG,TF,a(N)),M2), M2 = 1..max_in_set_size, M2 < M1.
-% there must be an input element for every positioned one
-there_is_input_element_position((RG,TF,a(N)),CType) :- input_element_position((RG,TF,a(N)),CType,M).
-:- input_element((RG,TF,a(N)),CType), not there_is_input_element_position((RG,TF,a(N)),CType).
-
 % ensure there can be numbered position in tuple for output elements
 0{ output_element_position((RG,TF,a(N)),CType,M) : output_element((RG,TF,a(N)),CType) }1 :-
 	recipe(RG,TF), M=1..max_out_set_size, in(arcs(RG),arc(a(N),c(Nout))).
-% ensure no output element has two positions
-:- output_element_position((RG,TF,a(N)),CType,N1), output_element_position((RG,TF,a(N)),CType,N2), N1 != N2.
-% ensure output element positions are lexicographically ordered
-:- output_element_position((RG,TF,a(N)),CType1,N1), output_element_position((RG,TF,a(N)),CType2,N2), CType1 < CType2, N1 > N2.
+
+%% Purely acceptability tuple reasoning so no need for triple (RG,TF,a(N)) replace with Key 
+% ensure no input element has two positions
+:- input_element_position(Key,CType,N1), input_element_position(Key,CType,N2), N1 != N2.
+% ensure input element positions are lexicographically ordered
+:- input_element_position(Key,CType1,N1), input_element_position(Key,CType2,N2), CType1 < CType2, N1 > N2.
 % no gaps between numbers (contiguous)
-used_output_m((RG,TF,a(N)),M) :- output_element_position((RG,TF,a(N)),CType,M).
-:- used_output_m((RG,TF,a(N)),M1), not used_output_m((RG,TF,a(N)),M2), M2 = 1..max_out_set_size, M2 < M1.
+used_input_m(Key,M) :- input_element_position(Key,CType,M).
+:- used_input_m(Key,M1), not used_input_m(Key,M2), M2 = 1..max_in_set_size, M2 < M1.
+% there must be an input element for every positioned one
+there_is_input_element_position(Key,CType) :- input_element_position(Key,CType,M).
+:- input_element(Key,CType), not there_is_input_element_position(Key,CType).
+
+% ensure no output element has two positions
+:- output_element_position(Key,CType,N1), output_element_position(Key,CType,N2), N1 != N2.
+% ensure output element positions are lexicographically ordered
+:- output_element_position(Key,CType1,N1), output_element_position(Key,CType2,N2), CType1 < CType2, N1 > N2.
+% no gaps between numbers (contiguous)
+used_output_m(Key,M) :- output_element_position(Key,CType,M).
+:- used_output_m(Key,M1), not used_output_m(Key,M2), M2 = 1..max_out_set_size, M2 < M1.
 % there must be an output element for every positioned one
-there_is_output_element_position((RG,TF,a(N)),CType) :- output_element_position((RG,TF,a(N)),CType,M).
-:- output_element((RG,TF,a(N)),CType), not there_is_output_element_position((RG,TF,a(N)),CType).
+there_is_output_element_position(Key,CType) :- output_element_position(Key,CType,M).
+:- output_element(Key,CType), not there_is_output_element_position(Key,CType).
 
 % a recipe is either a given recipe xor a candidate recipe
 candidate_recipe(RG,TF) :- recipe(RG,TF), not given_recipe(RG,TF).
