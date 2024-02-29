@@ -15,7 +15,7 @@ Later in this README we describe a general use of the library. First, we list a 
 
 To test whether the graph for spaghetti-pomodoro (in file `'./asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_graph.lp'`) satisfies the requirements of  a recipe graph, run:
 
-```
+```shell
 clingo 1 ./asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs}.lp ./asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_graph.lp ./asp_recipe_graphs/asp/queries/is_recipe_graph.lp
 ```
 
