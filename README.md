@@ -15,7 +15,9 @@ Later in this README we describe a general use of the library. First, we list a 
 
 To test whether the graph for spaghetti-pomodoro (in file `'./asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_graph.lp'`) satisfies the requirements of  a recipe graph, run:
 
-```clingo 1 ./asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs}.lp ./asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_graph.lp ./asp_recipe_graphs/asp/queries/is_recipe_graph.lp```
+```
+clingo 1 ./asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs}.lp ./asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_graph.lp ./asp_recipe_graphs/asp/queries/is_recipe_graph.lp
+```
 
 This should give the following as part of the output:
 
@@ -30,7 +32,9 @@ SATISFIABLE
 
 To test whether the graph and type function for spaghetti-pomodoro (in files `'./asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_graph.lp'` and  `'./asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_types.lp'`) satisfies the requirements of  a recipe, run:
 
-``` clingo 1 ./asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,universal_types,type_hierarchies,recipe}.lp ./asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_{graph,types}.lp ./asp_recipe_graphs/asp/queries/is_recipe.lp```
+```
+clingo 1 ./asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,universal_types,type_hierarchies,recipe}.lp ./asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_{graph,types}.lp ./asp_recipe_graphs/asp/queries/is_recipe.lp
+```
 
 This should give the following as part of the output:
 
@@ -58,7 +62,9 @@ For the following examples,
 
 The standard command is as follows:
 
-`clingo 1 <ASPDIR>/domain_independent/{<ASPMODULES>}.lp <TYPEHIERARCHY> <RECIPES> <QUERY>`
+```
+clingo 1 <ASPDIR>/domain_independent/{<ASPMODULES>}.lp <TYPEHIERARCHY> <RECIPES> <QUERY>
+```
 
 where query is typically of the form `<ASPDIR>/queries/<QUERYNAME>.lp`. You can write your own queries or use those in the folder `<ASPDIR>/queries`. The `1` means "return just one stable model", which is sufficient for the majority of queries, but you may require `0` (all stable models) for more advanced calls.
 
@@ -139,7 +145,9 @@ If you are using the universal type hierarchy you can simply add `universal_type
 
 However this can be slow. To easily create your own type hierarchy or hierarchies for recipes in `<RECIPES>` then use:
 
-`clingo 1 <ASPDIR>/domain_independent/{type_hierarchies,recipe_graphs,graph_properties,universal_types}.lp  <RECIPES> <ASPDIR>/queries/used_child.lp`
+```
+clingo 1 <ASPDIR>/domain_independent/{type_hierarchies,recipe_graphs,graph_properties,universal_types}.lp  <RECIPES> <ASPDIR>/queries/used_child.lp
+```
 
 This outputs a stable model with terms of the form `used_child(A,B)`. Copy these to a new file at some location (hereafter called `<TYPEHIERARCHY>`) then edit to replace `used_child` with `child` and `) ` with `). ` universally. `<TYPEHIERARCHY>` can then be used in place of `<ASPDIR>/domain_independent/universal_types.lp` as a minimal type-hierarchy.
 
@@ -153,13 +161,13 @@ clingo 1 asp_recipe_graphs/asp/domain_independent/{type_hierarchies,recipe_graph
 
 This should output (something like) the following:
 
-```
+```shell
 used_child("butter","spreads") used_child("spreads","comestible") used_child("plain toast","toast") used_child("toast","bread") used_child("bread","comestible") used_child("buttered toast","toast") used_child("spread on toast","spread") used_child("spread","put") used_child("put","action")
 ```
 
 Edit this, as described, to give the following:
 
-```
+```shell
 child("butter","spreads"). child("spreads","comestible"). child("plain toast","toast"). child("toast","bread"). child("bread","comestible"). child("buttered toast","toast"). child("spread on toast","spread"). child("spread","put"). child("put","action").
 ```
 
