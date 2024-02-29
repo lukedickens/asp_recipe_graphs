@@ -316,25 +316,25 @@ What follows are a few examples that replicate the functionality described for c
 **Example: Check if  BBC vegan sponge cake graph is a recipe graph** 
 
 ```python:
-python3 simple_asp_query.py -r bbc_vegan_sponge_cake -q is_recipe_graph
+python simple_asp_query.py -r bbc_vegan_sponge_cake -q is_recipe_graph
 ```
 
 **Example: Is BBC Vegan Sponge Cake a recipe?** 
 
 ```python:
-python3 simple_asp_query.py -r bbc_vegan_sponge_cake -q is_recipe
+python simple_asp_query.py -r bbc_vegan_sponge_cake -q is_recipe
 ```
 
 **Example: Compressed hierarchy for buttered toast** 
 
 ```python:
-python3 simple_asp_query.py -r buttered_toast -q used_child
+python simple_asp_query.py -r buttered_toast -q used_child
 ```
 
 **Example: Acceptability tuples inferred from hummus recipe**
 
 ```python:
-python3 simple_asp_query.py -r hummus -q acceptability_tuples
+python simple_asp_query.py -r hummus -q acceptability_tuples
 ```
 
 ### Which queries and which recipes
@@ -342,7 +342,7 @@ python3 simple_asp_query.py -r hummus -q acceptability_tuples
 You can get a list of available queries and available recipes by passing the `-h` flag to the `simple_asp_query.py` script. I.e.
 
 ```
-python3 simple_asp_query.py -h
+python simple_asp_query.py -h
 ```
 
 You can add additional recipes and queries too. Recipes are picked up from the appropriate folder but at the time of writing the queries must be present in the `queries` folder but also included in the `QUERIES_DATA` global variable defined in `asp_recipe_graphs.api.queries` module.
