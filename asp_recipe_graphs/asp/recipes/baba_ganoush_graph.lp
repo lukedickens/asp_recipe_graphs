@@ -2,7 +2,7 @@
 % example recipe graph: baba_ganoush
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-given_recipe_graph(rg_baba_ganoush).
+recipe_graph(rg_baba_ganoush).
 % halve and oil
 in(arcs(rg_baba_ganoush),arc(c(0),a(0))).
 in(arcs(rg_baba_ganoush),arc(c(1),a(0))).

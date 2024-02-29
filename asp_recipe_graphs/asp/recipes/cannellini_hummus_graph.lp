@@ -2,7 +2,7 @@
 % example recipe graph: hummus
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-given_recipe_graph(rg_cannellini_hummus).
+recipe_graph(rg_cannellini_hummus).
 % roasting garlic
 in(arcs(rg_cannellini_hummus),arc(c(0),a(0))).
 in(arcs(rg_cannellini_hummus),arc(c(1),a(0))).

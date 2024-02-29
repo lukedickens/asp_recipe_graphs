@@ -2,7 +2,7 @@
 %  recipe graph (beans on toast):
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-given_recipe_graph(rg_beans_on_toast).   
+recipe_graph(rg_beans_on_toast).   
 in(arcs(rg_beans_on_toast),arc(c(0),a(0))).
 in(arcs(rg_beans_on_toast),arc(c(1),a(0))).
 in(arcs(rg_beans_on_toast),arc(a(0),c(2))).

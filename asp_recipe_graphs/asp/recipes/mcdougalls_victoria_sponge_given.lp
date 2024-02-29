@@ -1,0 +1,2 @@
+given_recipe(rg_mcdougalls_victoria_sponge,tf_mcdougalls_victoria_sponge).
+

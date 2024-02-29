@@ -2,7 +2,7 @@
 % example recipe graph: hummus
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-given_recipe_graph(rg_edamame_hummus).
+recipe_graph(rg_edamame_hummus).
 % thawing edamame
 in(arcs(rg_edamame_hummus),arc(c(0),a(0))).
 in(arcs(rg_edamame_hummus),arc(a(0),c(1))).

@@ -2,7 +2,7 @@
 % example recipe graph: hummus
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-given_recipe_graph(rg_hummus).
+recipe_graph(rg_hummus).
 %
 in(arcs(rg_hummus),arc(c(0),a(0))).
 in(arcs(rg_hummus),arc(a(0),c(6))).

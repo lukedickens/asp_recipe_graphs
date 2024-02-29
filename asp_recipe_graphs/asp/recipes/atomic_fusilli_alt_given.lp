@@ -1,0 +1,1 @@
+given_recipe(rg_atomic_fusilli_alt,tf_atomic_fusilli_alt).

@@ -2,9 +2,9 @@ import os
 from asp_recipe_graphs.api.modules import SRC_ROOT_DIR
 from asp_recipe_graphs.api.modules import QUERIES_DIR
 
-#acceptability_tuples.lp  is_connected.lp     is_recipe.lp                     used_child.lp
+#acceptability_tuples.lp  is_connected.lp     show_recipe.lp                     used_child.lp
 #atomic_recipe_graph.lp   is_cyclic.lp        not_properly_connected_graph.lp  why_not_recipe_graph.lp
-#badly_defined_type.lp    is_recipe_graph.lp  used_ancestor.lp                 why_not_recipe.lp
+#badly_defined_type.lp    show_recipe_graph.lp  used_ancestor.lp                 why_not_recipe.lp
 
 # ideally the dependencies here would also be auto discovered just as for the 
 # domain independent modules
@@ -20,11 +20,11 @@ QUERY_DATA['types'] = {
     'requires' : ['graph_properties','type_hierarchies']}
 QUERY_DATA['arcs_and_types'] = {
     'requires' : ['graph_properties','type_hierarchies']}
-QUERY_DATA['is_recipe_graph'] = {
+QUERY_DATA['show_recipe_graph'] = {
     'parameters' : [],
     'requires' : ['recipe_graphs']}
-QUERY_DATA['is_recipe'] = {
-    'requires' : ['recipe']}
+QUERY_DATA['show_recipe'] = {
+    'requires' : ['recipes']}
 QUERY_DATA['why_not_recipe_graph'] = {
     'requires' : ['graph_properties']}
 QUERY_DATA['why_not_recipe'] = {
@@ -35,7 +35,7 @@ QUERY_DATA['why_not_recipe'] = {
 QUERY_DATA['describe_recipe_graphs'] = {
     'requires' : ['recipe_graphs']}
 QUERY_DATA['describe_recipes'] = {
-    'requires' : ['recipe']}
+    'requires' : ['recipes']}
 
 QUERY_DATA['used_child'] = {
     'requires' : ['universal_types','type_hierarchies']}
