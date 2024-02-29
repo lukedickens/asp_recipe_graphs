@@ -10,9 +10,9 @@ from asp_recipe_graphs.api.asp2graph import recipe_to_dot
 from asp_recipe_graphs.api.asp2graph import GRAPH_TYPES
 from asp_recipe_graphs.api.asp2graph import parse_type_hierarchy
 from asp_recipe_graphs.api.asp2graph import create_type_hierarchy_graph
-from asp_recipe_graphs.api.asp2graph import RECIPE_DIR
-from asp_recipe_graphs.api.asp2graph import RECIPE_GRAPH_DIR
-from asp_recipe_graphs.api.asp2graph import TYPE_GRAPH_DIR
+from asp_recipe_graphs.api.asp2graph import RECIPE_RESDIR
+from asp_recipe_graphs.api.asp2graph import RECIPE_GRAPH_RESDIR
+from asp_recipe_graphs.api.asp2graph import TYPE_GRAPH_RESDIR
 
 from asp_recipe_graphs.api.solver import load_and_solve
 from asp_recipe_graphs.api.recipes import RECIPES
@@ -70,12 +70,12 @@ def load_and_draw_recipe(
     # parses the asp model string to get type function info
     type_functions = get_type_functions(asp_model)
     dot = recipe_to_dot((graph_id, typef_id), graphs, type_functions)
-    bare_ofname = os.path.join(RECIPE_DIR,recipe_name)
+    bare_ofname = os.path.join(RECIPE_RESDIR,recipe_name)
     ofname = dot.render(bare_ofname)
     print(f"recipe graph for {recipe} saved to:\n\t{ofname}")
 
 def load_and_draw_recipe_graph(
-        recipe='beans_on_toast', outdir=RECIPE_GRAPH_DIR, **kwargs):
+        recipe='beans_on_toast', outdir=RECIPE_GRAPH_RESDIR, **kwargs):
 #    # find the file path (just one graph)
     fpaths, recipe_graph_name = recipe_graphs_to_fpaths_and_str(recipe)
     # recipe identifier
@@ -90,19 +90,30 @@ def load_and_draw_recipe_graph(
     print(f"recipe graph for {recipe_graph_name} saved to:\n\t{ofname}")
 
 def load_and_draw_type_hierarchy(recipe=None, base_type=None, **kwargs):
-    print(f"Creating type hierarchy for {recipe}")
+    print(f"Creating type hierarchy for recipe(s): {recipe}")
     fpaths, recipes_name = recipes_to_fpaths_and_str(recipe)
 #    recipe = 'buttered_toast'
 #    asp_model = """
 #        used_child("butter","spreads") used_child("spreads","comestible") used_child("plain toast","toast") used_child("toast","bread") used_child("bread","comestible") used_child("buttered toast","toast") used_child("spread on toast","spread") used_child("spread","put") used_child("put","action")"""
     asp_model = load_and_solve('used_child',fpaths)[0]
-    parent2children = parse_type_hierarchy(asp_model, root=base_type)
+    parent2children = parse_type_hierarchy(asp_model, root=base_type, child_predicate='used_child')
     print(f"parent2children = {parent2children}")
     dot = create_type_hierarchy_graph(parent2children)
     ofstem = recipes_name+'_'+base_type
-    bare_ofname = os.path.join(TYPE_GRAPH_DIR,ofstem)
+    bare_ofname = os.path.join(TYPE_GRAPH_RESDIR,ofstem)
     ofname = dot.render(bare_ofname)
     print(f"Type hierarchy for {recipe} saved to:\n\t{ofname}")
+
+def draw_preexisting_type_hierarchy(fpath=None, base_type=None, **kwargs):
+    print(f"Creating type hierarchy in {fpath}")
+    fpaths = [fpath ]
+    asp_model = load_and_solve('show_child',fpaths)[0]
+    parent2children = parse_type_hierarchy(asp_model, root=base_type, child_predicate='child')
+    dot = create_type_hierarchy_graph(parent2children)
+    ofstem = fpath.split('/')[-1].split('.')[0] +'_'+base_type
+    bare_ofname = os.path.join(TYPE_GRAPH_RESDIR,ofstem)
+    ofname = dot.render(bare_ofname)
+    print(f"Type hierarchy from {fpath} saved to:\n\t{ofname}")
 
 def main(graph_type=None, **kwargs):
     if graph_type == 'recipe_graph':
@@ -110,7 +121,12 @@ def main(graph_type=None, **kwargs):
     elif graph_type == 'recipe':
         load_and_draw_recipe(**kwargs)
     elif graph_type == 'types':
-        load_and_draw_type_hierarchy(**kwargs)
+        recipe = kwargs.pop('recipe',None)
+        if not recipe is None:
+            load_and_draw_type_hierarchy(recipe, **kwargs)
+        else:
+            fpath = kwargs.get('hierarchy_fpath',None)
+            draw_preexisting_type_hierarchy(fpath, **kwargs)
     else:
         raise ValueError(f"graph_type {graph_type} not recognised")
 
@@ -138,6 +154,7 @@ def create_parser():
     parser.add_argument('--recipe', '-r', type=str,
 #     choices=recipe_options,
         help='Specify recipe by identifier')
+    parser.add_argument('--hierarchy-fpath', type=str, default='./asp_recipe_graphs/asp/domain_independent/universal_types.lp')
     return parser
     
 if __name__ == '__main__':

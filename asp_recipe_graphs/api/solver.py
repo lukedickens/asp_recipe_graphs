@@ -49,7 +49,9 @@ def load_and_solve(query, domain_files, additional_asp=None):
     query_info = QUERY_DATA[query]
     parameters = query_info['parameters']
     programme = query_info['programme']
+    print(f"query_info['requires'] = {query_info['requires']}")
     dependencies = get_dependencies(query_info['requires'])
+    print(f"dependencies = {dependencies}")
     load_modules(ctl, dependencies)
     load_paths(ctl, domain_files)
 #    load_queries(ctl, [query])

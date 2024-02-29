@@ -4,9 +4,9 @@ import os
 
 from asp_recipe_graphs.api.modules import SRC_ROOT_DIR
 RESULTS_DIR = os.path.join(SRC_ROOT_DIR, 'results')
-RECIPE_GRAPH_DIR = os.path.join(RESULTS_DIR, 'recipe_graphs')
-RECIPE_DIR = os.path.join(RESULTS_DIR, 'recipe')
-TYPE_GRAPH_DIR = os.path.join(RESULTS_DIR, 'types')
+RECIPE_GRAPH_RESDIR = os.path.join(RESULTS_DIR, 'recipe_graphs')
+RECIPE_RESDIR = os.path.join(RESULTS_DIR, 'recipe')
+TYPE_GRAPH_RESDIR = os.path.join(RESULTS_DIR, 'types')
 
 RES_C_OR_A = '(?:c|a)\([0-9]+\)'
 RES_FIND_ARC = fr'arc\(({RES_C_OR_A}),({RES_C_OR_A})\)'
@@ -152,9 +152,11 @@ def create_type_hierarchy_graph(neighbours):
     return dot
 
 
-def parse_type_hierarchy(asp_model, root='comestible'):
+def parse_type_hierarchy(asp_model, root='comestible', child_predicate='used_child'):
     neighbours = {}
-    for child, parent in RE_FIND_USED_CHILDS.findall(asp_model):
+    re_find_childs = re.compile(
+        fr'{child_predicate}\(({RES_STRING}),({RES_STRING})\)')
+    for child, parent in re_find_childs.findall(asp_model):
         parent = parent.strip('"')
         child = child.strip('"')
         these_children = neighbours.get(parent, set())

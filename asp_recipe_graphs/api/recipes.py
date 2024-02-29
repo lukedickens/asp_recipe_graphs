@@ -6,6 +6,7 @@ import warnings
 GRAPH_INDICATOR = 'graph'
 TF_INDICATOR = 'types'
 TUPLES_INDICATOR = 'tuples'
+GIVEN_INDICATOR = 'given'
 
 
 
@@ -25,6 +26,8 @@ def detect_recipes(recipes_dir=RECIPES_DIR):
         elif short_name.endswith(TF_INDICATOR):
             recipe_type_function_paths[short_name[:-TLEN-1]] = path
         elif short_name.endswith(TUPLES_INDICATOR):
+            pass
+        elif short_name.endswith(GIVEN_INDICATOR):
             pass
         else:
             warnings.warn(f"Unrecognised recipe file:\n\t{path}")
