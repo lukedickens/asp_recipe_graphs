@@ -69,6 +69,8 @@ Optimization: -10
 OPTIMUM FOUND
 ```
 
+This type substitution is minimal cost with respect to the size of the secondary substitution set, and (at time of writing) we assume 0-1 distance for types. (A more so-
+phisticated approach might use path distance within the type hierarchy between the type defined in the original type function and the type in the newly proposed type function as the contributing cost including that element within the secondary substitution set.) The minimal cost substitution is implemented using the `#maximise` operator from clingo, maximising the overlap between the two type functions, in this case `tf_spaghetti_pomodoro` and `tf_spaghetti_pomodoro_sub`.
 
 # General Usage
 
