@@ -1,6 +1,6 @@
 # ASP recipe graphs
 
-Code for reasoning about substitution and other properties of recipe graphs in ASP with supporting Python wrappers.
+The code in this repository is for reasoning about ingredient substitution and various properties of cooking recipes that have been represented in graphical form. The code is written in the Potassco (Clingo) dialect of Answer Set Programming (ASP). It is assumed that the user has a working knowledge of ASP, and has a version of Python enablled Clingo installed (see https://potassco.org/).
 
 ## Reference
 This code is based on the definitions within:
@@ -16,7 +16,7 @@ Later in this README we describe a general use of the library. First, we list a 
 To test whether the graph for spaghetti-pomodoro (in file `'./asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_graph.lp'`) satisfies the requirements of  a recipe graph, run:
 
 ```shell
-clingo 1 ./asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs}.lp ./asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_graph.lp ./asp_recipe_graphs/asp/queries/show_recipe_graph.lp
+clingo -e cautious ./asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs}.lp ./asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_graph.lp ./asp_recipe_graphs/asp/queries/show_recipe_graph.lp
 ```
 
 This should give the following as part of the output:
@@ -24,7 +24,8 @@ This should give the following as part of the output:
 ```shell
 Solving...
 Answer: 1
-recipe_graph(rg_spaghetti_pomodoro)
+recipe(rg_spaghetti_pomodoro,tf_spaghetti_pomodoro)
+Consequences: [1;1]
 SATISFIABLE
 ```
 
