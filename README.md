@@ -50,16 +50,14 @@ SATISFIABLE
 To find type substitutions for spaghetti-pomodoro. Which is defined across files `'./asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_{graph,types,given}.lp'` and the additional tuples corresponding to fusilli-pomodoro which are in file `'./asp_recipe_graphs/asp/recipes/fusilli_pomodoro_tuples.lp'` you can run:
 
 ```shell
-clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipes,acceptability_tuples,validity,type_substitution}.lp asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_{graph,types,given}.lp asp_recipe_graphs/asp/recipes/fusilli_pomodoro_tuples.lp asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/show/show_type_substitution.lp -n 0
+clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipes,acceptability_tuples,validity,type_substitution}.lp asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_{graph,types,given}.lp asp_recipe_graphs/asp/recipes/fusilli_pomodoro_tuples.lp asp_recipe_graphs/asp/domains/spaghetti_pomodoro_type_substitution.lp asp_recipe_graphs/asp/show/show_type_substitution.lp --quiet=1
 ```
 
 This should give the following as part of the output (which has been formatted by piping to `sed 's/) /)\n/g'` for improved readability):
 
-ROB GOT TO HERE. THE FOLLOWING DOESN'T WORK:
-
 ```shell
 Solving...
-Answer: 1
+Answer: 2
 primary_substitution((rg_spaghetti_pomodoro,tf_spaghetti_pomodoro,tf_spaghetti_pomodoro_sub),c(1),"uncooked fusilli")
 type_substitution(rg_spaghetti_pomodoro,tf_spaghetti_pomodoro,tf_spaghetti_pomodoro_sub)
 valid_recipe(rg_spaghetti_pomodoro,tf_spaghetti_pomodoro_sub)
@@ -71,8 +69,7 @@ Optimization: -10
 OPTIMUM FOUND
 ```
 
-This type substitution is minimal cost with respect to the size of the secondary substitution set, and (at time of writing) we assume 0-1 distance for types. (A more so-
-phisticated approach might use path distance within the type hierarchy between the type defined in the original type function and the type in the newly proposed type function as the contributing cost including that element within the secondary substitution set.) The minimal cost substitution is implemented using the `#maximise` operator from clingo, maximising the overlap between the two type functions, in this case `tf_spaghetti_pomodoro` and `tf_spaghetti_pomodoro_sub`.
+This shows the type substitution (with the minimal cost with respect to the size of the secondary substitution set). At time of writing, we assume 0-1 distance for types. A more sophisticated approach might use path distance within the type hierarchy between the type defined in the original type function and the type in the newly proposed type function as the contributing cost including that element within the secondary substitution set. The minimal cost substitution is implemented using the `#maximise` operator from clingo, maximising the overlap between the two type functions, in this case `tf_spaghetti_pomodoro` and `tf_spaghetti_pomodoro_sub`.
 
 # General Usage
 
