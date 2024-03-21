@@ -1,1 +1,0 @@
-#show connected/1.

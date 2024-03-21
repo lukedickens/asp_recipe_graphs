@@ -133,15 +133,12 @@ def main(graph_type=None, **kwargs):
 
 def create_parser():
     description= """
-        Provides functionality to run simple ASP queries with a simple interface"""
+        Provides functionality to draw graphs of ASP results"""
     parser = argparse.ArgumentParser(
-        prog='simple_asp_query',
+        prog='draw_graph',
         description=description,
         epilog='See git repository readme for more details.')
 
-#    query_options = QUERIES
-#    parser.add_argument('--query', '-q', type=str, choices=query_options,
-#        help='What query do you wish to make?')
     graph_type_options = GRAPH_TYPES
     parser.add_argument('--graph-type', '-t', type=str,
         choices=graph_type_options,

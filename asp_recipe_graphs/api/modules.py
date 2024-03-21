@@ -8,10 +8,10 @@ DEFINITIONS_SUBDIR = os.path.join(
     'asp_recipe_graphs','asp','domain_independent')
 DEFINITIONS_DIR = os.path.join(
     SRC_ROOT_DIR,DEFINITIONS_SUBDIR)
-QUERIES_SUBDIR = os.path.join(
-    'asp_recipe_graphs','asp','queries')
-QUERIES_DIR = os.path.join(
-    SRC_ROOT_DIR, QUERIES_SUBDIR)
+SHOW_SUBDIR = os.path.join(
+    'asp_recipe_graphs','asp','show')
+SHOW_DIR = os.path.join(
+    SRC_ROOT_DIR, SHOW_SUBDIR)
 RECIPES_SUBDIR = os.path.join(
     'asp_recipe_graphs','asp','recipes')
 RECIPES_DIR = os.path.join(

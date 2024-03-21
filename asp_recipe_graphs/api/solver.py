@@ -2,8 +2,8 @@ import clingo
 
 from asp_recipe_graphs.api.modules import get_dependencies
 from asp_recipe_graphs.api.modules import get_module_path
-from asp_recipe_graphs.api.queries import QUERY_DATA
-from asp_recipe_graphs.api.queries import get_query_path
+from asp_recipe_graphs.api.show import SHOW_DATA
+from asp_recipe_graphs.api.show import get_show_path
 
 from asp_recipe_graphs.api.recipes import RECIPE_GRAPH_PATHS
 from asp_recipe_graphs.api.recipes import RECIPE_TYPE_FUNCTION_PATHS
@@ -15,9 +15,9 @@ def load_modules(ctl, modules):
         print(f"fpath ={fpath}")
         ctl.load(fpath)
 
-def load_queries(ctl, queries):
-    for q in queries:
-        fpath = get_query_path(q)
+def load_show_modules(ctl, modules):
+    for m in modules:
+        fpath = get_show_path(m)
         print(f"fpath ={fpath}")
         ctl.load(fpath)
         
@@ -28,7 +28,7 @@ def load_paths(ctl, paths):
 
 
 def load_and_solve_recipes(
-        query, recipes, domain_files=None, include_graphs=True,
+        call, recipes, domain_files=None, include_graphs=True,
         include_type_functions=True,
         recipe_graph_paths=RECIPE_GRAPH_PATHS,
         recipe_type_function_paths=RECIPE_TYPE_FUNCTION_PATHS):
@@ -41,25 +41,25 @@ def load_and_solve_recipes(
             domain_files.append(recipe_graph_paths[recipe])
         if include_type_functions:
             domain_files.append(recipe_type_function_paths[recipe])
-    return load_and_solve(query, domain_files, additional_asp=None)
+    return load_and_solve(call, domain_files, additional_asp=None)
     
 
-def load_and_solve(query, domain_files, additional_asp=None):
+def load_and_solve(call, domain_files, additional_asp=None):
     ctl = clingo.Control()
-    query_info = QUERY_DATA[query]
-    parameters = query_info['parameters']
-    programme = query_info['programme']
-    print(f"query_info['requires'] = {query_info['requires']}")
-    dependencies = get_dependencies(query_info['requires'])
+    show_info = SHOW_DATA[call]
+    parameters = show_info['parameters']
+    programme = show_info['programme']
+    print(f"show_info['requires'] = {show_info['requires']}")
+    dependencies = get_dependencies(show_info['requires'])
     print(f"dependencies = {dependencies}")
     load_modules(ctl, dependencies)
     load_paths(ctl, domain_files)
-#    load_queries(ctl, [query])
-#    ctl.add(query, parameters, programme)
+#    load_show_modules(ctl, [call])
+#    ctl.add(call, parameters, programme)
     ctl.add(programme)
     if not additional_asp is None:
         ctl.add(additional_asp)
-    ctl.ground([("base",[]), (query, parameters)])
+    ctl.ground([("base",[]), (call, parameters)])
     models = []
 #    ctl.solve(on_model=lambda m: print("Answer: {}".format(m)))
     ctl.solve(on_model=lambda m: models.append(str(m)))
