@@ -1,15 +1,12 @@
 # ASP recipe graphs
 
-The code in this repository is for reasoning about ingredient substitution and various properties of cooking recipes that have been represented in graphical form. The code is written in the Potassco (Clingo) dialect of Answer Set Programming (ASP). It is assumed that the user has a working knowledge of ASP, and has a version of Python enablled Clingo installed (see https://potassco.org/).
+The code in this repository is for reasoning about ingredient substitution and various properties of cooking recipes that have been represented in graphical form. Specifically, it is an implementation of the formalism described in [BDD+24] "A Graphical Formalism for Commonsense Reasoning with Recipes", by Antonis Bikakis , Aissatou Diallo , Luke Dickens, Anthony Hunter and Rob Miller. 
 
-## Reference
-This code is based on the definitions within:
-[BDD+24] "A Graphical Formalism for Commonsense Reasoning with Recipes",
-by Antonis Bikakis , Aissatou Diallo , Luke Dickens, Anthony Hunter, Rob Miller
+The code is written in the Potassco (Clingo) dialect of Answer Set Programming (ASP). It is assumed that the user has a working knowledge of ASP, and has a version of Python enablled Clingo installed (see https://potassco.org/). For reasons of efficiency and clarity, the code has been split into several .lp files contained within various subdirectories of this repository. Depending on the computational task at hand, an appropriate subset (variable length list) of these files can be added as an argument to a single command-line call to Clingo.
 
 ## Quick-start: Paper Examples
 
-Later in this README we describe a general use of the library. First, we list a series of executions that recreate the examples in Section 10 of the paper [BDD+24]. Each command should be executed from within the root directory of the git repository, hereafter referred to as `'.'`.
+Later in this README we describe a general use of the library. First, we list a series of executions that correspond to examples in Section 10 of [BDD+24]. Each command should be executed from within the root directory of the Git repository, hereafter referred to as `'.'`.
 
 ### Testing recipe graph for spaghetti-pomodoro
 
@@ -28,13 +25,14 @@ recipe(rg_spaghetti_pomodoro,tf_spaghetti_pomodoro)
 Consequences: [1;1]
 SATISFIABLE
 ```
+This demonstrates that `'recipe(rg_spaghetti_pomodoro,tf_spaghetti_pomodoro)'` is a logical consequence of the program, since the `'-e cautious'` flag directs Clingo to output only literals present in all answer sets.
 
 ### Testing recipe spaghetti-pomodoro
 
 To test whether the graph and type function for spaghetti-pomodoro (in files `'./asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_graph.lp'` and  `'./asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_types.lp'`) satisfies the requirements of  a recipe, run:
 
 ```
-clingo 1 ./asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,type_hierarchies,recipes}.lp asp_recipe_graphs/asp/domains/universal_types.lp ./asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_{graph,types}.lp ./asp_recipe_graphs/asp/queries/show_recipe.lp
+clingo -e cautious ./asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,type_hierarchies,recipes}.lp asp_recipe_graphs/asp/domains/universal_types.lp ./asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_{graph,types}.lp ./asp_recipe_graphs/asp/queries/show_recipe.lp
 ```
 
 This should give the following as part of the output:
@@ -43,6 +41,7 @@ This should give the following as part of the output:
 Solving...
 Answer: 1
 recipe(rg_spaghetti_pomodoro,tf_spaghetti_pomodoro)
+Consequences: [1;1]
 SATISFIABLE
 ```
 
@@ -55,6 +54,8 @@ clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properti
 ```
 
 This should give the following as part of the output (which has been formatted by piping to `sed 's/) /)\n/g'` for improved readability):
+
+ROB GOT TO HERE. THE FOLLOWING DOESN'T WORK:
 
 ```shell
 Solving...
