@@ -5,3 +5,4 @@ scratch
 .ipynb_checkpoints
 results
 deprecated
+.DS_Store
