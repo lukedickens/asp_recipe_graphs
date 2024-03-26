@@ -4,7 +4,7 @@ The code in this repository is for reasoning about ingredient substitution and v
 
 The code is written in the Potassco (Clingo) dialect of Answer Set Programming (ASP). It is assumed that the user has a working knowledge of ASP, and has a version of Python enablled Clingo installed (see https://potassco.org/). For reasons of efficiency and clarity, the code has been split into several .lp files contained within various subdirectories of this repository. Depending on the computational task at hand, an appropriate subset (variable length list) of these files can be added as an argument to a single command-line call to Clingo.
 
-NOTE: The remainder of this README file assumes the user has a command line compatible with POSIX style commands and arguments. In particular we assume it is able to interpret calls of the form
+NOTE: The remainder of this README file assumes the user has a command line compatible with Posix style commands and arguments. In particular we assume it is able to interpret calls of the form
 
 ```shell
 call path/{file1,file2,...}.lp
@@ -88,16 +88,20 @@ This shows the type substitution with the minimal cost with respect to the size 
 
 For the following examples,
 * `<ASPDIR>` refers to the directory in which the asp files are stored. If your working directory is the root of the repository, this is likely to be `./asp_recipe_graphs/asp`. 
-* `<RECIPES>` is (are) the file(s) containing your recipe in ASP format. At the time of writing ASP recipes are stored in directory `<ASPDIR>/recipes/` in two parts: the graph part with suffix `_graph.lp` and the type function with suffix  `_types.lp`. Many commands can take more than one recipe as input, and so you can use wildcards (`*`) or other methods to pass multiple recipes in.
-* `<TYPEHIERARCHY>` is a file that contains your ASP type hierarchy. There is a universal type hierarchy in ASP module `<ASPDIR>/domains/universal_types.lp`. However, this can be slow (very slow) to compute for some commands, so you are encouraged to use a minimal type hierarchy for more complex calls. Instructions to follow. 
-* `<ASPMODULES>` is a comma separated list of the domain independent modules you wish to use. Posix command lines will expand `<ASPDIR>/domain_independent/{<ASPMODULES>}.lp` to give all `.lp` terminating filepaths for modules whose name is in `<ASPMODULES>` that sit in the appropriate directory. The success or otherwise of your command will depend on whether you have a sufficient list of ASP-modules. If you include modules you don't need, it can slow the computation down.
+* `<RECIPES>` is (are) the file(s) containing your recipe in ASP format. ASP recipes are stored in directory `<ASPDIR>/recipes/` in two parts: the graph part with suffix `_graph.lp` and the type function with suffix  `_types.lp`. Many commands can take more than one recipe as input, and so you can use wildcards (`*`) or other methods to pass multiple recipes in.
+* `<TYPEHIERARCHY>` is a file that contains your ASP type hierarchy. There is a universal type hierarchy in ASP module `<ASPDIR>/domains/universal_types.lp`. However, this can be slow (very slow) to compute for some commands, so you are encouraged to use a minimal type hierarchy for more complex calls, as described below. 
+* `<ASPMODULES>` is a comma separated list of the domain independent modules you wish to use. Posix command lines will expand `<ASPDIR>/domain_independent/{<ASPMODULES>}.lp` to give all `.lp` terminating filepaths for modules whose name is in `<ASPMODULES>` that sit in the appropriate directory. The success or otherwise of your command will depend on whether you have a sufficient list of ASP-modules. If you include modules you don't need, this may slow down the computation.
 
 
-The standard command is as follows:
+In what follows, two main standard forms of command are used:
 
 ```shell
-clingo 1 <ASPDIR>/domain_independent/{<ASPMODULES>}.lp <TYPEHIERARCHY> <RECIPES> <SHOWMODULE>
+clingo -e cautious <ASPDIR>/domain_independent/{<ASPMODULES>}.lp <TYPEHIERARCHY> <RECIPES> <SHOWMODULE>
 ```
+is used where we want to find and display logical consequences of the input program modules, i.e. literals that are present in all answer sets (true in all models) of the program. The '`-e cautious`' flag indicates this mode of use of Clingo. Such calls are appropriate, for example, where we want to check whether a recipe (or other data structure) fully defined within the program satisfies one of the definitions in [BDD+24].
+
+Alternatively, if we want to use program modules in a 'generative' way, for example to generate variants of a recipe containing various ingredient substitutions
+
 
 where `<SHOWMODULE>` is typically of the form `<ASPDIR>/show/<SHOWNAME>.lp`. You can write your own calls or use those in the folder `<ASPDIR>/show`. The `1` means "return just one stable model", which is sufficient for the majority of calls, but you may require `0` (all stable models) for more advanced calls.
 
