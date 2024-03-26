@@ -4,6 +4,17 @@ The code in this repository is for reasoning about ingredient substitution and v
 
 The code is written in the Potassco (Clingo) dialect of Answer Set Programming (ASP). It is assumed that the user has a working knowledge of ASP, and has a version of Python enablled Clingo installed (see https://potassco.org/). For reasons of efficiency and clarity, the code has been split into several .lp files contained within various subdirectories of this repository. Depending on the computational task at hand, an appropriate subset (variable length list) of these files can be added as an argument to a single command-line call to Clingo.
 
+NOTE: The remainder of this README file assumes the user has a command line compatible with POSIX style commands and arguments. In particular we assume it is able to interpret calls of the form
+
+```shell
+call path/{file1,file2,...}.lp
+```
+as
+
+```shell
+call path/file1.lp path/file1.lp ...
+```
+
 ## Quick-start: Paper Examples
 
 Later in this README we describe a general use of the library. First, we list a series of executions that correspond to examples in Section 10 of [BDD+24]. Each command should be executed from within the root directory of the Git repository, hereafter referred to as `'.'`.
@@ -69,11 +80,9 @@ Optimization: -10
 OPTIMUM FOUND
 ```
 
-This shows the type substitution (with the minimal cost with respect to the size of the secondary substitution set). At time of writing, we assume 0-1 distance for types. A more sophisticated approach might use path distance within the type hierarchy between the type defined in the original type function and the type in the newly proposed type function as the contributing cost including that element within the secondary substitution set. The minimal cost substitution is implemented using the `#maximise` operator from clingo, maximising the overlap between the two type functions, in this case `tf_spaghetti_pomodoro` and `tf_spaghetti_pomodoro_sub`.
+This shows the type substitution with the minimal cost with respect to the size of the secondary substitution set, assuming a 0-1 distance for types. (See [BDD+24] for alternative cost measures). The minimal cost substitution is implemented using Clingo's `#maximise` operator, maximising the overlap between the two type functions, in this case `tf_spaghetti_pomodoro` and `tf_spaghetti_pomodoro_sub`.
 
 # General Usage
-
-
 
 ## Running ASP
 
