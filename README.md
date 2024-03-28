@@ -61,7 +61,7 @@ SATISFIABLE
 To find type substitutions for spaghetti-pomodoro. Which is defined across files `'./asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_{graph,types,given}.lp'` and the additional tuples corresponding to fusilli-pomodoro which are in file `'./asp_recipe_graphs/asp/recipes/fusilli_pomodoro_tuples.lp'` you can run:
 
 ```shell
-clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipes,acceptability_tuples,validity,type_substitution}.lp asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_{graph,types,given}.lp asp_recipe_graphs/asp/recipes/fusilli_pomodoro_tuples.lp asp_recipe_graphs/asp/domains/spaghetti_pomodoro_type_substitution.lp asp_recipe_graphs/asp/show/show_type_substitution.lp --quiet=1
+clingo 0 --quiet=1 asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipes,acceptability_tuples,validity,type_substitution}.lp asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/recipes/spaghetti_pomodoro_{graph,types,given}.lp asp_recipe_graphs/asp/recipes/fusilli_pomodoro_tuples.lp asp_recipe_graphs/asp/domains/spaghetti_pomodoro_type_substitution.lp asp_recipe_graphs/asp/show/show_type_substitution.lp
 ```
 
 This should give the following as part of the output (which has been formatted by piping to `sed 's/) /)\n/g'` for improved readability):
@@ -80,7 +80,7 @@ Optimization: -10
 OPTIMUM FOUND
 ```
 
-This shows the type substitution with the minimal cost with respect to the size of the secondary substitution set, assuming a 0-1 distance for types. (See [BDD+24] for alternative cost measures). The minimal cost substitution is implemented using Clingo's `#maximise` operator, maximising the overlap between the two type functions, in this case `tf_spaghetti_pomodoro` and `tf_spaghetti_pomodoro_sub`.
+This shows the type substitution with the minimal cost with respect to the size of the secondary substitution set, assuming a 0-1 distance for types. (See [BDD+24] for alternative cost measures). The minimal cost substitution is implemented using Clingo's `#maximise` operator, maximising the overlap between the two type functions, in this case `tf_spaghetti_pomodoro` and `tf_spaghetti_pomodoro_sub`. The `'0'` flag directs Clingo to compute all answer sets, whereas the `'--quiet=1'` flag directs Clingo to display only the answer set representing the optimum solution.
 
 # General Usage
 
@@ -100,17 +100,22 @@ clingo -e cautious <ASPDIR>/domain_independent/{<ASPMODULES>}.lp <TYPEHIERARCHY>
 ```
 is used where we want to find and display logical consequences of the input program modules, i.e. literals that are present in all answer sets (true in all models) of the program. The '`-e cautious`' flag indicates this mode of use of Clingo. Such calls are appropriate, for example, where we want to check whether a recipe (or other data structure) fully defined within the program satisfies one of the definitions in [BDD+24].
 
-Alternatively, if we want to use program modules in a 'generative' way, for example to generate variants of a recipe containing various ingredient substitutions
+Alternatively, when we want to use program modules in a 'generative' way, for example to generate variants of a recipe containing various ingredient substitutions, then each answer set may represent an alternative solution. In this case the appropriate form of call is:
+
+```shell
+clingo 0 <ASPDIR>/domain_independent/{<ASPMODULES>}.lp <TYPEHIERARCHY> <RECIPES> <SHOWMODULE>
+```
+where the `0` directs Clingo to compute all answer sets. The additional flag `'--quiet=1'` may be included where we want Clingo to display only the answer set containing an optimal solution (see e.g. the type substitution example above).
 
 
-where `<SHOWMODULE>` is typically of the form `<ASPDIR>/show/<SHOWNAME>.lp`. You can write your own calls or use those in the folder `<ASPDIR>/show`. The `1` means "return just one stable model", which is sufficient for the majority of calls, but you may require `0` (all stable models) for more advanced calls.
+In all cases `<SHOWMODULE>` is typically of the form `<ASPDIR>/show/<SHOWNAME>.lp`. You can thus write your own `#show` directives or use those already in the folder `<ASPDIR>/show`.
 
 ### Recipe Graphs
 
-The standard command to call whether the graphs in `<RECIPES>` are recipe graphs is:
+The standard command to check whether all the graphs in `<RECIPES>` are recipe graphs is:
 
 ```shell
-clingo 1 <ASPDIR>/domain_independent/{graph_properties,recipe_graphs}.lp <RECIPES> <ASPDIR>/show/show_recipe_graph.lp
+clingo -e cautious <ASPDIR>/domain_independent/{graph_properties,recipe_graphs}.lp <RECIPES> <ASPDIR>/show/show_recipe_graph.lp
 ```
 
 If any graphs are not recipe graphs then this will be `UNSATISFIABLE`, otherwise it will list all recipe_graphs in `<RECIPES>`.
@@ -118,7 +123,7 @@ If any graphs are not recipe graphs then this will be `UNSATISFIABLE`, otherwise
 **Example: Check if  BBC vegan sponge cake graph is a recipe graph** We can do this with the following call:
 
 ```
-clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs}.lp asp_recipe_graphs/asp/recipes/bbc_vegan_sponge_cake_graph.lp asp_recipe_graphs/asp/show/show_recipe_graph.lp
+clingo -e cautious asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs}.lp asp_recipe_graphs/asp/recipes/bbc_vegan_sponge_cake_graph.lp asp_recipe_graphs/asp/show/show_recipe_graph.lp
 ```
 
 This should be `SATISFIABLE` and output `recipe_graph(rg_bbc_vegan_sponge_cake)` .
@@ -126,13 +131,13 @@ This should be `SATISFIABLE` and output `recipe_graph(rg_bbc_vegan_sponge_cake)`
 **Example: Imperfect recipe graph definitions.** Imagine instead that I have a recipe graph poorly defined in file `scratch/not_a_recipe.lp`, then the following should be  `UNSATISFIABLE`:
 
 ```
-clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs}.lp scratch/not_a_recipe_graph.lp asp_recipe_graphs/asp/show/show_recipe_graph.lp
+clingo -e cautious asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs}.lp scratch/not_a_recipe_graph.lp asp_recipe_graphs/asp/show/show_recipe_graph.lp
 ```
 
 To understand why this is not a recipe-graph I can run the `why_not_recipe_graph` call with:
 
 ```shell
-clingo 1 asp_recipe_graphs/asp/domain_independent/graph_properties.lp scratch/not_a_recipe_graph.lp asp_recipe_graphs/asp/show/why_not_recipe_graph.lp
+clingo -e cautious asp_recipe_graphs/asp/domain_independent/graph_properties.lp scratch/not_a_recipe_graph.lp asp_recipe_graphs/asp/show/why_not_recipe_graph.lp
 ```
 
 This will output predicates associated with offending properties, see `asp_recipe_graphs/asp/show/why_not_recipe_graph.lp` for a description. 
@@ -143,42 +148,42 @@ This will output predicates associated with offending properties, see `asp_recip
 
 ### Recipes
 
-The standard command to call whether the recipes in `<RECIPES>` are properly defined recipes:
+The standard command to check whether the recipes in `<RECIPES>` are properly defined recipes is:
 
 ```
-clingo 1 <ASPDIR>/domain_independent/{graph_properties,recipe_graphs,recipes}.lp <TYPEHIERARCHY> <RECIPES> <ASPDIR>/show/show_recipe.lp
+clingo -e cautious <ASPDIR>/domain_independent/{graph_properties,recipe_graphs,recipes}.lp <TYPEHIERARCHY> <RECIPES> <ASPDIR>/show/show_recipe.lp
 ```
 
 
 If any graphs are not recipe graphs then this will be `UNSATISFIABLE`, otherwise it will list all recipe_graphs in `<RECIPES>`.
 
-**Example: Is BBC Vegan Sponge Cake a recipe?** - check if BBC vegan sponge cake graph and type function constitute a recipe with:
+**Example: Is BBC Vegan Sponge Cake a recipe?** - check if BBC the 'vegan sponge cake' graph and type function constitute a recipe with the call:
 
 ```
-clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,type_hierarchies,recipes}.lp asp_recipe_graphs/asp/domains/universal_types.lp asp_recipe_graphs/asp/recipes/bbc_vegan_sponge_cake_{graph,types}.lp asp_recipe_graphs/asp/show/show_recipe.lp
+clingo -e cautious asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,type_hierarchies,recipes}.lp asp_recipe_graphs/asp/domains/universal_types.lp asp_recipe_graphs/asp/recipes/bbc_vegan_sponge_cake_{graph,types}.lp asp_recipe_graphs/asp/show/show_recipe.lp
 ```
 
 This should be `SATISFIABLE` and output `recipe(rg_bbc_vegan_sponge_cake,tf_bbc_vegan_sponge_cake)` .
 
-**Example: Imperfect recipe definitions.** Imagine instead that I have a recipe (graph and types) poorly defined in file `scratch/not_a_recipe.lp` then the following should be `UNSATISFIABLE`:
+**Example: Imperfect recipe definitions.** Imagine instead that we have a recipe (graph and types) poorly defined in file `scratch/not_a_recipe.lp` then the following will be `UNSATISFIABLE`:
 
 ```shell
-clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,type_hierarchies,recipes}.lp asp_recipe_graphs/asp/domains/universal_types.lp scratch/not_a_recipe.lp asp_recipe_graphs/asp/show/show_recipe.lp
+clingo -e cautious asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,type_hierarchies,recipes}.lp asp_recipe_graphs/asp/domains/universal_types.lp scratch/not_a_recipe.lp asp_recipe_graphs/asp/show/show_recipe.lp
 ```
 
-To understand why this is not a recipe I can run the `why_not_recipe_graph` to determine if the recipe-graph is okay. If the graph is fine, then run `why_not_recipe` to call the typing function with:
+To understand why this is not a recipe we can run the `why_not_recipe_graph` to determine if the recipe-graph is well formed. If the graph is fine, then we can run `why_not_recipe` to reveal problems with the typing function:
 
 ```shell
-clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,type_hierarchies}.lp asp_recipe_graphs/asp/domains/universal_types.lp scratch/not_a_recipe.lp asp_recipe_graphs/asp/show/why_not_recipe.lp
+clingo -e cautious asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,type_hierarchies}.lp asp_recipe_graphs/asp/domains/universal_types.lp scratch/not_a_recipe.lp asp_recipe_graphs/asp/show/why_not_recipe.lp
 ```
 
 This will output predicates associated with offending properties, see `asp_recipe_graphs/asp/show/why_not_recipe.lp` for a description.
 
-**Note:** that the `why_not_recipe` call, excludes the `recipe` module, otherwise ASP will return `UNSATISFIABLE`.
+**Note:** that the `why_not_recipe` call, excludes the `recipe` module, since otherwise ASP will return `UNSATISFIABLE`.
 
 ### Given recipes
 
-For later calls, such as type substitution, we disinguish between given recipes (those that are treated as background knowledge) and candidate recipes. Every recipe in the folder `asp_recipe_graphs/asp/recipes/` is formed of two files one ending in `..._graph.lp` which specifies the recipe graph and one ending in  `..._types.lp` which specifies the type function. A third file will also appear ending in  `..._given.lp` which declares that the recipe is background knowledge. The three files must be included together to properly declare a given recipe. To see this distinction, see the following examples.
+For later calls, such as type substitution, we disinguish between given recipes (those that are treated as background knowledge) and candidate recipes. Every recipe in the folder `asp_recipe_graphs/asp/recipes/` is formed of two files, one ending in `..._graph.lp` which specifies the recipe graph and one ending in  `..._types.lp` which specifies the type function. A third file is also included, ending in  `..._given.lp`, which can otionally be incorporated in a call to declare that the recipe is background knowledge. The three files must be called together to declare a given recipe. To see the distinction between given and candidate recipes, consider the following examples.
 
 
 **Example: Baba ganoush as a given recipe** - we declare the Baba Ganoush recipe to be a given recipe and call this with:
