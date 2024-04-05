@@ -342,6 +342,7 @@ input_element_position((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(4)),"fusilli i
 input_element_position((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(0)),"uncooked fusilli",2)
 input_element_position((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(1)),"fried onion",2)
 input_element_position((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(4)),"hot pomodoro sauce",2)
+Consequences: [10;24]
 SATISFIABLE
 ```
 
@@ -351,7 +352,7 @@ The only difference from the previous output is that the acceptability tuples ar
 **Example: Acceptability tuples derived from fusilli pomodoro recipe using specialised hierarchy** With the repository root as present working directory, and a compressed type hierarchy stored in `asp_recipe_graphs/asp/domains/pomodoro_types.lp`, run the following command:
 
 ```shell
-clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipes,acceptability_tuples}.lp  asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/recipes/fusilli_pomodoro_{graph,types,given}.lp asp_recipe_graphs/asp/show/derived_acceptability_tuples.lp -n 0
+clingo -e cautious asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipes,acceptability_tuples}.lp  asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/recipes/fusilli_pomodoro_{graph,types,given}.lp asp_recipe_graphs/asp/show/derived_acceptability_tuples.lp
 ```
 
 The output should be the same as for the previous command.
@@ -362,13 +363,13 @@ The output should be the same as for the previous command.
 This requires a candidate recipe, namely a recipe (graph and type function) that is not a given recipe. We provide a small number of these in the `<ASPDIR>/candidate_recipes` directory with filenames of the form `<RECIPENAME>_graph.lp` and `<RECIPENAME>_types.lp`. You will also need to provide a set of given acceptability tuples. Some examples of these can be found in the `<ASPDIR>/recipes` directory with filenames of the form `<RECIPENAME>_tuples.lp`. Again this can be a computationally expensive call, so you are advised to create a compressed hierarchy with only the types of interest within it and place this in `<DOMAIN_TYPE_HIERARCHY>`. The general call to determine which nodes in your candidate recipe are valid is:
 
 ```shell
-clingo <ASPDIR>/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipes,acceptability_tuples,validity}.lp  <DOMAIN_TYPE_HIERARCHY> <ASPDIR>/recipes/<RECIPENAME>_tuples.lp <ASPDIR>/candidate_recipes/<RECIPENAME>_{graph,types}.lp <ASPDIR>/show/is_valid_candidate.lp  -n 0
+clingo -e cautious <ASPDIR>/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipes,acceptability_tuples,validity}.lp  <DOMAIN_TYPE_HIERARCHY> <ASPDIR>/recipes/<RECIPENAME>_tuples.lp <ASPDIR>/candidate_recipes/<RECIPENAME>_{graph,types}.lp <ASPDIR>/show/is_valid_candidate.lp
 ```
 
 **Example: Valid candidate tuples derived from fusilli pomodoro candidate recipe using specialised hierarchy** With the repository root as present working directory, a candidate recipe in `asp_recipe_graphs/asp/candidate_recipes/fusilli_pomodoro_{graph,types}.lp` and a compressed type hierarchy stored in `asp_recipe_graphs/asp/domains/pomodoro_types.lp`, run the following command:
 
 ```shell
-clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipes,acceptability_tuples,validity}.lp  asp_recipe_graphs/asp/recipes/fusilli_pomodoro_tuples.lp asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/candidate_recipes/fusilli_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/show/show_validated_candidate_tuples.lp
+clingo -e cautious asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipes,acceptability_tuples,validity}.lp  asp_recipe_graphs/asp/recipes/fusilli_pomodoro_tuples.lp asp_recipe_graphs/asp/domains/pomodoro_types.lp asp_recipe_graphs/asp/candidate_recipes/fusilli_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/show/show_validated_candidate_tuples.lp
 ```
 
 The above command piped through our `sed` command includes the following output:
