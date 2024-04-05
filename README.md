@@ -183,13 +183,13 @@ This will output predicates associated with offending properties, see `asp_recip
 
 ### Given recipes
 
-For later calls, such as type substitution, we disinguish between given recipes (those that are treated as background knowledge) and candidate recipes. Every recipe in the folder `asp_recipe_graphs/asp/recipes/` is formed of two files, one ending in `..._graph.lp` which specifies the recipe graph and one ending in  `..._types.lp` which specifies the type function. A third file is also included, ending in  `..._given.lp`, which can otionally be incorporated in a call to declare that the recipe is background knowledge. The three files must be called together to declare a given recipe. To see the distinction between given and candidate recipes, consider the following examples.
+For later calls, such as type substitution, we disinguish between given recipes (those that are treated as background knowledge) and candidate recipes. Every recipe in the folder `asp_recipe_graphs/asp/recipes/` is formed of two files, one ending in `..._graph.lp` which specifies the recipe graph and one ending in  `..._types.lp` which specifies the type function. A third file is also included, ending in  `..._given.lp`, which can otionally be incorporated in a call to declare that the recipe is accepted background knowledge. The three files must be called together to declare a given recipe. To see the distinction between given and candidate recipes, consider the following examples.
 
 
 **Example: Baba ganoush as a given recipe** - we declare the Baba Ganoush recipe to be a given recipe and call this with:
 
 ```shell
-clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,type_hierarchies,recipes}.lp asp_recipe_graphs/asp/domains/universal_types.lp asp_recipe_graphs/asp/recipes/baba_ganoush_{graph,types,given}.lp asp_recipe_graphs/asp/show/show_{given_,}recipe.lp
+clingo -e cautious asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,type_hierarchies,recipes}.lp asp_recipe_graphs/asp/domains/universal_types.lp asp_recipe_graphs/asp/recipes/baba_ganoush_{graph,types,given}.lp asp_recipe_graphs/asp/show/show_{given_,}recipe.lp
 ```
 
 Note the use of the three files `asp_recipe_graphs/asp/recipes/baba_ganoush_{graph,types,given}.lp` and show module `asp_recipe_graphs/asp/show/show_given_recipe.lp`.
@@ -199,15 +199,15 @@ When run this should give the following as part of the output:
 ```shell
 Answer: 1
 given_recipe(rg_baba_ganoush,tf_baba_ganoush) recipe(rg_baba_ganoush,tf_baba_ganoush)
-SATISFIABLE
-```
+Consequences: [2;2]
+SATISFIABLE```
 
 So `(rg_baba_ganoush,tf_baba_ganoush)` is both a recipe and a given recipe.
 
 **Example: Baba ganoush as a recipe, but not a given recipe** - we declare the Baba Ganoush recipe to be a given recipe and call this with:
 
 ```shell
-clingo 1 asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,type_hierarchies,recipes}.lp asp_recipe_graphs/asp/domains/universal_types.lp asp_recipe_graphs/asp/recipes/baba_ganoush_{graph,types}.lp asp_recipe_graphs/asp/show/show_{given_,}recipe.lp
+clingo -e cautious asp_recipe_graphs/asp/domain_independent/{graph_properties,recipe_graphs,type_hierarchies,recipes}.lp asp_recipe_graphs/asp/domains/universal_types.lp asp_recipe_graphs/asp/recipes/baba_ganoush_{graph,types}.lp asp_recipe_graphs/asp/show/show_{given_,}recipe.lp
 ```
 
 Note the use of just two recipe files `asp_recipe_graphs/asp/recipes/baba_ganoush_{graph,types}.lp` and show module `asp_recipe_graphs/asp/show/show_given_recipe.lp`.
@@ -217,20 +217,20 @@ When run this should give the following as part of the output:
 ```shell
 Answer: 1
 recipe(rg_baba_ganoush,tf_baba_ganoush)
-SATISFIABLE
-```
+Consequences: [1;1]
+SATISFIABLE```
 
 
 ### Type Hierarchies
 
 If you are using the universal type hierarchy you can simply add `universal_types` to your list of `<ASPMODULES>`. Then simply use the command:
 
-`clingo 1 <ASPDIR>/domain_independent/{<ASPMODULES>}.lp <RECIPES> <SHOWMODULE>`
+`clingo -e cautious <ASPDIR>/domain_independent/{<ASPMODULES>}.lp <RECIPES> <SHOWMODULE>`
 
 However this can be slow. To easily create your own type hierarchy or hierarchies for recipes in `<RECIPES>` then use:
 
 ```
-clingo 1 <ASPDIR>/domain_independent/{type_hierarchies,recipe_graphs,graph_properties}.lp asp_recipe_graphs/asp/domains/universal_types.lp  <RECIPES> <ASPDIR>/show/used_child.lp
+clingo -e cautious <ASPDIR>/domain_independent/{type_hierarchies,recipe_graphs,graph_properties}.lp asp_recipe_graphs/asp/domains/universal_types.lp  <RECIPES> <ASPDIR>/show/used_child.lp
 ```
 
 This outputs a stable model with terms of the form `used_child(A,B)`. Copy these to a new file at some location (hereafter called `<TYPEHIERARCHY>`) then edit to replace `used_child` with `child` and `) ` with `). ` universally. `<TYPEHIERARCHY>` can then be used in place of `<ASPDIR>/domains/universal_types.lp` as a minimal type-hierarchy.
@@ -242,7 +242,7 @@ For even greater speed use `used_ancestor` rather than `used_child`.
 **Example: Compressed hierarchy for buttered toast** With the repository root as present working directory run the following command:
 
 ```shell
-clingo 1 asp_recipe_graphs/asp/domain_independent/{type_hierarchies,recipe_graphs,graph_properties}.lp asp_recipe_graphs/asp/domains/universal_types.lp asp_recipe_graphs/asp/recipes/buttered_toast_{graph,types}.lp asp_recipe_graphs/asp/show/used_child.lp
+clingo -e cautious asp_recipe_graphs/asp/domain_independent/{type_hierarchies,recipe_graphs,graph_properties}.lp asp_recipe_graphs/asp/domains/universal_types.lp asp_recipe_graphs/asp/recipes/buttered_toast_{graph,types}.lp asp_recipe_graphs/asp/show/used_child.lp
 ```
 
 This should output (something like) the following:
@@ -264,13 +264,13 @@ Then save in an appropriate `.lp` file, e.g. `scratch/buttered_toast_type_hierar
 To output the acceptability tuples you can derive from a `recipe`, use:
 
 ```
-clingo 1 <ASPDIR>/domain_independent/{type_hierarchies,recipe_graphs,recipes,graph_properties,acceptability}.lp  <TYPEHIERARCHY> <RECIPES> <ASPDIR>/show/acceptability_tuples.lp
+clingo -e cautious <ASPDIR>/domain_independent/{type_hierarchies,recipe_graphs,recipes,graph_properties,acceptability}.lp  <TYPEHIERARCHY> <RECIPES> <ASPDIR>/show/acceptability_tuples.lp
 ```
 
 **Example: Acceptability tuples derived from fusilli pomodoro** With the repository root as present working directory, run the following command:
 
 ```shell
-clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipes,acceptability_tuples}.lp asp_recipe_graphs/asp/domains/universal_types.lp asp_recipe_graphs/asp/recipes/fusilli_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/show/derived_acceptability_tuples.lp -n 0
+clingo -e cautious asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipes,acceptability_tuples}.lp asp_recipe_graphs/asp/domains/universal_types.lp asp_recipe_graphs/asp/recipes/fusilli_pomodoro_{graph,types}.lp asp_recipe_graphs/asp/show/derived_acceptability_tuples.lp
 ```
 
 This will output all acceptability tuples from the chosen recipe. The following is part of the output (again piped through `sed 's/) /)\n/g'` for readability):
@@ -301,8 +301,8 @@ input_element_position((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(4)),"fusilli i
 input_element_position((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(0)),"uncooked fusilli",2)
 input_element_position((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(1)),"fried onion",2)
 input_element_position((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(4)),"hot pomodoro sauce",2)
-SATISFIABLE
-```
+Consequences: [10;24]
+SATISFIABLE```
 
 **Note:** The recipe is passed without declaring it to be a `given_recipe`. As a result, the acceptability tuples output are `candidate_acceptability_tuples`. See below for the results of a `given_recipe`.
 
@@ -311,7 +311,7 @@ SATISFIABLE
 **Example: Acceptability tuples derived from given recipe fusilli pomodoro** With the repository root as present working directory, run the following command:
 
 ```shell
-clingo asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipes,acceptability_tuples}.lp asp_recipe_graphs/asp/domains/universal_types.lp asp_recipe_graphs/asp/recipes/fusilli_pomodoro_{graph,types,given}.lp asp_recipe_graphs/asp/show/derived_acceptability_tuples.lp -n 0
+clingo -e cautious asp_recipe_graphs/asp/domain_independent/{type_hierarchies,graph_properties,recipe_graphs,recipes,acceptability_tuples}.lp asp_recipe_graphs/asp/domains/universal_types.lp asp_recipe_graphs/asp/recipes/fusilli_pomodoro_{graph,types,given}.lp asp_recipe_graphs/asp/show/derived_acceptability_tuples.lp
 ```
 
 This will output all acceptability tuples from the chosen recipe. The following is part of the output (again piped through `sed 's/) /)\n/g'` for readability):
