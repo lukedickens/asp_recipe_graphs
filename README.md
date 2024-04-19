@@ -200,7 +200,8 @@ When run this should give the following as part of the output:
 Answer: 1
 given_recipe(rg_baba_ganoush,tf_baba_ganoush) recipe(rg_baba_ganoush,tf_baba_ganoush)
 Consequences: [2;2]
-SATISFIABLE```
+SATISFIABLE
+```
 
 So `(rg_baba_ganoush,tf_baba_ganoush)` is both a recipe and a given recipe.
 
@@ -218,7 +219,8 @@ When run this should give the following as part of the output:
 Answer: 1
 recipe(rg_baba_ganoush,tf_baba_ganoush)
 Consequences: [1;1]
-SATISFIABLE```
+SATISFIABLE
+```
 
 
 ### Type Hierarchies
@@ -302,7 +304,8 @@ input_element_position((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(0)),"uncooked 
 input_element_position((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(1)),"fried onion",2)
 input_element_position((rg_fusilli_pomodoro,tf_fusilli_pomodoro,a(4)),"hot pomodoro sauce",2)
 Consequences: [10;24]
-SATISFIABLE```
+SATISFIABLE
+```
 
 **Note:** The recipe is passed without declaring it to be a `given_recipe`. As a result, the acceptability tuples output are `candidate_acceptability_tuples`. See below for the results of a `given_recipe`.
 
