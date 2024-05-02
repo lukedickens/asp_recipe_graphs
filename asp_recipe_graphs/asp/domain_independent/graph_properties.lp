@@ -1,34 +1,12 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% ASP Part Implementation of Section 3 of 
-% "A Graphical Formalism for Commonsense Reasoning with Recipes",
-% by Antonis Bikakis , Aissatou Diallo , Luke Dickens, Anthony Hunter, Rob Miller
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Properties for Section 3 of paper, Recipes as graphs
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Properties for Section 3 of paper
+% Recipes as graphs
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% define pools of comestible nodes, action nodes,   
 %% and arcs with which to construct graphs:
 
-%TODO get c_node_index(N) to be created if c(N) stated within a recipe.
-% specify values of "max_c_node_index" 
-%c_node_index(0..max_c_node_index).
-%% and "max_a_node_index" in domain
-%a_node_index(0..max_a_node_index).
-
 % auto discover recipe graph nodes
-%TODO is this safe? In Luke's sense of the word safe.
 c_node_index(N1) :-
     in(arcs(RG),arc(c(N1),a(N2))).
 a_node_index(N2) :-
@@ -110,7 +88,6 @@ connected_in(G,V1,V2) :-
     in(nodes(G),V1),
     in(nodes(G),V2),
     not connected_in(G,V1,V2).
-%NOTE Next line may not be needed
 connected(G) :- graph(G), not -connected(G).
 
 % all action nodes in a recipe graph must have both an incoming and an outgoing arc:

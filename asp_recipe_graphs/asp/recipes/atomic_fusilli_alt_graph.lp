@@ -2,7 +2,6 @@
 % example recipe graph: rg_atomic_fusilli_alt
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 recipe_graph(rg_atomic_fusilli_alt).
 % steam fusilli
 in(arcs(rg_atomic_fusilli_alt),arc(c(0),a(0))).

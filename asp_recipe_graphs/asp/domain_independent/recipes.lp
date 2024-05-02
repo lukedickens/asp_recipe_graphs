@@ -1,27 +1,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Definition 3 of a recipe:
+% Definition 3: Recipe
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 recipe(RG,TF) :- given_recipe(RG,TF).
 recipe_graph(RG) :- recipe(RG,TF).
-
 
 given_recipe_graph(RG) :- given_recipe(RG,TF).
 given_type_of(TF, V, T) :- 
     given_recipe(RG,TF),
     in(nodes(RG),V),
     type_of(TF, V, T).
-    
-    
-%TODO Luke: constrain the recipe predicate to only act on type functions
-%TODO Luke: constrain type functions to only associate one type with each node
-%TODO Luke: constrain type functions paired with a recipe graph to only define types for nodes within the graph 
-%type_function(TF) :- given_recipe(RG,TF).
-%%:- recipe(RG, TF), not graph(RG).
-%:- recipe(RG, TF), not type_function(TF).
-%:- recipe(RG,TF), type_of(TF,V,Type1), type_of(TF,V,Type2), Type1 != Type2.
-%:- recipe(RG,TF), type_of(TF,V,Type), not in(nodes(RG),V).
-
 
 % the 3rd argument of type_of is a function of the first two arguments:
 % range of function is the c_nodes and a_nodes of corresponding graph
@@ -49,4 +37,3 @@ has_given_type(TF, V) :-
 comestible_type_in(recipe(RG,TF),Type) :- recipe(RG,TF), type_of(TF,V,Type), in(c_nodes(RG),V).
 action_type_in(recipe(RG,TF),Type) :- recipe(RG,TF), type_of(TF,V,Type), in(a_nodes(RG),V).
 
-%#show comestible_type_in/2.

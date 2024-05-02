@@ -108,13 +108,10 @@ def type_function_to_dot_node_descs(type_function):
     return nodes
 
 def recipe_to_dot(recipe_id, graphs, type_functions):
-#    print(f"type_functions = {type_functions}")
     gid, tfid = recipe_id
     arcs = graphs[gid]
-#    print(f"arcs = {arcs}")
     type_function = type_functions[tfid]
     nodes = type_function_to_dot_node_descs(type_function)
-#    print(f"nodes = {nodes}")
     return graph_to_dot(nodes, arcs)
 
 def recipe_graph_to_dot(graph_id, graphs):
@@ -169,9 +166,7 @@ def isolate_hierarchy(neighbours, root):
     nodes = set([root])
     seen = set()
     while nodes:
-#        print(f"iterate with nodes = {nodes}")
         node = nodes.pop()
-#        print(f"\tnode={node}")
         seen.add(node)
         nodes |= neighbours.get(node,set()) - seen
     return { n:neighbours[n] for n in seen if n in neighbours }

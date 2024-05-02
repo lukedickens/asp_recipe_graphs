@@ -9,10 +9,7 @@ match_for_action(Candidate,Valid) :-
     candidate_acceptability_tuple(Candidate),
     action_element(Candidate,AType).
 
-% Sufficient and necessary conditions for outputs
-% Commented out lines are now possible because we can state whether the
-% acceptability tuple itself is valid or candidate (rather than input or output elements)
-% This commenting out speeds up code by factor of 80x
+% sufficient and necessary conditions for outputs
 match_for_output(Candidate,Valid,CType) :-
     valid_acceptability_tuple(Valid),
     there_is_output_element_position(Valid,CType),
@@ -41,7 +38,7 @@ necessary_match_output(Candidate,Valid) :-
     candidate_acceptability_tuple(Candidate),
     not -necessary_match_output(Candidate,Valid).
 
-% Sufficient and necessary conditions for inputs
+% sufficient and necessary conditions for inputs
 match_for_input(Candidate,Valid,CType) :-
     valid_acceptability_tuple(Valid),
     there_is_input_element_position(Valid,CType),
@@ -71,7 +68,7 @@ necessary_match_input(Candidate,Valid) :-
     not -necessary_match_input(Candidate,Valid).
     
 
-% Sufficient and necessary condition for both inputs and outputs
+% sufficient and necessary condition for both inputs and outputs
 valid_acceptability_tuple(Candidate) :-
     match_for_action(Candidate,Valid),
     sufficient_match_input(Candidate,Valid),

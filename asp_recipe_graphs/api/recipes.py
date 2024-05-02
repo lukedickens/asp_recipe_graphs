@@ -18,7 +18,6 @@ def detect_recipes(recipes_dir=RECIPES_DIR):
     recipe_graph_paths = {}
     recipe_type_function_paths = {}
     for short_name, path in recipe_file_paths.items():
-#        print(f"short_name = {short_name}")
         GLEN  = len(GRAPH_INDICATOR) 
         TLEN  = len(TF_INDICATOR) 
         if short_name.endswith(GRAPH_INDICATOR):
@@ -35,7 +34,6 @@ def detect_recipes(recipes_dir=RECIPES_DIR):
 
 RECIPE_GRAPH_PATHS, RECIPE_TYPE_FUNCTION_PATHS = \
     detect_recipes(recipes_dir=RECIPES_DIR)
-    
-#RECIPES = set(RECIPE_GRAPH_PATHS.keys()).union(set(RECIPE_TYPE_FUNCTION_PATHS.keys()))
+
 RECIPES = set(RECIPE_GRAPH_PATHS.keys())
 RECIPES |= set(RECIPE_TYPE_FUNCTION_PATHS.keys())

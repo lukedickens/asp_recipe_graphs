@@ -1,23 +1,9 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% ASP Part Implementation of Section 5 of 
-% "A Graphical Formalism for Commonsense Reasoning with Recipes",
-% by Antonis Bikakis , Aissatou Diallo , Luke Dickens, Anthony Hunter, Rob Miller
-
-% to run, also requires
-%     type_hierarchies.lp   (i.e. code for Section 2)
-%     graph_properties.lp, recipe_graphs.lp    (i.e. code for Section 3)
-% does not appear to require
-%     acceptability.lp     (i.e. code for Section 4)
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%WARNING: Code in this file is not currently fully tested
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% TODO
 % Used in subrecipes Defn. 5 of paper
-% strict subrecipe graphs are nonetheless in the body of
-% high_indexes_allowed, which is defined here. Maybe we
-% need to be more flexible about dependencies 
+% strict subrecipe graphs are in the body of
+% high_indexes_allowed (defined here).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 -subrecipe_graph_of(RG1,RG2) :-           % the first argument is the  
     recipe_graph(RG2),                    % subrecipe graph
@@ -40,8 +26,6 @@ strict_subrecipe_graph(RG) :-              % need this for the constraints
 % Definition 5 of a subrecipe:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%strict_subrecipe_graph can now be found in recipe graphs.lp
-
 -subrecipe_of(RG1,TF1,RG2,TF2) :-          % the first two arguments  
     recipe(RG1,TF1),                       % are the subrecipe
     recipe(RG2,TF2),
@@ -57,9 +41,6 @@ subrecipe_of(RG1,TF1,RG2,TF2) :-
     recipe(RG2,TF2),
     not -subrecipe_of(RG1,TF1,RG2,TF2).
 
-%TODO moved from recipe graphs as generated a dependency cycle otherwise
-%TODO high indexes allowed also creates dependency cycle though but this
-%TODO dependency is not recognised by parser.
 high_indexes_allowed(RG) :- strict_subrecipe_graph(RG).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

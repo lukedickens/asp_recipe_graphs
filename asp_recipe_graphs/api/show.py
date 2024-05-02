@@ -29,8 +29,6 @@ SHOW_DATA['why_not_recipe_graph'] = {
     'requires' : ['graph_properties']}
 SHOW_DATA['why_not_recipe'] = {
     'requires' : ['graph_properties', 'recipe_graphs', 'type_hierarchies']}
-#SHOW_DATA['acceptability_tuples'] = {
-#    'requires' : ['acceptability']}
     
 SHOW_DATA['describe_recipe_graphs'] = {
     'requires' : ['recipe_graphs']}
@@ -51,7 +49,6 @@ def generate_show_data(show_data=SHOW_DATA, show_dir=SHOW_DIR):
     files = os.listdir(show_dir)
     show_paths = { f[:-3]:path for f in files \
         if f[-3:] == '.lp' and os.path.isfile((path := os.path.join(SHOW_DIR, f))) }
-#    print(f"show_paths = {show_paths}")
     for call_name, this_data in show_data.items():
         show_path = show_paths[call_name]
         this_data['parameters'] = list()
@@ -71,8 +68,6 @@ if __name__ == '__main__':
     call_names = [ f[:-3] for f in call_files \
         if f[-3:] == '.lp' and os.path.isfile(os.path.join(SHOW_DIR, f)) ]
     print(f"call_names = {call_names}")
-#    show_paths = { name: os.path.join(SHOW_DIR, f) \
-#        for name, f in zip(call_names, call_files)}
         
     show_paths = { f[:-3]:path for f in call_files \
         if f[-3:] == '.lp' and os.path.isfile((path := os.path.join(SHOW_DIR, f))) }

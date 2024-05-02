@@ -54,14 +54,11 @@ def load_and_solve(call, domain_files, additional_asp=None):
     print(f"dependencies = {dependencies}")
     load_modules(ctl, dependencies)
     load_paths(ctl, domain_files)
-#    load_show_modules(ctl, [call])
-#    ctl.add(call, parameters, programme)
     ctl.add(programme)
     if not additional_asp is None:
         ctl.add(additional_asp)
     ctl.ground([("base",[]), (call, parameters)])
     models = []
-#    ctl.solve(on_model=lambda m: print("Answer: {}".format(m)))
     ctl.solve(on_model=lambda m: models.append(str(m)))
     return models
     

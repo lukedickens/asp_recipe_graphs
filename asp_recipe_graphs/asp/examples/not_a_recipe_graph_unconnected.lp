@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% example recipe graph: spaghetti_con pasata
+% based on example recipe graph:
+% rg_spaghetti_pomodoro
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 given_recipe_graph(rg_spaghetti_pomodoro).
 % boil spaghetti
@@ -14,6 +14,7 @@ in(arcs(rg_spaghetti_pomodoro),arc(c(4),a(1))).
 in(arcs(rg_spaghetti_pomodoro),arc(a(1),c(5))).
 % drain spaghetti
 % missing cooked spaghetti node as input
+% deliberately removed for illustration
 in(arcs(rg_spaghetti_pomodoro),arc(a(2),c(6))).
 in(arcs(rg_spaghetti_pomodoro),arc(a(2),c(7))).
 %% put in bowl

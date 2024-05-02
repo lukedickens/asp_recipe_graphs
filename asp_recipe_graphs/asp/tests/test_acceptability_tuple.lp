@@ -1,24 +1,4 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% BUTTERED TOAST
-
-% Domain specific recipe data file to be run with "GraphRecipesSection*.lp"
-
-% This file contains the atomic recipe (rg1,tf1). It's for initial testing of
-% the new definition of acceptability_tuple using sets of input and output
-% comestibles
-
-% Version 0.1
-
-% last updated: 2/6/2023
-
-% run with the command "clingo 0 GraphRecipesSection* ButteredToastExample.lp"
-% or with the command "clingo 1 GraphRecipesSection* ButteredToastExample.lp"
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+%WARNING: Deprecated code
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % The size of the universal sets of comestible and action nodes for this example:

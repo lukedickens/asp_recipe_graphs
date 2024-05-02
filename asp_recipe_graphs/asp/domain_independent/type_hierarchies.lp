@@ -1,28 +1,6 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% ASP Implementation of Section 2 of 
-% "A Graphical Formalism for Commonsense Reasoning with Recipes",
-% by Antonis Bikakis , Aissatou Diallo , Luke Dickens, Anthony Hunter, Rob Miller
-
-% Version 0.1
-
-% last updated: 17/5/2023
-
-% run with the command: 
-% clingo 0 GraphRecipesExcludingSections76543.lp [list of domain specific files]
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Section 2 of paper, Type hierarchies
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% From Section 2 of paper:
+% Type hierarchies
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 action_type("action").
@@ -47,7 +25,8 @@ subtype_or_equal(Ts,T) :- subtype(Ts,T).
 subtype_or_equal(T,T) :- action_type(T).
 subtype_or_equal(T,T) :- comestible_type(T).
 
-same_type_path(T1,T2) :- subtype_or_equal(T1,T2).   % mathematically "comparable"
+% mathematically "comparable"
+same_type_path(T1,T2) :- subtype_or_equal(T1,T2).   
 same_type_path(T1,T2) :- subtype_or_equal(T2,T1).
 
 type_of(TF, V, T) :- given_type_of(TF, V, T).

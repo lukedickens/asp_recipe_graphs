@@ -1,4 +1,3 @@
-
 #show valid_acceptability_tuple/1.
 #show -valid_acceptability_tuple/1.
 #show action_element/2.

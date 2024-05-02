@@ -1,7 +1,3 @@
-
-% should we be saying in validity.lp
-
-% the existing way
 % all given tuples are valid under any rule
 valid_acceptability_tuple((Valid,AType,AType2)) :-
     valid_acceptability_tuple(Valid),
@@ -13,5 +9,3 @@ valid_acceptability_tuple((Valid,AType,AType2)) :-
     sufficient_match_output((Valid,AType,AType2),Valid),
     necessary_match_output((Valid,AType,AType2),Valid).
 
-
-% But how do we generate identifiers to the variables NewTuple

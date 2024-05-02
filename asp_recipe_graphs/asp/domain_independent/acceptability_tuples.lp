@@ -2,15 +2,6 @@
 #const max_in_set_size=6.
 #const max_out_set_size=2.
 
-%%% Removed this block as we didn't need a choice rule
-%%% allow creation of input and output elements
-%%1{ input_element((RG,TF,a(N)),CType) : in(arcs(RG),arc(c(Nin),a(N))), type_of(TF,c(Nin),CType), type_of(TF,a(N),AType) }max_in_set_size :-
-%%	recipe(RG,TF), in(acts(RG),a(N)).
-%%:- recipe(RG,TF), in(arcs(RG),arc(c(Nin),a(N))), type_of(TF,c(Nin),CType), type_of(TF,a(N),AType), not input_element((RG,TF,a(N)),CType).    
-%%1{ output_element((RG,TF,a(N)),CType) : in(arcs(RG),arc(a(N),c(Nout))), type_of(TF,c(Nout),CType), type_of(TF,a(N),AType) }max_out_set_size :-
-%%	recipe(RG,TF), in(acts(RG),a(N)).
-%%:- recipe(RG,TF), in(arcs(RG),arc(a(N),c(Nout))), type_of(TF,c(Nout),CType), type_of(TF,a(N),AType), not output_element((RG,TF,a(N)),CType).
-
 %% A more straightforward way to do the above ^^. Namely creating input and output elements
 input_element((RG,TF,a(N)),CType) :-
 	recipe(RG,TF), in(acts(RG),a(N)),

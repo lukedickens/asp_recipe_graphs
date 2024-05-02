@@ -17,12 +17,6 @@ def main():
     with main.solve(yield_=True) as handle:
         for m in handle:
             print(m)
-            # for s in m.symbols(atoms=True):
-            #     input_dict = {}
-            #     if s.name == "input_element":
-            #         print(s)
-
-            #     if s.name == "output_element": print(s)
 
 if __name__ == "__main__":
     main()

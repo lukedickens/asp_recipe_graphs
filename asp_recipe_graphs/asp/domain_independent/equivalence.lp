@@ -1,16 +1,4 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% ASP Part Implementation of Section 5 of 
-% "A Graphical Formalism for Commonsense Reasoning with Recipes",
-% by Antonis Bikakis , Aissatou Diallo , Luke Dickens, Anthony Hunter, Rob Miller
-
-% to run, also requires
-%     type_hierarchies.lp   (i.e. code for Section 2)
-%     graph_properties.lp, recipe_graphs.lp    (i.e. code for Section 3)
-% does not appear to require
-%     acceptability.lp     (i.e. code for Section 4)
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%WARNING: Code in this file is not currently fully tested
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Definition 6 of equivalent recipes:

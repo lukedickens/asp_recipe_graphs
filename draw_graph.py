@@ -54,12 +54,6 @@ def recipes_to_fpaths_and_str(recipes,
 
 def load_and_draw_recipe(
         recipe='beans_on_toast', **kwargs):
-#    # find the file paths
-#    graph_fpath = recipe_graph_paths[recipe]
-#    types_fpath = recipe_type_function_paths[recipe]
-#    fpaths =[]
-#    fpaths.append(graph_fpath)
-#    fpaths.append(types_fpath)
     fpaths, recipe_name = recipes_to_fpaths_and_str(recipe)
     # recipe identifier
     graph_id, typef_id = (f'rg_{recipe}',f'tf_{recipe}')
@@ -92,9 +86,6 @@ def load_and_draw_recipe_graph(
 def load_and_draw_type_hierarchy(recipe=None, base_type=None, **kwargs):
     print(f"Creating type hierarchy for recipe(s): {recipe}")
     fpaths, recipes_name = recipes_to_fpaths_and_str(recipe)
-#    recipe = 'buttered_toast'
-#    asp_model = """
-#        used_child("butter","spreads") used_child("spreads","comestible") used_child("plain toast","toast") used_child("toast","bread") used_child("bread","comestible") used_child("buttered toast","toast") used_child("spread on toast","spread") used_child("spread","put") used_child("put","action")"""
     asp_model = load_and_solve('used_child',fpaths)[0]
     parent2children = parse_type_hierarchy(asp_model, root=base_type, child_predicate='used_child')
     print(f"parent2children = {parent2children}")
@@ -146,10 +137,7 @@ def create_parser():
     parser.add_argument('--base-type', '-b', type=str,
         default='comestible',
         help='Specify base type')
-   # we no longer limit recipes to options as we want to allow multiple recipes
-#    recipe_options = RECIPES
     parser.add_argument('--recipe', '-r', type=str,
-#     choices=recipe_options,
         help='Specify recipe by identifier')
     parser.add_argument('--hierarchy-fpath', type=str, default='./asp_recipe_graphs/asp/domain_independent/universal_types.lp')
     return parser

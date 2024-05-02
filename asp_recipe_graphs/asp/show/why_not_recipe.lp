@@ -43,11 +43,6 @@ comestible_types_from_same_type_path(given_recipe(RG,TF), given_type_of(TF,N1,T1
 
 #show typed_node_not_in_graph/2.
 #show comestible_types_from_same_type_path/3.
-%#show is_typed/2.
-%#show -is_typed/2.
-%#show in/2.
-%#show given_type_of/3.
-%#show given_recipe/2.
 #show untyped_node/2.
 #show badly_typed_a_node/2.
 #show badly_typed_c_node/2.
