@@ -6,7 +6,7 @@ recipe(rg_mcdougalls_victoria_sponge,tf_mcdougalls_victoria_sponge).
 type_of(tf_mcdougalls_victoria_sponge,c(0),"caster sugar").
 type_of(tf_mcdougalls_victoria_sponge,c(1),"unsalted butter").
 type_of(tf_mcdougalls_victoria_sponge,c(2),"creamed butter and sugar").
-type_of(tf_mcdougalls_victoria_sponge,c(3),"beaten eggs").
+type_of(tf_mcdougalls_victoria_sponge,c(3),"beaten egg").
 type_of(tf_mcdougalls_victoria_sponge,c(4),"water").
 type_of(tf_mcdougalls_victoria_sponge,c(5),"flour").
 type_of(tf_mcdougalls_victoria_sponge,c(6),"sponge batter").

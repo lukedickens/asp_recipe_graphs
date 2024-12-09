@@ -10,13 +10,13 @@ TYPE_GRAPH_RESDIR = os.path.join(RESULTS_DIR, 'types')
 
 RES_C_OR_A = '(?:c|a)\([0-9]+\)'
 RES_FIND_ARC = fr'arc\(({RES_C_OR_A}),({RES_C_OR_A})\)'
-RES_FIND_ARCS_GRAPH = fr'arcs\(([a-zA-Z][a-zA-Z_]*)\)'
-RE_FIND_ARCS = re.compile(fr'(?:^|\s)in\(arcs\(([a-z][a-z_]*)\),{RES_FIND_ARC}\)')
+RES_FIND_ARCS_GRAPH = fr'arcs\(([a-zA-Z][a-zA-Z0-9_]*)\)'
+RE_FIND_ARCS = re.compile(fr'(?:^|\s)in\(arcs\(([a-z][a-zA-Z0-9_]*)\),{RES_FIND_ARC}\)')
 RE_RMV_BRCK = re.compile('(\(|\))')
 
-RES_VAR_OR_CONST = '[a-zA-Z][a-zA-Z_]*'
+RES_VAR_OR_CONST = '[a-zA-Z][a-zA-Z0-9_]*'
 RES_STRING = '"[a-z][a-zA-Z0-9, \-]*"'
-RES_FIND_ARCS_GRAPH = fr'arcs\(([a-zA-Z][a-zA-Z_]*)\)'
+RES_FIND_ARCS_GRAPH = fr'arcs\(([a-zA-Z][a-zA-Z0-9_]*)\)'
 RE_FIND_TYPE_OF = re.compile(fr'(?:^|\s)type_of\(({RES_VAR_OR_CONST}),({RES_C_OR_A}),({RES_STRING})\)')
 
 RE_FIND_RECIPE = re.compile(fr'(?:^|\s)recipe\(({RES_VAR_OR_CONST}),({RES_VAR_OR_CONST})\)')
@@ -115,6 +115,7 @@ def recipe_to_dot(recipe_id, graphs, type_functions):
     return graph_to_dot(nodes, arcs)
 
 def recipe_graph_to_dot(graph_id, graphs):
+    print(f"list(graphs.keys()) = {list(graphs.keys())}")
     graph = graphs[graph_id]
     nodes = recipe_graph_to_dot_node_descs(graph)
     return graph_to_dot(nodes, graph)

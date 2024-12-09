@@ -36,7 +36,7 @@ SHOW_DATA['describe_recipes'] = {
     'requires' : ['recipes']}
 
 SHOW_DATA['used_child'] = {
-    'requires' : ['universal_types','type_hierarchies']}
+    'requires' : ['type_hierarchies']}
 
 SHOW_DATA['show_child'] = {
     'requires' : ['type_hierarchies']}

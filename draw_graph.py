@@ -55,6 +55,7 @@ def recipes_to_fpaths_and_str(recipes,
 def load_and_draw_recipe(
         recipe='beans_on_toast', **kwargs):
     fpaths, recipe_name = recipes_to_fpaths_and_str(recipe)
+    
     # recipe identifier
     graph_id, typef_id = (f'rg_{recipe}',f'tf_{recipe}')
     # run the asp to get the arcs and types
@@ -72,20 +73,24 @@ def load_and_draw_recipe_graph(
         recipe='beans_on_toast', outdir=RECIPE_GRAPH_RESDIR, **kwargs):
 #    # find the file path (just one graph)
     fpaths, recipe_graph_name = recipe_graphs_to_fpaths_and_str(recipe)
+    print(f"fpaths = {fpaths}")
+    print(f"recipe_graph_name = {recipe_graph_name}")
     # recipe identifier
     graph_id = f'rg_{recipe}'
     # run the asp to get the arcs and types
     asp_model = load_and_solve('arcs',fpaths)[0]
     # parses asp_model string to get the graph info
     graphs = get_graphs(asp_model)
+    print(f"graph_id = {graph_id}")
     dot = recipe_graph_to_dot(graph_id, graphs)
     bare_ofname = os.path.join(outdir, recipe_graph_name)
     ofname = dot.render(bare_ofname)
     print(f"recipe graph for {recipe_graph_name} saved to:\n\t{ofname}")
 
-def load_and_draw_type_hierarchy(recipe=None, base_type=None, **kwargs):
+def load_and_draw_type_hierarchy(recipe=None, base_type=None, hierarchy_fpath=None, **kwargs):
     print(f"Creating type hierarchy for recipe(s): {recipe}")
     fpaths, recipes_name = recipes_to_fpaths_and_str(recipe)
+    fpaths.append(hierarchy_fpath)
     asp_model = load_and_solve('used_child',fpaths)[0]
     parent2children = parse_type_hierarchy(asp_model, root=base_type, child_predicate='used_child')
     print(f"parent2children = {parent2children}")
@@ -139,7 +144,7 @@ def create_parser():
         help='Specify base type')
     parser.add_argument('--recipe', '-r', type=str,
         help='Specify recipe by identifier')
-    parser.add_argument('--hierarchy-fpath', type=str, default='./asp_recipe_graphs/asp/domain_independent/universal_types.lp')
+    parser.add_argument('--hierarchy-fpath', type=str, default='./asp_recipe_graphs/asp/domains/universal_types.lp')
     return parser
     
 if __name__ == '__main__':

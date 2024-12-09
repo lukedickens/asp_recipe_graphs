@@ -1,0 +1,2 @@
+given_recipe(rg_mushroom_bhaji_r1m_a5b1ad6c1f, tf_mushroom_bhaji_r1m_a5b1ad6c1f).
+

@@ -8,7 +8,8 @@ fails_constraint_4(RG) :- empty(c_nodes(RG)), recipe_graph(RG).
 fails_constraint_5(RG) :- empty(a_nodes(RG)), recipe_graph(RG).
 fails_constraint_6(RG) :- empty(arcs(RG)), recipe_graph(RG).
 fails_constraint_7(RG) :- cyclic(RG), recipe_graph(RG).
-fails_constraint_8(RG) :- -connected(RG), recipe_graph(RG).
+
+graph_not_connected(RG) :- -connected(RG), recipe_graph(RG).
 
 fails_constraint_9(RG,a(N)):- -a_node_properly_connected(RG,a(N)), recipe_graph(RG).
 
@@ -29,6 +30,22 @@ fails_contraint_13(RG,path(RG,c(N2),c(N1))) :-
 fails_contraint_14(RG,path(RG,a(N2),a(N1))) :- 
     path(RG,a(N2),a(N1)), N1<N2, recipe_graph(RG).
 
+fails_recipe_graph_constraint(RG) :- fails_constraint_1(RG).
+fails_recipe_graph_constraint(RG) :- fails_constraint_2(RG).
+fails_recipe_graph_constraint(RG) :- fails_constraint_3(RG).
+fails_recipe_graph_constraint(RG) :- fails_constraint_4(RG).
+fails_recipe_graph_constraint(RG) :- fails_constraint_5(RG).
+fails_recipe_graph_constraint(RG) :- fails_constraint_6(RG).
+fails_recipe_graph_constraint(RG) :- fails_constraint_7(RG).
+fails_recipe_graph_constraint(RG) :- graph_not_connected(RG).
+fails_recipe_graph_constraint(RG) :- fails_constraint_9(RG).
+fails_recipe_graph_constraint(RG) :- fails_constraint_10(RG).
+fails_recipe_graph_constraint(RG) :- fails_constraint_11(RG).
+fails_recipe_graph_constraint(RG) :- fails_constraint_12(RG).
+fails_recipe_graph_constraint(RG) :- fails_constraint_13(RG).
+fails_recipe_graph_constraint(RG) :- fails_constraint_14(RG).
+
+
 #show fails_constraint_1/2.
 #show fails_constraint_2/2.
 #show fails_constraint_3/2.
@@ -36,11 +53,11 @@ fails_contraint_14(RG,path(RG,a(N2),a(N1))) :-
 #show fails_constraint_5/1.
 #show fails_constraint_6/1.
 #show fails_constraint_7/1.
-#show fails_constraint_8/1.
+#show graph_not_connected/1.
 #show fails_constraint_9/2.
 #show fails_constraint_10/4.
 #show fails_constraint_11/3.
 #show fails_constraint_12/3.
 #show fails_constraint_13/2.
 #show fails_constraint_14/2.
-
+#show fails_recipe_graph_constraint/1.

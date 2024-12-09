@@ -5,8 +5,12 @@ import copy
 SRC_ROOT_DIR = os.environ.get("GRASP_SRC_DIR",'.')
 DEFINITIONS_SUBDIR = os.path.join(
     'asp_recipe_graphs','asp','domain_independent')
+DOMAINS_SUBDIR = os.path.join(
+    'asp_recipe_graphs','asp','domains')
 DEFINITIONS_DIR = os.path.join(
     SRC_ROOT_DIR,DEFINITIONS_SUBDIR)
+DOMAINS_DIR = os.path.join(
+    SRC_ROOT_DIR,DOMAINS_SUBDIR)
 SHOW_SUBDIR = os.path.join(
     'asp_recipe_graphs','asp','show')
 SHOW_DIR = os.path.join(
@@ -24,6 +28,10 @@ MODULES = [
     f.split('.')[0] for f in MODULE_FILES ]
 MODULES_FILEMAP = { m:f for m,f in zip(MODULES,MODULE_FILES) }
 
+DOMAIN_FILES = [
+    f for f in os.listdir(DOMAINS_DIR) \
+        if os.path.isfile(os.path.join(DOMAINS_DIR, f)) and f[0] != '.' ]
+
 def get_module_path(
         module, src_root_dir=SRC_ROOT_DIR,
         definitions_subdir=DEFINITIONS_SUBDIR,
@@ -39,7 +47,7 @@ ASP_MODULE_USES = {}
 RE_FIND_TERMS = re.compile('(?=(?:^|\W|\(|\))([a-z][a-z_]*)\([a-zA-Z][a-zA-Z0-9_,()]*\))')
 RE_IS_DEFINITION = re.compile('^([a-z][a-z_]*)\([a-zA-Z0-9_," ]*\)(?: :-|\.)')
 
-
+print(f"MODULES = {MODULES}")
 for m in MODULES:
     fpath = get_module_path(m)
     defines = set([])

@@ -1,5 +1,5 @@
 import re
-from typing import List, Dict
+from typing import List, Dict, Set
 
 class Node:
     """Represents a node in the recipe graph."""
@@ -167,6 +167,42 @@ class Recipe:
 
 
 
+class TypeHierarchy:
+    """Represents a type hierarchy for a recipe corpus."""
+    def __init__(self):
+        self.child_ofs: Dict[str, List] = {}
+        self.child_ofs['action'] = None
+        self.child_ofs['comestible'] = None
+        
+    def add_type(self, type_name):
+        if not type_name in self.child_ofs:
+            self.child_ofs[type_name] = []
+        return type_name
+        
+    def add_child_of(self, child, parent):
+        self.add_type(child)
+        self.add_type(parent)        
+        self.child_ofs[child].append(parent)
+        return (child, parent)
+        
+    def get_types(self):
+        return list(self.child_ofs.keys())
+
+    def to_db(self):
+        child_of_decls = [ iterable_to_csv_string(tuple_form) \
+            for tuple_form in self.tuple_form_child_ofs() ]
+        return child_of_decls
+
+    def tuple_form_child_ofs(self):
+        return [
+            ("child", child, parent) \
+                for child, parents in self.child_ofs.items() \
+                    if not parents is None \
+                        for parent in parents ]
+
+    @classmethod
+    def db_types(cls):
+        return ["child"]
 
 class RecipeCorpus:
     recipe_graph_pattern = re.compile(r"recipe_graph\((\w+)\)\.")
@@ -178,12 +214,15 @@ class RecipeCorpus:
         r"(?:given_)?recipe\((\w+),(\w+)\)\.")
 #    given_recipe_pattern = re.compile(
 #        r"given_"+recipe_pattern.pattern)
+    child_pattern = re.compile(
+        r"""child\(\"(\w.*)\",\s*"(\w.*)"\)\.""")
 
     """Represents an entire recipe including graph and typing_func."""
     def __init__(self):
         self.recipes: Dict[str,Recipe] = {}
         self.graphs: Dict[str,RecipeGraph] = {}
         self.typing_functions: Dict[str,TypingFunction] = {}
+        self.type_hierarchy = TypeHierarchy()
 
     def add_recipe(self, graph_name, typing_name):
         if (graph_name, typing_name) in self.recipes:
@@ -226,7 +265,14 @@ class RecipeCorpus:
         type_of = typing_func.add_type_of(
             node_type, node_id, type_name)
         return type_of
+
+    def add_type(self, type_name):
+        type_name = self.type_hierarchy.add_type(type_name)
+        return type_name
     
+    def add_child_of(self, child, parent):
+        pair = self.type_hierarchy.add_child_of(child, parent)
+        return pair
                 
     def read_in_asp_line(self, line):
 #        print(f"parsing:\n{line}")
@@ -255,6 +301,11 @@ class RecipeCorpus:
             typing_func_name, node_type, node_id, type_name = match.groups()
             node_id = int(node_id)
             self.add_type_of(typing_func_name, node_type, node_id, type_name)
+        # Match and process types
+        elif match := self.child_pattern.match(line):
+            print("matches child of pattern")
+            child_name, parent_name = match.groups()
+            self.add_child_of(child_name, parent_name)
 
     def __repr__(self):
         n_g = len(self.graphs)
@@ -275,6 +326,10 @@ class RecipeCorpus:
             self.read_in_asp_file(ifpath)
 
     @classmethod
+    def db_types(cls):
+        return Recipe.db_types() + TypeHierarchy.db_types()
+
+    @classmethod
     def create_corpus(cls, ifpaths):
         corpus = RecipeCorpus()
         corpus.read_in_asp_files(ifpaths)
@@ -287,62 +342,6 @@ def iterable_to_csv_string(iterable):
 
 
 
-def parse_asp_recipe_old(asp_text: str) -> Recipe:
-    print(f"Parsing recipe:\n{asp_text}\n\n")
-    # Regex patterns for parsing
-    recipe_graph_pattern = re.compile(r"recipe_graph\((\w+)\)\.")
-    arc_pattern = re.compile(r"in\(arcs\((\w+)\),arc\((\w)\((\d+)\),(\w)\((\d+)\)\)\)\.")
-    type_of_pattern = re.compile(r"type_of\((\w+),(\w)\((\d+)\),\"([^\"]+)\"\)\.")
-    recipe_pattern = re.compile(r"recipe\((\w+),(\w+)\)\.")
-    given_recipe_pattern = re.compile(r"given_"+recipe_pattern.pattern)
-
-    # Initialize variables
-    recipe_name = None
-    typing_name = None
-    recipe = None
-
-    # Go through each line
-    for line in asp_text.splitlines():
-        line = line.strip()
-#        print(f"processing: {line}")
-        # Match the recipe and typing_func names
-        if match := given_recipe_pattern.match(line):
-            recipe_name, typing_name = match.groups()
-#            print(f"given_recipe_pattern match: {recipe_name}, {typing_name}")
-            recipe = Recipe(recipe_name, typing_name)
-            continue
-
-        # Match the recipe graph name
-        if match := recipe_graph_pattern.match(line):
-#            print("recipe_graph_pattern match")
-            graph_name = match.group(1)
-            if recipe is None:
-                recipe = Recipe(graph_name, typing_name)  # If recipe wasn't created by previous rule
-
-        # Match and process arcs
-        elif match := arc_pattern.match(line):
-            graph_name, from_type, from_id, to_type, to_id = match.groups()
-            from_id, to_id = int(from_id), int(to_id)
-#            from_node = Node(from_type, from_id)
-#            to_node = Node(to_type, t_id)
-            # Ensure the nodes are created in the graph before adding the arc
-            from_node = recipe.graph.add_node(from_type, from_id)
-            to_node = recipe.graph.add_node(to_type, to_id)
-            # Add the arc
-            recipe.graph._add_arc(from_node, to_node)
-
-        # Match and process types
-        elif match := type_of_pattern.match(line):
-            typing_func_name, node_type, node_id, type_name = match.groups()
-            node_id = int(node_id)
-            node = Node(node_type, node_id)
-            # Update the typing function
-            recipe.typing_func._add_type_of(node, type_name)
-#            # Update the node's name in the recipe graph
-#            if node_id in recipe.graph.nodes:
-#                recipe.graph.nodes[node_id].name = type_name
-
-    return recipe
 
 
 if __name__ == '__main__':
@@ -368,68 +367,9 @@ if __name__ == '__main__':
             else:
                 for subelement in element:
                     print(subelement)
+    for i, db_type in enumerate(TypeHierarchy.db_types()):
+        print(f"# {db_type}")
+        for element in corpus.type_hierarchy.to_db():
+            print(element)
     print()
-#                    
-#    print(list(corpus.recipes.items()))
-#    print(list(corpus.graphs.items()))
-#    print(list(corpus.typing_functions.items()))
-#    print()
-    
-#    typing_func = corpus.typing_functions['tf_bbc_vegan_sponge_cake']
-#    print(f"typing_func = {typing_func}")
-#    signature, type_of_lines = typing_func.to_db()
-#    for line in type_of_lines:
-#        print(line)
-
-#    # Example ASP input
-#    asp_text = """
-#    % recipe
-#    given_recipe(rg_buttered_toast,tf_buttered_toast).
-#    % graph
-#    recipe_graph(rg_buttered_toast).
-#    in(arcs(rg_buttered_toast),arc(c(0),a(0))).
-#    in(arcs(rg_buttered_toast),arc(c(1),a(0))).
-#    in(arcs(rg_buttered_toast),arc(a(0),c(2))).
-#    % typing function
-#    recipe(rg_buttered_toast,tf_buttered_toast).
-#    type_of(tf_buttered_toast,c(0),"butter").
-#    type_of(tf_buttered_toast,c(1),"plain toast").
-#    type_of(tf_buttered_toast,c(2),"buttered toast").
-#    type_of(tf_buttered_toast,a(0),"spread on toast").
-#    """
-
-#    # Parse the ASP text and print the recipe object
-#    recipe = parse_asp_recipe(asp_text)
-#    print(recipe)
-#    
-#    print("database output")
-#    example_arc = recipe.graph.arcs[0].str_signature(recipe.graph.name)
-#    print(f'example_arc = "{example_arc}"')
-#    example_graph, example_arcs = recipe.graph.to_db()
-#    print(f'example_graph = "{example_graph}"')
-#    print(f'example_arcs = {example_arcs}')
-#    example_typing, example_types = recipe.typing_func.to_db()
-#    print(f'example_typing = "{example_typing}"')
-#    print(f'example_types = {example_types}')
-#    
-#    print("All in one:")
-#    recipe_decl, graph_decl, arcs_decl, typing_decl, types_decl = recipe.to_db()
-#    print(recipe_decl)
-#    print(graph_decl)
-#    for arc_decl in arcs_decl:
-#        print(arc_decl)
-#    print(typing_decl)
-#    for type_decl in types_decl:
-#        print(type_decl)
-#        
-#    
-#    print("And again from tuple forms")
-#    tuple_form_graph = recipe.graph.tuple_form_signature()
-#    print(iterable_to_csv_string(tuple_form_graph))
-#    for tuple_form_arc in recipe.graph.tuple_form_arcs():
-#        print(iterable_to_csv_string(tuple_form_arc))
-#    tuple_form_typing = recipe.typing_func.tuple_form_signature()
-#    print(iterable_to_csv_string(tuple_form_typing))
-#    for tuple_form_type in recipe.typing_func.tuple_form_types():
-#        print(iterable_to_csv_string(tuple_form_type))
 

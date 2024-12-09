@@ -26,18 +26,22 @@ type_of(tf_baba_ganoush,c(18),"ungarnished baba ganoush").
 type_of(tf_baba_ganoush,c(19),"smoked paprika").
 type_of(tf_baba_ganoush,c(20),"baba ganoush").
 % actions
-type_of(tf_baba_ganoush,a(0),"halve and oil aubergine").
+type_of(tf_baba_ganoush,a(0),"halve and oil").
 type_of(tf_baba_ganoush,a(1),"roast").
-type_of(tf_baba_ganoush,a(2),"scoop out flesh").
+type_of(tf_baba_ganoush,a(2),"scoop out").
 type_of(tf_baba_ganoush,a(3),"strain").
 type_of(tf_baba_ganoush,a(4),"stir together vigorously").
 type_of(tf_baba_ganoush,a(5),"stir until incorporated").
 type_of(tf_baba_ganoush,a(6),"drizzle oil while stirring").
-type_of(tf_baba_ganoush,a(7),"stir in parsley, salt and cumin").
+type_of(tf_baba_ganoush,a(7),"stir together").
 type_of(tf_baba_ganoush,a(8),"season").
 type_of(tf_baba_ganoush,a(9),"garnish").
 
 
+child("mixture of aubergine, garlic and lemon juice", "mixture").
 child("mixture of aubergine, garlic, lemon juice and tahini", "mixture").
 child("mixture of aubergine, garlic, lemon juice, tahini and olive oil", "mixture").
+child("baba ganoush","complex comestible").
+child("unseasoned baba ganoush","complex comestible").
+child("ungarnished baba ganoush","complex comestible").
 
