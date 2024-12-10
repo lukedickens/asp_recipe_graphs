@@ -1,0 +1,2 @@
+given_recipe(rg_sattvic_herbs_bhaji_r1m_5bdff4673f, tf_sattvic_herbs_bhaji_r1m_5bdff4673f).
+

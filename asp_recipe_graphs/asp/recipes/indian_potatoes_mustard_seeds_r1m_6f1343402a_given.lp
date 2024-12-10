@@ -1,0 +1,2 @@
+given_recipe(rg_indian_potatoes_mustard_seeds_r1m_6f1343402a, tf_indian_potatoes_mustard_seeds_r1m_6f1343402a).
+

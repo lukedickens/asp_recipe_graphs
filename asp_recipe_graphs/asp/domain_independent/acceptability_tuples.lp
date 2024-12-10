@@ -1,5 +1,5 @@
 % set maximum input and output set sizes (should be moved elsewhere for flexibility)
-#const max_in_set_size=12.
+#const max_in_set_size=10.
 #const max_out_set_size=2.
 
 %% A more straightforward way to do the above ^^. Namely creating input and output elements

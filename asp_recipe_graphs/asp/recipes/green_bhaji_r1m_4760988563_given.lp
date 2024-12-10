@@ -1,0 +1,2 @@
+given_recipe(rg_green_bhaji_r1m_4760988563, tf_green_bhaji_r1m_4760988563).
+

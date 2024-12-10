@@ -3,45 +3,53 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+child("complex action", "action").
+    child("add and cook", "complex action").
+    child("wash and quarter", "complex action").
 child("bake", "action").
     child("bake at 180C for 45min", "bake").
-child("boil", "action").
-    child("simmer", "boil").
-child("cook", "action").
-    child("simmer", "cook").
-    child("steam","cook").
-        child("steam for 10 min","steam").
-child("cool", "action").
-child("check temperature", "action").
-child("divide", "action").
-    child("scoop out", "divide").
-    child("halve", "divide").
-        child("halve and oil", "halve").
-child("cut", "action").
-    child("chop", "cut").
-        child("finely chop", "chop").
-        child("dice", "chop").
-child("combine", "action").
-    child("mix", "combine").
-    child("beat together", "mix").
-        child("beat together until smooth", "beat together").
-    child("blend together", "mix").
-    child("cream together", "mix").
-    child("stir together", "mix").
-
+child("beat","action").
 child("blend", "action").
     child("blend until uniform", "blend").
     child("blend together", "blend").
         child("pulse in blender", "blend").
             child("blend together until smooth", "blend together").
+child("boil", "action").
+    child("simmer", "boil").
+child("coat", "action").
+child("cook", "action").
+    child("cook together", "cook").
+    child("fry", "cook").
+    child("grill", "cook").
+    child("toast", "cook").
+    child("simmer", "cook").
+    child("steam","cook").
+        child("steam for 10 min","steam").
+child("cool", "action").
+child("check temperature", "action").
+child("cut", "action").
+    child("slice", "cut").
+    child("chop", "cut").
+        child("finely chop", "chop").
+        child("dice", "chop").
+child("combine", "action").
+    child("mix", "combine").
+        child("mix together","action").
+    child("beat together", "mix").
+        child("beat together until smooth", "beat together").
+    child("blend together", "mix").
+    child("cream together", "mix").
+    child("stir together", "mix").
+child("divide", "action").
+    child("scoop out", "divide").
+    child("halve", "divide").
+        child("halve and oil", "halve").
 child("drain", "action").
     child("strain", "drain").
-
 child("dust","action").
 child("fill","action").
-
-child("fry", "cook").
-child("grill", "cook").
+child("form","action").
+child("grind","action").
 child("heat", "action").
 child("hull", "action").
 child("infuse", "action").
@@ -57,6 +65,7 @@ child("rinse", "action").
 child("roast", "cook").
 child("shell", "action").
 child("serve", "action").
+child("sift","action").
 child("stir", "action").
     child("drizzle oil while stirring","stir").
     child("stir together", "stir").
@@ -85,7 +94,10 @@ child("mix and heat", "mix").
 child("mix and heat", "heat").
 
 child("baking agent","comestible").
-    child("bicarbonate of soda","baking agent").
+    % these two should be aliases not siblings 
+    child("bicarbonate of soda","baking agent"). 
+    child("baking soda","baking agent").
+    child("baking powder","baking agent").
 
 child("bread", "comestible").
     child("sliced bread","bread").
@@ -131,6 +143,8 @@ child("pulses", "comestible").
 child("mushrooms and fungi", "comestible").
     child("mushrooms", "mushrooms and fungi").
         child("button mushrooms", "mushrooms").
+        child("white mushrooms", "mushrooms").
+        child("quartered mushrooms", "mushrooms").
 child("vegetable", "comestible").
     child("preserved vegetable","vegetable").
         child("sun-dried tomato", "preserved vegetable").
@@ -144,6 +158,7 @@ child("vegetable", "comestible").
             child("roasted aubergine skin", "roasted aubergine").
         child("aubergine drippings", "aubergine").
     child("carrot", "vegetable").
+        child("julienned carrots", "carrot").
     child("garlic", "vegetable").
         child("diced garlic", "garlic").
         child("whole garlic", "garlic").
@@ -154,16 +169,30 @@ child("vegetable", "comestible").
         %child("roasted peeled garlic", "peeled garlic").
         child("roasted peeled garlic", "garlic").
     child("onion", "vegetable").
+        child("raw onion rings","onion").
+        child("chopped onion","onion").
+            child("raw chopped onion", "chopped onion").
+                child("finely chopped onion", "chopped onion").
         child("raw onion", "onion").
             child("raw chopped onion", "raw onion").
                 child("raw finely chopped onion", "raw chopped onion").
                 child("raw sliced onion", "raw chopped onion").
+                    child("raw thinly sliced onion", "raw chopped onion").
         child("fried onion", "onion").
+            child("browned onion", "onion").
         child("sliced onion", "onion").
+    child("peas", "vegetable").
+    child("potato", "vegetable").
+        child("potato pieces", "potato").
     child("radish", "vegetable").
         child("sliced radish", "radish").
             child("thinly sliced radish", "radish").
+    child("spinach","vegetable").
+        child("frozen spinach","spinach").
+        child("thawed spinach","spinach").
+        child("chopped spinach","spinach").
     child("tomato", "vegetable").
+        child("chopped tomato", "tomato").
         child("tomato paste", "tomato").
         child("pasata", "tomato").
         child("sun-dried tomato", "tomato").
@@ -189,6 +218,7 @@ child("flour", "comestible").
         child("self-raising flour", "wheat flour").
         child("plain flour", "wheat flour").
     child("chickpea flour", "flour").
+    child("besan flour", "flour").
     child("rice flour", "flour").
 child("fruit", "comestible").
     child("lemon juice", "fruit").
@@ -200,11 +230,20 @@ child("dips", "comestible").
     child("hummus", "dips").
 child("pastes", "comestible").
     child("tahini", "pastes").
-child("oil", "comestible").
+child("fat", "comestible").
+    child("ghee or vegetable oil", "comestible").
+        child("ghee", "ghee or vegetable oil").
+    child("ghee", "fat").
+        child("unheated ghee", "ghee").
+        child("heated ghee", "ghee").
+child("oil", "fat").
     child("sunflower oil", "oil").
     child("vegetable oil", "oil").
+    child("vegetable oil", "ghee or vegetable oil").
+
     child("olive oil", "oil").
         child("extra-virgin olive oil", "olive oil").
+    child("unheated oil", "oil").
     child("heated oil", "oil").
         child("unchecked heated oil", "heated oil").
         child("oil ready for frying", "heated oil").
@@ -212,18 +251,39 @@ child("flavourings", "comestible").
     child("salt", "flavourings").
         child("kosher salt", "salt").
     child("spices", "flavourings").
+        child("asafoetida","spices").
         child("chili", "spices").
+            child("chopped chili","chili").
             child("cayenne pepper", "chili").
+            child("serrano chili", "chili").
             child("chili powder", "chili").
             child("green chili", "chili").
                 child("whole green chili", "green chili").
                 child("chopped green chili", "green chili").
+            child("red chili", "chili").
+                child("dried red chili", "chili").
+        child("cinnamon", "spices").
+            child("ground cinnamon", "spices").
         child("coriander spice", "spices").
             child("ground coriander", "coriander spice").
         child("cumin", "spices").
             child("ground cumin", "cumin").
             child("cumin seeds", "cumin").
+        child("fenugreek seeds","spices").
+        child("garam masala","spices").
+        child("ginger","spices").
+            child("fresh ginger","ginger").
+                child("grated fresh ginger","fresh ginger").
+            child("grated ginger", "ginger").
+                child("grated fresh ginger","grated ginger").
+            child("ground ginger","ginger").
         child("mustard seeds", "spices").
+            child("yellow mustard seeds","mustard seeds").
+            child("brown mustard seeds","mustard seeds").
+            child("black mustard seeds","mustard seeds").
+        child("onion seeds", "spices").
+            child("black onion seeds","onion seeds").
+
         child("paprika", "spices").
             child("smoked paprika", "paprika").
         child("turmeric", "spices").
@@ -231,6 +291,7 @@ child("flavourings", "comestible").
         child("vanilla seeds", "spices").
     child("herbs", "flavourings").
         child("cilantro", "herbs").
+            child("chopped cilantro", "cilantro").
             child("fresh coriander", "cilantro").
         child("parsley", "herbs").
             child("chopped parsley", "parsley").
@@ -258,6 +319,7 @@ child("mixture", "comestible").
         
 child("spreads", "comestible").
     child("butter", "spreads").
+    child("butter", "fat").
         child("salted butter", "butter").
         child("unsalted butter", "butter").
     child("dairy-free spread", "spreads").
@@ -283,6 +345,15 @@ child("gluten free comestible","comestible").
 child("complex comestible", "comestible").
     child("dish", "complex comestible").
         child("beans on toast", "dish").
+        child("onion bhajias","dish").
+        child("mushroom bhaji", "dish").
+        child("onion bhajis","dish").
+        child("green bhaji","dish").
+        child("freshly fried bhajis","dish").
+        child("onion bhajis with raita","dish").
+        child("yogurt and mint raita","dish").
+        child("indian potatoes with mustard seeds","dish").
+        child("khumbi aur besan kibhaji", "dish").
     child("pasta sauce", "complex comestible").
         child("pomodoro sauce", "pasta sauce").
             child("cold pomodoro sauce", "pasta sauce").
@@ -291,22 +362,58 @@ child("complex comestible", "comestible").
     child("batter", "complex comestible").
         child("sponge batter", "batter").
         child("bhaji batter", "batter").
-child("preparation", "complex comestible").
-    child("bhaji spice mixture", "spice mixture").
-    child("bhaji preparation", "preparation").
-    child("bhaji paste", "preparation").
-    child("mushroom bhaji preparation", "preparation").
-child("mushroom bhaji", "dish").
-child("onion bhajis","dish").
-child("freshly fried bhajis","dish").
-child("onion bhajis with raita","dish").
-child("yogurt and mint raita","dish").
+    child("preparation", "complex comestible").
+        child("toasted spices", "spice mixture").
+        child("bhaji spice mixture", "spice mixture").
+        child("bhaji preparation", "preparation").
+        child("bhaji paste", "preparation").
+        child("masala paste", "preparation").
+        child("fried masala mix", "preparation").
+        child("fried garlic mixture", "preparation").
+        child("garlic mushroom mixture", "preparation").
+        child("floured mushroom mixture", "preparation").
+        
+        child("mushroom bhaji preparation", "preparation").
+        child("sifted flour mix","preparation").
+        child("battered onion and chilies","preparation").
+        child("floured onion and chilies","preparation").
+        child("spiced onion strands","preparation").
+        child("vinegared onion mix","preparation").
+        child("floured onions","preparation").
+        child("formed onion balls","preparation").
+        child("unfinished indian potatoes","preparation").
+
+        child("unfinished green bhaji","preparation").
 
 child("lemon-tahini blend","mixture").
 child("hummus base","complex comestible").
 child("untopped edamame hummus","complex comestible").
 child("ungarnished edamame hummus","complex comestible").
 child("edamame hummus","complex comestible").
+
+child("coated vegetables", "preparation").
+    child("coated onion", "coated vegetables").
+child("drained bhajis", "preparation").
+child("cooked bhajis", "dish").
+child("onion and carrot bhajis", "dish").
+
+child("spiced mixture","preparation").
+    child("spiced onion mixture","spiced mixture").
+    child("spiced potato mixture","spiced mixture").
+    child("spiced mushroom mixture","spiced mixture").
+    child("lemon spiced mushroom mixture","spiced mixture").
+    child("spiced spinach mixture","spiced mixture").
+child("spinach and onion bhajis", "dish").
+child("cook seeds").
+child("saute", "fry").
+
+child("fried onion bhajis", "dish").
+child("drained onion bhajis", "dish").
+child("sattvic herbs bhaji","dish").
+child("coriander chutney or cucumber raita", "complex comestible").
+    child("coriander chutney","coriander chutney or cucumber raita").
+    child("cucumber raita","coriander chutney or cucumber raita").
+child("onion bhajis with chutney or raita", "dish").
 
 
 %child("mixture", "comestible").
